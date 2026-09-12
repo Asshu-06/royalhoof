@@ -120,7 +120,9 @@ export default function App() {
           {/* Storefront routes */}
           <Route path="/*" element={
             <div className="min-h-screen flex flex-col bg-royal-cream">
-              <Navbar />
+              <ErrorBoundary>
+                <Navbar />
+              </ErrorBoundary>
               <main className="flex-1">
                 <AnimatedRoutes />
               </main>

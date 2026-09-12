@@ -28,7 +28,7 @@ function StarRating({ value, onChange, size = 20 }) {
 }
 
 function ReviewCard({ review, currentUserId, onEdit, onDelete }) {
-  const isOwn = review.user_id === currentUserId
+  const isOwn = Boolean(currentUserId && review.user_id && review.user_id === currentUserId)
   const initials = (review.name || "U").slice(0, 2).toUpperCase()
 
   return (
@@ -74,7 +74,7 @@ export default function ReviewsSection() {
   const [guestName, setGuestName] = useState("")
   const [guestEmail, setGuestEmail] = useState("")
 
-  const userReview = reviews.find(r => r.user_id === user?.id)
+  const userReview = user?.id ? reviews.find(r => r.user_id && r.user_id === user.id) : null
   const avgRating = reviews.length ? (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1) : null
 
   useEffect(() => {
@@ -105,16 +105,14 @@ export default function ReviewsSection() {
     
     setSubmitting(true)
     try {
-      let userName, userId
+      let userName
       
       if (user) {
         // Logged-in user
         userName = user.user_metadata?.full_name || user.email?.split("@")[0] || "Customer"
-        userId = user.id
       } else {
         // Anonymous user
         userName = guestName.trim()
-        userId = null // No user ID for anonymous reviews
       }
       
       if (editingId) {
@@ -126,18 +124,12 @@ export default function ReviewsSection() {
         toast.success("Review updated!")
       } else {
         const reviewData = {
-          user_id: userId,
           name: userName,
           rating,
           review: comment.trim(),
           is_approved: false, // All reviews start as unapproved for admin moderation
           is_active: true,
           display_order: 0
-        }
-        
-        // Add email for anonymous users
-        if (!user && guestEmail.trim()) {
-          reviewData.guest_email = guestEmail.trim()
         }
         
         const { data, error } = await supabase.from("testimonials")
@@ -247,11 +239,29 @@ export default function ReviewsSection() {
               <StarRating value={rating} onChange={setRating} size={26} />
             </div>
             <div>
-              <p className="text-[#765334] text-xs mb-2 font-medium uppercase tracking-wide">Your Review</p>
+              <div className="flex justify-between items-center mb-2">
+                <p className="text-[#765334] text-xs font-medium uppercase tracking-wide">Your Review</p>
+                <span className="text-[#765334] text-xs font-medium">
+                  {comment.length}/1000
+                </span>
+              </div>
               <textarea
+                maxLength={1000}
                 value={comment}
                 onChange={e => setComment(e.target.value)}
-                placeholder="Tell us about your experience..."
+                onPaste={e => {
+                  const items = e.clipboardData?.items
+                  if (items) {
+                    for (let i = 0; i < items.length; i++) {
+                      if (items[i].type.indexOf("image") !== -1) {
+                        e.preventDefault()
+                        toast.error("Images are not allowed in the review field")
+                        return
+                      }
+                    }
+                  }
+                }}
+                placeholder="Tell us about your experience... (Max 1000 characters)"
                 rows={4}
                 className="input-premium w-full rounded-sm px-3 py-2.5 text-sm resize-none"
                 required

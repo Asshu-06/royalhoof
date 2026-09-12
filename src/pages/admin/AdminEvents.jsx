@@ -196,8 +196,9 @@ export default function AdminEvents() {
               </div>
             </div>
             <div>
-              <label style={labelStyle}>Description *</label>
+              <label style={labelStyle}>Description * (Max 1000 chars)</label>
               <textarea 
+                maxLength={1000}
                 value={formData.description} 
                 onChange={e => set('description', e.target.value)} 
                 style={{ ...inputStyle, resize: "vertical", minHeight: 100 }} 

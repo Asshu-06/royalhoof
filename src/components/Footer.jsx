@@ -57,48 +57,51 @@ export default function Footer() {
             </div>
           </div>
 
-          <div>
-            <h4 className="eyebrow-label mb-5 text-[#C5963A]">Our Services</h4>
-            <ul className="space-y-3">
-              {[
-                "Horse Riding Lessons",
-                "Certified Training",
-                "Boarding Facilities",
-                "Trail Rides & Adventures",
-                "Equestrian Events",
-                "Premium Care"
-              ].map(service => (
-                <li key={service}>
-                  <span className="text-sm text-[#D8C5A0] hover:text-[#C5963A] transition-colors" style={{ fontFamily: "'Inter', sans-serif" }}>
-                    {service}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Services & Quick Links side-by-side */}
+          <div className="col-span-1 md:col-span-2 grid grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
+            <div>
+              <h4 className="eyebrow-label mb-5 text-[#C5963A]">Our Services</h4>
+              <ul className="space-y-3">
+                {[
+                  "Horse Riding Lessons",
+                  "Certified Training",
+                  "Boarding Facilities",
+                  "Trail Rides & Adventures",
+                  "Equestrian Events",
+                  "Premium Care"
+                ].map(service => (
+                  <li key={service}>
+                    <span className="text-sm text-[#D8C5A0] hover:text-[#C5963A] transition-colors" style={{ fontFamily: "'Inter', sans-serif" }}>
+                      {service}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          <div>
-            <h4 className="eyebrow-label mb-5 text-[#C5963A]">Quick Links</h4>
-            <ul className="space-y-3">
-              {[
-                { to: "/", label: "Home" },
-                { to: "/events", label: "Upcoming Events" },
-                { to: "/packages", label: "Packages & Pricing" },
-                { to: "/gallery", label: "Visual Showcase" },
-                { to: "/csr", label: "CSR Initiatives" },
-                { to: "/enquiry", label: "Book a Session" },
-                { to: "/contact", label: "Contact Us" },
-              ].map(item => (
-                <li key={item.to}>
-                  <Link to={item.to} className="text-sm transition-colors duration-300 text-[#D8C5A0]"
-                    style={{ fontFamily: "'Inter', sans-serif" }}
-                    onMouseEnter={e => e.currentTarget.style.color = "#C5963A"}
-                    onMouseLeave={e => e.currentTarget.style.color = "#D8C5A0"}>
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <div>
+              <h4 className="eyebrow-label mb-5 text-[#C5963A]">Quick Links</h4>
+              <ul className="space-y-3">
+                {[
+                  { to: "/", label: "Home" },
+                  { to: "/events", label: "Upcoming Events" },
+                  { to: "/packages", label: "Packages & Pricing" },
+                  { to: "/gallery", label: "Visual Showcase" },
+                  { to: "/csr", label: "CSR Initiatives" },
+                  { to: "/enquiry", label: "Book a Session" },
+                  { to: "/contact", label: "Contact Us" },
+                ].map(item => (
+                  <li key={item.to}>
+                    <Link to={item.to} className="text-sm transition-colors duration-300 text-[#D8C5A0]"
+                      style={{ fontFamily: "'Inter', sans-serif" }}
+                      onMouseEnter={e => e.currentTarget.style.color = "#C5963A"}
+                      onMouseLeave={e => e.currentTarget.style.color = "#D8C5A0"}>
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 

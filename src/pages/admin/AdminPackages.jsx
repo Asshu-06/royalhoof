@@ -183,8 +183,8 @@ export default function AdminPackages() {
             </div>
 
             <div>
-              <label style={labelStyle}>Description</label>
-              <textarea value={formData.description} onChange={e => set('description', e.target.value)} style={{ ...inputStyle, resize: "none" }} rows={2} />
+              <label style={labelStyle}>Description (Max 1000 chars)</label>
+              <textarea maxLength={1000} value={formData.description} onChange={e => set('description', e.target.value)} style={{ ...inputStyle, resize: "none" }} rows={2} />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

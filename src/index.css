@@ -229,7 +229,7 @@
   /* Cream Card Surface */
   .equestrian-card {
     background: var(--royal-cream-input);
-    border: 1px solid var(--border-navy);
+    border: 1.5px solid #C5963A;
     box-shadow: var(--shadow-card);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }

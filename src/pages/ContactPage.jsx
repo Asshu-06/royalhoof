@@ -95,16 +95,16 @@ export default function ContactPage() {
 
   const inputClass = `
     w-full rounded-sm px-4 py-3 text-sm text-[#292725]
-    placeholder-[#F5EBD8]/30 focus:outline-none transition-all duration-200
+    placeholder-[#765334]/50 focus:outline-none transition-all duration-200
   `
   const inputStyle = {
-    background: "rgba(22, 8, 11, 0.6)",
-    border: "1px solid rgba(197, 150, 58, 0.15)",
+    background: "#FAF3E4",
+    border: "1px solid rgba(8, 43, 73, 0.2)",
     fontFamily: "'Inter', sans-serif",
   }
   const inputFocusStyle = {
-    borderColor: "rgba(197, 150, 58, 0.5)",
-    boxShadow: "0 0 0 3px rgba(197, 150, 58, 0.08)",
+    borderColor: "#C5963A",
+    boxShadow: "0 0 0 3px rgba(197, 150, 58, 0.15)",
   }
 
   return (
@@ -192,15 +192,7 @@ export default function ContactPage() {
                       {item.href ? (
                         <a href={item.href} target={item.href.startsWith('http') ? "_blank" : undefined}
                           rel="noopener noreferrer"
-                          style={{
-                            color: "#292725",
-                            fontSize: "0.9375rem",
-                            fontFamily: "'Inter', sans-serif",
-                            textDecoration: "none",
-                            lineHeight: 1.5,
-                          }}
-                          onMouseEnter={e => e.currentTarget.style.color = "#C5963A"}
-                          onMouseLeave={e => e.currentTarget.style.color = "#F5EBD8"}
+                          className="contact-detail-link"
                         >
                           {item.value}
                         </a>
@@ -358,15 +350,33 @@ export default function ContactPage() {
                   </label>
                   <textarea
                     rows={5}
+                    maxLength={1000}
                     value={message}
                     onChange={e => setMessage(e.target.value)}
-                    placeholder="How can we help you?"
+                    onPaste={e => {
+                      const items = e.clipboardData?.items
+                      if (items) {
+                        for (let i = 0; i < items.length; i++) {
+                          if (items[i].type.indexOf("image") !== -1) {
+                            e.preventDefault()
+                            toast.error("Images are not allowed in the message field")
+                            return
+                          }
+                        }
+                      }
+                    }}
+                    placeholder="How can we help you? (Max 1000 characters)"
                     className={inputClass}
                     style={{ ...inputStyle, resize: "none" }}
                     onFocus={e => Object.assign(e.target.style, { ...inputStyle, ...inputFocusStyle, resize: "none" })}
                     onBlur={e => Object.assign(e.target.style, { ...inputStyle, resize: "none" })}
                   />
-                  {errors.message && <p style={{ color: "#f87171", fontSize: "0.75rem", marginTop: "4px" }}>{errors.message}</p>}
+                  <div className="flex justify-between items-center mt-1">
+                    {errors.message ? <p style={{ color: "#f87171", fontSize: "0.75rem" }}>{errors.message}</p> : <div />}
+                    <span style={{ color: "#765334", fontSize: "0.75rem", fontFamily: "'Inter', sans-serif" }}>
+                      {message.length}/1000
+                    </span>
+                  </div>
                 </div>
 
                 {/* Submit */}
@@ -440,6 +450,25 @@ export default function ContactPage() {
         @keyframes spin { to { transform: rotate(360deg); } }
         @media (max-width: 640px) {
           .contact-grid { grid-template-columns: 1fr !important; }
+        }
+        .contact-detail-link {
+          color: #292725 !important;
+          font-size: 0.9375rem;
+          font-family: 'Inter', sans-serif;
+          text-decoration: none;
+          line-height: 1.5;
+          transition: color 0.2s ease, text-decoration 0.2s ease;
+          display: inline-block;
+          word-break: break-word;
+        }
+        .contact-detail-link:hover,
+        .contact-detail-link:focus,
+        .contact-detail-link:active {
+          color: #082B49 !important;
+          text-decoration: underline !important;
+        }
+        .contact-detail-link:visited {
+          color: #292725 !important;
         }
       `}</style>
     </>

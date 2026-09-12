@@ -545,8 +545,9 @@ export default function AdminEnquiries() {
                 {editingNotes === item.id ? (
                   <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                     <textarea
+                      maxLength={1000}
                       value={notes} onChange={e => setNotes(e.target.value)}
-                      style={{ ...inputStyle, resize: "none" }} rows={3} placeholder="Add internal notes..."
+                      style={{ ...inputStyle, resize: "none" }} rows={3} placeholder="Add internal notes... (Max 1000 chars)"
                     />
                     <div style={{ display: "flex", gap: 8 }}>
                       <button onClick={() => saveNotes(item.id)}

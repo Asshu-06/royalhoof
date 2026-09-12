@@ -188,8 +188,8 @@ export default function AdminTestimonials() {
               </div>
             </div>
             <div>
-              <label style={labelStyle}>Review *</label>
-              <textarea value={formData.review} onChange={e => set('review', e.target.value)} style={{ ...inputStyle, resize: "none" }} rows={4} required />
+              <label style={labelStyle}>Review * (Max 1000 chars)</label>
+              <textarea maxLength={1000} value={formData.review} onChange={e => set('review', e.target.value)} style={{ ...inputStyle, resize: "none" }} rows={4} required />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>

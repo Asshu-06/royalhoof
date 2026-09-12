@@ -286,11 +286,11 @@ export default function PackagesPage() {
                       initial="hidden"
                       animate="visible"
                       variants={cardVariants}
-                      whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                      className={`group relative bg-white rounded-2xl p-8 transition-all duration-300 ${
+                      whileHover={{ y: -6, transition: { duration: 0.3 } }}
+                      className={`group relative bg-white rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 ${
                         pkg.popular 
-                          ? 'ring-4 ring-[#C5963A] shadow-2xl shadow-[#C5963A]/20' 
-                          : 'border-2 border-[#C5963A] hover:border-[#C5963A] hover:shadow-xl hover:shadow-[#C5963A]/20'
+                          ? 'ring-4 ring-[#C5963A] shadow-xl shadow-[#C5963A]/20' 
+                          : 'border-2 border-[#C5963A] hover:border-[#C5963A] hover:shadow-lg hover:shadow-[#C5963A]/15'
                       }`}
                       style={{
                         background: pkg.popular 
@@ -299,60 +299,62 @@ export default function PackagesPage() {
                       }}
                     >
                       {pkg.popular && (
-                        <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-10">
-                          <div className="bg-gradient-to-r from-[#C5963A] to-[#D2AA55] text-white px-6 py-2 rounded-full text-sm font-bold uppercase flex items-center gap-2 shadow-lg shadow-[#C5963A]/40">
-                            <Star size={16} fill="currentColor" />
+                        <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+                          <div className="bg-gradient-to-r from-[#C5963A] to-[#D2AA55] text-white px-5 py-1.5 rounded-full text-xs font-bold uppercase flex items-center gap-1.5 shadow-md shadow-[#C5963A]/30">
+                            <Star size={14} fill="currentColor" />
                             Most Popular
                           </div>
                         </div>
                       )}
 
-                      {/* Package Name & Description */}
-                      <div className="mb-6 pt-4">
-                        <h3 className="heading-editorial text-3xl mb-2" style={{ color: "#292725" }}>
-                          {pkg.name}
-                        </h3>
-                        {pkg.description && (
-                          <p className="text-[#9A8870] text-sm">{pkg.description}</p>
-                        )}
-                      </div>
-                      
-                      {/* Price */}
-                      <div className="mb-8">
-                        <div className="flex items-baseline gap-2">
-                          <span className="text-5xl font-bold" style={{ 
-                            background: `linear-gradient(135deg, ${pkg.color} 0%, ${pkg.popular ? '#D2AA55' : '#8A6640'} 100%)`,
-                            WebkitBackgroundClip: "text",
-                            WebkitTextFillColor: "transparent",
-                            backgroundClip: "text"
-                          }}>
-                            ₹{pkg.price.toLocaleString('en-IN')}
-                          </span>
-                          <span className="text-[#9A8870] text-lg font-medium">/{pkg.duration}</span>
+                      <div>
+                        {/* Package Name & Description */}
+                        <div className="mb-4 pt-2">
+                          <h3 className="heading-editorial text-2.5xl text-2rem mb-1" style={{ color: "#292725" }}>
+                            {pkg.name}
+                          </h3>
+                          {pkg.description && (
+                            <p className="text-[#9A8870] text-xs font-medium">{pkg.description}</p>
+                          )}
                         </div>
+                        
+                        {/* Price */}
+                        <div className="mb-4">
+                          <div className="flex items-baseline gap-1.5">
+                            <span className="text-4xl font-bold" style={{ 
+                              background: `linear-gradient(135deg, ${pkg.color} 0%, ${pkg.popular ? '#D2AA55' : '#8A6640'} 100%)`,
+                              WebkitBackgroundClip: "text",
+                              WebkitTextFillColor: "transparent",
+                              backgroundClip: "text"
+                            }}>
+                              ₹{pkg.price.toLocaleString('en-IN')}
+                            </span>
+                            <span className="text-[#9A8870] text-sm font-medium">/{pkg.duration}</span>
+                          </div>
+                        </div>
+
+                        {/* Divider */}
+                        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#C5963A]/30 to-transparent my-4" />
+
+                        {/* Features */}
+                        <ul className="space-y-3 mb-6">
+                          {pkg.features.map((feature, i) => (
+                            <li key={i} className="flex items-start gap-2.5 text-[#765334] text-xs leading-snug group/item">
+                              <div className="mt-0.5 flex-shrink-0 w-4 h-4 rounded-full bg-gradient-to-br from-[#C5963A]/20 to-[#C5963A]/10 flex items-center justify-center group-hover/item:from-[#C5963A] group-hover/item:to-[#D2AA55] transition-all duration-300">
+                                <Check size={12} className="text-[#C5963A] group-hover/item:text-white" strokeWidth={3} />
+                              </div>
+                              <span className="group-hover/item:text-[#292725] transition-colors">{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-
-                      {/* Divider */}
-                      <div className="w-full h-px bg-gradient-to-r from-transparent via-[#C5963A]/30 to-transparent my-6" />
-
-                      {/* Features */}
-                      <ul className="space-y-4 mb-8 min-h-[280px]">
-                        {pkg.features.map((feature, i) => (
-                          <li key={i} className="flex items-start gap-3 text-[#765334] text-sm leading-relaxed group/item">
-                            <div className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-[#C5963A]/20 to-[#C5963A]/10 flex items-center justify-center group-hover/item:from-[#C5963A] group-hover/item:to-[#D2AA55] transition-all duration-300">
-                              <Check size={14} className="text-[#C5963A] group-hover/item:text-white" strokeWidth={3} />
-                            </div>
-                            <span className="group-hover/item:text-[#292725] transition-colors">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
 
                       {/* Button */}
                       <button
                         onClick={() => handleEnquiry(pkg)}
-                        className={`w-full py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-300 text-sm relative overflow-hidden group/btn ${
+                        className={`w-full py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-300 text-xs relative overflow-hidden group/btn mt-auto ${
                           pkg.popular
-                            ? 'bg-gradient-to-r from-[#C5963A] to-[#D2AA55] text-white shadow-lg shadow-[#C5963A]/30'
+                            ? 'bg-gradient-to-r from-[#C5963A] to-[#D2AA55] text-white shadow-md shadow-[#C5963A]/30'
                             : 'bg-[#292725] text-white hover:bg-[#C5963A]'
                         }`}
                       >
@@ -391,51 +393,53 @@ export default function PackagesPage() {
                       initial="hidden"
                       animate="visible"
                       variants={cardVariants}
-                      whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                      className="group relative bg-white rounded-2xl p-8 border-2 border-[#C5963A] hover:border-[#C5963A] transition-all duration-300 hover:shadow-xl hover:shadow-[#C5963A]/20"
+                      whileHover={{ y: -6, transition: { duration: 0.3 } }}
+                      className="group relative bg-white rounded-2xl p-6 border-2 border-[#C5963A] hover:border-[#C5963A] transition-all duration-300 hover:shadow-lg hover:shadow-[#C5963A]/15 flex flex-col justify-between"
                     >
-                      {/* Package Name & Age Group */}
-                      <div className="mb-6">
-                        <h3 className="heading-editorial text-3xl mb-2" style={{ color: "#292725" }}>
-                          {pkg.name}
-                        </h3>
-                        <div className="inline-block bg-gradient-to-r from-[#C5963A]/10 to-[#D2AA55]/10 border border-[#C5963A]/30 px-4 py-2 rounded-lg">
-                          <span className="text-[#C5963A] text-sm font-bold">{pkg.ageGroup}</span>
+                      <div>
+                        {/* Package Name & Age Group */}
+                        <div className="mb-4">
+                          <h3 className="heading-editorial text-2.5xl text-2rem mb-1.5" style={{ color: "#292725" }}>
+                            {pkg.name}
+                          </h3>
+                          <div className="inline-block bg-gradient-to-r from-[#C5963A]/10 to-[#D2AA55]/10 border border-[#C5963A]/30 px-3 py-1 rounded-lg">
+                            <span className="text-[#C5963A] text-xs font-bold">{pkg.ageGroup}</span>
+                          </div>
+                          {pkg.description && (
+                            <p className="text-[#9A8870] text-xs font-medium mt-2">{pkg.description}</p>
+                          )}
                         </div>
-                        {pkg.description && (
-                          <p className="text-[#9A8870] text-sm mt-3">{pkg.description}</p>
-                        )}
-                      </div>
-                      
-                      {/* Price */}
-                      <div className="mb-8">
-                        <div className="flex items-baseline gap-2">
-                          <span className="text-5xl font-bold text-[#C5963A]">
-                            ₹{pkg.price.toLocaleString('en-IN')}
-                          </span>
-                          <span className="text-[#9A8870] text-lg font-medium">/{pkg.duration}</span>
+                        
+                        {/* Price */}
+                        <div className="mb-4">
+                          <div className="flex items-baseline gap-1.5">
+                            <span className="text-4xl font-bold text-[#C5963A]">
+                              ₹{pkg.price.toLocaleString('en-IN')}
+                            </span>
+                            <span className="text-[#9A8870] text-sm font-medium">/{pkg.duration}</span>
+                          </div>
                         </div>
+
+                        {/* Divider */}
+                        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#C5963A]/30 to-transparent my-4" />
+
+                        {/* Features */}
+                        <ul className="space-y-3 mb-6">
+                          {pkg.features.map((feature, i) => (
+                            <li key={i} className="flex items-start gap-2.5 text-[#765334] text-xs leading-snug group/item">
+                              <div className="mt-0.5 flex-shrink-0 w-4 h-4 rounded-full bg-gradient-to-br from-[#C5963A]/20 to-[#C5963A]/10 flex items-center justify-center group-hover/item:from-[#C5963A] group-hover/item:to-[#D2AA55] transition-all duration-300">
+                                <Check size={12} className="text-[#C5963A] group-hover/item:text-white" strokeWidth={3} />
+                              </div>
+                              <span className="group-hover/item:text-[#292725] transition-colors">{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-
-                      {/* Divider */}
-                      <div className="w-full h-px bg-gradient-to-r from-transparent via-[#C5963A]/30 to-transparent my-6" />
-
-                      {/* Features */}
-                      <ul className="space-y-4 mb-8">
-                        {pkg.features.map((feature, i) => (
-                          <li key={i} className="flex items-start gap-3 text-[#765334] text-sm leading-relaxed group/item">
-                            <div className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-[#C5963A]/20 to-[#C5963A]/10 flex items-center justify-center group-hover/item:from-[#C5963A] group-hover/item:to-[#D2AA55] transition-all duration-300">
-                              <Check size={14} className="text-[#C5963A] group-hover/item:text-white" strokeWidth={3} />
-                            </div>
-                            <span className="group-hover/item:text-[#292725] transition-colors">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
 
                       {/* Button */}
                       <button
                         onClick={() => handleEnquiry(pkg)}
-                        className="w-full bg-gradient-to-r from-[#C5963A] to-[#D2AA55] hover:from-[#8A6640] hover:to-[#C5963A] text-white py-4 rounded-xl font-bold uppercase tracking-wider transition-all duration-300 text-sm shadow-lg shadow-[#C5963A]/30 relative overflow-hidden group/btn"
+                        className="w-full bg-gradient-to-r from-[#C5963A] to-[#D2AA55] hover:from-[#8A6640] hover:to-[#C5963A] text-white py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-300 text-xs shadow-md shadow-[#C5963A]/30 relative overflow-hidden group/btn mt-auto"
                       >
                         <span className="relative z-10">View Details →</span>
                         <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700" />

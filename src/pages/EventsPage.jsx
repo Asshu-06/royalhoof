@@ -139,103 +139,133 @@ export default function EventsPage() {
               <div className="w-8 h-8 border-2 border-[#C5963A] border-t-transparent rounded-full animate-spin" />
             </div>
           ) : activeTab === 'upcoming' ? (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto justify-items-center">
               {upcomingEvents.map(event => (
-                <div key={event.id} className="equestrian-card rounded-lg overflow-hidden">
-                  {/* Image */}
-                  <div className="relative h-64 overflow-hidden">
-                    <img 
-                      src={event.image} 
-                      alt={event.title}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute top-4 right-4">
-                      <span className="bg-[#C5963A] text-white px-3 py-1 rounded-full text-xs font-medium uppercase">
-                        {event.category}
-                      </span>
+                <div key={event.id}
+                  style={{
+                    border: "1.5px solid #C5963A",
+                    background: "#FAF3E4",
+                    boxShadow: "0 4px 16px rgba(8, 43, 73, 0.08)"
+                  }}
+                  className="equestrian-card rounded-lg overflow-hidden flex flex-col justify-between max-w-[340px] w-full transition-all duration-300 hover:shadow-md"
+                >
+                  <div>
+                    {/* Image */}
+                    <div className="relative h-36 overflow-hidden">
+                      <img 
+                        src={event.image} 
+                        alt={event.title}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute top-2.5 right-2.5">
+                        <span className="bg-[#C5963A] text-white px-2.5 py-0.5 rounded-full text-[0.625rem] font-bold uppercase tracking-wider shadow-sm">
+                          {event.category}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-3.5 sm:p-4">
+                      <h3 className="heading-editorial text-lg font-bold mb-1" style={{ color: "#292725" }}>{event.title}</h3>
+                      {event.description && (
+                        <p className="text-[#C5963A] text-xs mb-2.5 leading-relaxed line-clamp-2">{event.description}</p>
+                      )}
+
+                      {/* Event Details */}
+                      <div className="space-y-1.5 mb-2.5 text-xs">
+                        <div className="flex items-center gap-2 text-[#765334]">
+                          <Calendar size={13} className="text-[#C5963A] shrink-0" />
+                          <span>{new Date(event.date).toLocaleDateString('en-IN', { 
+                            day: 'numeric', 
+                            month: 'short', 
+                            year: 'numeric' 
+                          })}</span>
+                        </div>
+                        {event.time && (
+                          <div className="flex items-center gap-2 text-[#765334]">
+                            <Clock size={13} className="text-[#C5963A] shrink-0" />
+                            <span>{event.time}</span>
+                          </div>
+                        )}
+                        {event.location && (
+                          <div className="flex items-center gap-2 text-[#765334]">
+                            <MapPin size={13} className="text-[#C5963A] shrink-0" />
+                            <span className="truncate">{event.location}</span>
+                          </div>
+                        )}
+                        {event.capacity > 0 && (
+                          <div className="flex items-center gap-2 text-[#765334]">
+                            <Users size={13} className="text-[#C5963A] shrink-0" />
+                            <span>{event.registered}/{event.capacity} Registered</span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Progress Bar */}
+                      {event.capacity > 0 && (
+                        <div className="mb-3">
+                          <div className="w-full bg-[#E5D4C1] rounded-full h-1.5 overflow-hidden">
+                            <div 
+                              className="bg-[#C5963A] h-full transition-all"
+                              style={{ width: `${Math.min(100, (event.registered / event.capacity) * 100)}%` }}
+                            />
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
 
-                  {/* Content */}
-                  <div className="p-6">
-                    <h3 className="heading-editorial text-2xl mb-3">{event.title}</h3>
-                    <p className="text-[#C5963A] text-sm mb-4 leading-relaxed">{event.description}</p>
-
-                    {/* Event Details */}
-                    <div className="space-y-2 mb-4">
-                      <div className="flex items-center gap-3 text-[#765334] text-sm">
-                        <Calendar size={16} />
-                        <span>{new Date(event.date).toLocaleDateString('en-IN', { 
-                          day: 'numeric', 
-                          month: 'long', 
-                          year: 'numeric' 
-                        })}</span>
-                      </div>
-                      <div className="flex items-center gap-3 text-[#765334] text-sm">
-                        <Clock size={16} />
-                        <span>{event.time}</span>
-                      </div>
-                      <div className="flex items-center gap-3 text-[#765334] text-sm">
-                        <MapPin size={16} />
-                        <span>{event.location}</span>
-                      </div>
-                      <div className="flex items-center gap-3 text-[#765334] text-sm">
-                        <Users size={16} />
-                        <span>{event.registered}/{event.capacity} Registered</span>
-                      </div>
-                    </div>
-
-                    {/* Progress Bar */}
-                    <div className="mb-4">
-                      <div className="w-full bg-[#FAF3E4] rounded-full h-2 overflow-hidden">
-                        <div 
-                          className="bg-[#C5963A] h-full transition-all"
-                          style={{ width: `${(event.registered / event.capacity) * 100}%` }}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Register Button */}
+                  {/* Register Button */}
+                  <div className="px-3.5 pb-3.5 sm:px-4 sm:pb-4 pt-0">
                     <button
                       onClick={() => handleRegister(event)}
-                      disabled={event.registered >= event.capacity}
-                      className={`w-full py-3 rounded-lg font-medium uppercase tracking-wider transition-colors ${
-                        event.registered >= event.capacity
-                          ? 'bg-[#FAF3E4] text-[#765334] cursor-not-allowed'
-                          : 'bg-[#C5963A] hover:bg-[#8A6640] text-white'
+                      disabled={event.capacity > 0 && event.registered >= event.capacity}
+                      className={`w-full py-2 rounded-md font-bold uppercase tracking-wider text-xs transition-all ${
+                        event.capacity > 0 && event.registered >= event.capacity
+                          ? 'bg-[#E5D4C1] text-[#765334] cursor-not-allowed'
+                          : 'bg-[#C5963A] hover:bg-[#8A6640] text-white shadow-sm'
                       }`}
                     >
-                      {event.registered >= event.capacity ? 'Fully Booked' : 'Register Now'}
+                      {event.capacity > 0 && event.registered >= event.capacity ? 'Fully Booked' : 'Register Now'}
                     </button>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto justify-items-center">
               {pastEvents.map(event => (
-                <div key={event.id} className="equestrian-card rounded-lg overflow-hidden group">
+                <div key={event.id}
+                  style={{
+                    border: "1.5px solid #C5963A",
+                    background: "#FAF3E4",
+                    boxShadow: "0 4px 16px rgba(8, 43, 73, 0.08)"
+                  }}
+                  className="equestrian-card rounded-lg overflow-hidden group max-w-[340px] w-full transition-all duration-300 hover:shadow-md"
+                >
                   {/* Image */}
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-36 overflow-hidden">
                     <img 
                       src={event.image} 
                       alt={event.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                     />
-                    <div className="absolute top-4 right-4">
-                      <span className="bg-[#FAF3E4] text-[#765334] px-3 py-1 rounded-full text-xs font-medium uppercase">
+                    <div className="absolute top-2.5 right-2.5">
+                      <span className="bg-[#FAF3E4] text-[#765334] px-2.5 py-0.5 rounded-full text-[0.625rem] font-bold uppercase tracking-wider border border-[#082B49]/30">
                         {event.category}
                       </span>
                     </div>
                   </div>
 
                   {/* Content */}
-                  <div className="p-5">
-                    <h3 className="text-[#292725] font-medium text-lg mb-2">{event.title}</h3>
-                    <p className="text-[#C5963A] text-sm mb-3 leading-relaxed">{event.description}</p>
+                  <div className="p-3.5 sm:p-4">
+                    <h3 className="heading-editorial text-lg font-bold mb-1" style={{ color: "#292725" }}>{event.title}</h3>
+                    {event.description && (
+                      <p className="text-[#C5963A] text-xs mb-2.5 leading-relaxed line-clamp-2">{event.description}</p>
+                    )}
 
-                    <div className="flex items-center gap-3 text-[#765334] text-xs">
-                      <Calendar size={14} />
+                    <div className="flex items-center gap-2 text-[#765334] text-xs">
+                      <Calendar size={13} className="text-[#C5963A] shrink-0" />
                       <span>{new Date(event.date).toLocaleDateString('en-IN', { 
                         day: 'numeric', 
                         month: 'short', 
@@ -251,8 +281,8 @@ export default function EventsPage() {
           {/* Empty State */}
           {!loading && ((activeTab === 'upcoming' && upcomingEvents.length === 0) || 
             (activeTab === 'past' && pastEvents.length === 0)) && (
-            <div className="text-center py-20 equestrian-card rounded-lg">
-              <p className="text-[#765334] text-lg">No {activeTab} events at the moment</p>
+            <div className="text-center py-20 equestrian-card rounded-lg" style={{ border: "1.5px solid #082B49" }}>
+              <p className="text-[#765334] text-lg font-medium">No {activeTab} events at the moment</p>
               <p className="text-[#765334] text-sm mt-2">Check back soon for updates!</p>
             </div>
           )}

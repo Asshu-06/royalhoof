@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react"
 import { Link } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { Helmet } from "react-helmet-async"
+import toast from "react-hot-toast"
 import { ArrowRight, Shield, CheckCircle, Star, Award, Users, Calendar, MapPin, ChevronLeft, ChevronRight, Mail, Phone, MessageSquare, Activity, Heart, Target, Sparkles, Trophy, Compass, Quote } from "lucide-react"
 import { CATEGORIES } from "../data/products"
 import { fetchProducts } from "../services/productService"
@@ -14,7 +15,6 @@ import ScrollReveal from "../components/ScrollReveal"
 import ReviewsSection from "../components/ReviewsSection"
 import hero1Img from "../assets/hero1.png"
 import { DEFAULT_BENEFITS } from "../data/defaultBenefits"
-import toast from 'react-hot-toast'
 import { isValidPhone, isValidEmail } from '../utils/validation'
 
 const LOCAL_HERO_FALLBACK = hero1Img
@@ -758,15 +758,33 @@ function QuickContactSection() {
                 </div>
 
                 <div>
-                  <label className="block text-[#C5963A] text-sm font-medium mb-2">
-                    Message *
-                  </label>
+                  <div className="flex justify-between items-center mb-2">
+                    <label className="block text-[#C5963A] text-sm font-medium">
+                      Message *
+                    </label>
+                    <span className="text-xs text-[#765334]">
+                      {(formData.message || "").length}/1000
+                    </span>
+                  </div>
                   <textarea
+                    maxLength={1000}
                     value={formData.message}
                     onChange={(e) => handleChange('message', e.target.value)}
+                    onPaste={e => {
+                      const items = e.clipboardData?.items
+                      if (items) {
+                        for (let i = 0; i < items.length; i++) {
+                          if (items[i].type.indexOf("image") !== -1) {
+                            e.preventDefault()
+                            toast.error("Images are not allowed in the message field")
+                            return
+                          }
+                        }
+                      }
+                    }}
                     rows={4}
                     className="w-full bg-[#F4E9D2] border border-[rgba(8,43,73,0.15)] rounded-lg px-4 py-3 text-[#292725] placeholder-[#B9AFA3]/50 focus:outline-none focus:border-[#C5963A] transition-colors resize-none"
-                    placeholder="How can we help you?"
+                    placeholder="How can we help you? (Max 1000 characters)"
                     required
                   />
                 </div>

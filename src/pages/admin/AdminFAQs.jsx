@@ -203,13 +203,14 @@ export default function AdminFAQs() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Answer *</label>
+              <label className="block text-sm font-medium mb-1">Answer * (Max 1000 chars)</label>
               <textarea
+                maxLength={1000}
                 value={formData.answer}
                 onChange={e => setFormData({...formData, answer: e.target.value})}
                 className="w-full border border-gray-300 rounded-lg px-3 py-2"
                 rows={4}
-                placeholder="Provide a detailed answer..."
+                placeholder="Provide a detailed answer... (Max 1000 characters)"
                 required
               />
             </div>

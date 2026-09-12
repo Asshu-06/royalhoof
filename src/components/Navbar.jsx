@@ -1,10 +1,10 @@
-import { useState, useRef, useEffect } from "react"
-import { Link, useNavigate, useLocation } from "react-router-dom"
+import { useState, useEffect, useRef } from "react"
 import { createPortal } from "react-dom"
-import { Search, Settings, Store, ChevronDown } from "lucide-react"
+import { Link, useNavigate, useLocation } from "react-router-dom"
+import { Search, ChevronDown, Settings, Store } from "lucide-react"
+import { supabase } from "../lib/supabase"
 import { useAuthStore } from "../store/authStore"
 import { useAdminStore } from "../store/adminStore"
-import { getSetting } from "../services/settingsService"
 import { isAdmin as checkIsAdmin } from "./AdminRoute"
 import logoImg from "../assets/logo.png"
 
@@ -15,6 +15,8 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false)
   const [mobileAboutOpen, setMobileAboutOpen] = useState(false)
+  const [dbPackages, setDbPackages] = useState([])
+  const [dbEvents, setDbEvents] = useState([])
   const { user } = useAuthStore()
   const { products, loadProducts } = useAdminStore()
   const navigate = useNavigate()
@@ -27,6 +29,35 @@ export default function Navbar() {
 
   useEffect(() => {
     if (!products.length) loadProducts()
+  }, [])
+
+  useEffect(() => {
+    async function loadSearchData() {
+      try {
+        const [pkgRes, evtRes] = await Promise.all([
+          supabase.from('packages').select('id, name, price, duration, package_type, is_active').eq('is_active', true),
+          supabase.from('events').select('id, title, category, is_active').eq('is_active', true)
+        ])
+        if (pkgRes.data && pkgRes.data.length > 0) {
+          setDbPackages(pkgRes.data)
+        } else {
+          setDbPackages([
+            { id: 1, name: 'Basic', price: 2999, duration: 'month' },
+            { id: 2, name: 'Premium', price: 7999, duration: 'quarter' },
+            { id: 3, name: 'Elite', price: 14999, duration: '6 months' }
+          ])
+        }
+        if (evtRes.data) setDbEvents(evtRes.data)
+      } catch (err) {
+        console.error('Error fetching search data:', err)
+        setDbPackages([
+          { id: 1, name: 'Basic', price: 2999, duration: 'month' },
+          { id: 2, name: 'Premium', price: 7999, duration: 'quarter' },
+          { id: 3, name: 'Elite', price: 14999, duration: '6 months' }
+        ])
+      }
+    }
+    loadSearchData()
   }, [])
 
   useEffect(() => {
@@ -48,15 +79,123 @@ export default function Navbar() {
     return () => { document.removeEventListener("mousedown", handler); document.removeEventListener("touchstart", handler) }
   }, [])
 
+  const getSearchIndex = () => {
+    const staticItems = [
+      {
+        title: "Upcoming Events & Competitions",
+        type: "Events",
+        path: "/events",
+        icon: "📅",
+        keywords: ["events", "event", "competition", "workshop", "bootcamp", "schedule", "calendar", "show", "riding", "tournament"]
+      },
+      {
+        title: "Packages & Memberships",
+        type: "Packages",
+        path: "/packages",
+        icon: "💎",
+        keywords: ["package", "packages", "price", "pricing", "membership", "cost", "fee", "rate", "adult", "kids", "month", "quarter"]
+      },
+      {
+        title: "Book Free Demo Session",
+        type: "Enquiry",
+        path: "/enquiry",
+        icon: "🗓️",
+        keywords: ["demo", "free demo", "book", "trial", "session", "schedule", "experience"]
+      },
+      {
+        title: "General Enquiry",
+        type: "Enquiry",
+        path: "/enquiry",
+        icon: "💬",
+        keywords: ["enquiry", "inquire", "ask", "question", "form", "message"]
+      },
+      {
+        title: "Contact Us & Location",
+        type: "Contact",
+        path: "/contact",
+        icon: "📍",
+        keywords: ["contact", "address", "phone", "mobile", "whatsapp", "call", "location", "map", "giri farms", "nallambakkam", "hours", "timing"]
+      },
+      {
+        title: "About Royal Hoof Academy",
+        type: "About",
+        path: "/about",
+        icon: "🏰",
+        keywords: ["about", "story", "history", "academy", "instructors", "coaches", "facilities", "stables", "horses"]
+      },
+      {
+        title: "Our Vision",
+        type: "About",
+        path: "/about#vision",
+        icon: "👁️",
+        keywords: ["vision", "future", "goals", "excellence"]
+      },
+      {
+        title: "Our Mission",
+        type: "About",
+        path: "/about#mission",
+        icon: "🎯",
+        keywords: ["mission", "values", "training", "standards"]
+      },
+      {
+        title: "Visual Gallery Showcase",
+        type: "Gallery",
+        path: "/gallery",
+        icon: "🖼️",
+        keywords: ["gallery", "photos", "images", "pictures", "videos", "media", "showcase"]
+      },
+      {
+        title: "Testimonials & Reviews",
+        type: "Testimonials",
+        path: "/testimonials",
+        icon: "⭐️",
+        keywords: ["testimonials", "reviews", "ratings", "feedback", "stories", "students", "parents"]
+      },
+      {
+        title: "CSR Initiatives",
+        type: "CSR",
+        path: "/csr",
+        icon: "🌱",
+        keywords: ["csr", "social", "community", "environment", "initiatives", "giving back"]
+      },
+      {
+        title: "FAQ & Safety Guidelines",
+        type: "FAQ",
+        path: "/faq",
+        icon: "❓",
+        keywords: ["faq", "help", "safety", "gear", "clothing", "equipment", "age limit", "rules", "rain"]
+      }
+    ]
+
+    const packageItems = dbPackages.map(pkg => ({
+      title: `${pkg.name} Package${pkg.price ? ` (₹${pkg.price.toLocaleString('en-IN')}/${pkg.duration || 'period'})` : ''}`,
+      type: "Package",
+      path: "/packages",
+      icon: "💎",
+      keywords: [pkg.name.toLowerCase(), "package", "membership", "price", "cost"]
+    }))
+
+    const eventItems = dbEvents.map(evt => ({
+      title: evt.title,
+      type: "Event",
+      path: "/events",
+      icon: "📅",
+      keywords: [evt.title.toLowerCase(), "event", "competition", evt.category?.toLowerCase() || ''].filter(Boolean)
+    }))
+
+    return [...staticItems, ...packageItems, ...eventItems]
+  }
+
   const handleSearchChange = (e) => {
     const q = e.target.value
     setSearchQuery(q)
-    if (q.trim().length >= 2 && products.length) {
-      const lower = q.toLowerCase()
-      const matches = products.filter(p =>
-        p.name?.toLowerCase().includes(lower) ||
-        p.category?.toLowerCase().includes(lower) ||
-        (p.custom_id || "").toLowerCase().includes(lower)
+    if (q.trim().length >= 1) {
+      const lower = q.toLowerCase().trim()
+      const searchIndex = getSearchIndex()
+      const matches = searchIndex.filter(item =>
+        item.title.toLowerCase().includes(lower) ||
+        item.type.toLowerCase().includes(lower) ||
+        item.keywords.some(k => k.toLowerCase().includes(lower) || lower.includes(k.toLowerCase()))
       ).slice(0, 6)
       setSuggestions(matches)
     } else {
@@ -66,16 +205,30 @@ export default function Navbar() {
 
   const handleSearch = (e) => {
     e?.preventDefault()
-    if (searchQuery.trim()) {
-      navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`)
-      setSearchQuery(""); setSuggestions([])
+    const q = searchQuery.trim().toLowerCase()
+    if (q) {
+      const searchIndex = getSearchIndex()
+      const match = searchIndex.find(item =>
+        item.title.toLowerCase().includes(q) ||
+        item.keywords.some(k => k.toLowerCase().includes(q) || q.includes(k.toLowerCase()))
+      ) || suggestions[0]
+
+      if (match) {
+        navigate(match.path)
+      } else {
+        navigate('/events')
+      }
+      setSearchQuery("")
+      setSuggestions([])
       setMenuOpen(false)
     }
   }
 
-  const handleSuggestionClick = (product) => {
-    navigate(`/products/${product.id}`)
-    setSearchQuery(""); setSuggestions([])
+  const handleSuggestionClick = (item) => {
+    navigate(item.path)
+    setSearchQuery("")
+    setSuggestions([])
+    setMenuOpen(false)
   }
 
   const closeAll = () => { 
@@ -445,28 +598,44 @@ export default function Navbar() {
             </form>
             {suggestions.length > 0 && (
               <div 
-                className="absolute top-full left-0 right-0 mt-2 rounded-sm z-50 overflow-hidden"
+                className="absolute top-full right-0 mt-2 w-[360px] sm:w-[400px] max-w-[90vw] rounded-lg z-50 overflow-hidden border border-[#C5963A]/40 shadow-2xl"
                 style={{ 
                   background: "#FAF3E4", 
-                  border: "1px solid rgba(197, 150, 58, 0.35)",
-                  boxShadow: "0 12px 32px rgba(8, 43, 73, 0.15)" 
+                  boxShadow: "0 16px 40px rgba(8, 43, 73, 0.3)" 
                 }}>
-                {suggestions.map(p => (
-                  <button key={p.id} onClick={() => handleSuggestionClick(p)}
-                    className="w-full flex items-center gap-3 px-4 py-3 hover:bg-[rgba(197,150,58,0.08)] transition-colors text-left">
-                    {p.images?.[0] && (
-                      <img src={p.images[0]} alt="" className="w-10 h-10 object-cover rounded-sm flex-shrink-0" 
-                        onError={e => { e.target.style.display = "none" }} />
-                    )}
-                    <div className="flex-1 min-w-0">
-                      <p className="text-[#082B49] text-sm font-medium truncate" style={{ fontFamily: "'Inter', sans-serif" }}>{p.name}</p>
-                      <p className="text-[#765334] text-xs">{p.category}</p>
-                    </div>
-                    <span className="text-[#082B49] text-sm font-semibold flex-shrink-0">
-                      {p.price?.toLocaleString("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 })}
-                    </span>
-                  </button>
-                ))}
+                <div className="px-4 py-2.5 bg-[#082B49] border-b border-[#C5963A]/30 flex items-center justify-between">
+                  <span className="text-[0.75rem] font-bold uppercase tracking-widest text-[#C5963A]">
+                    Search Suggestions
+                  </span>
+                  <span className="text-[0.6875rem] text-[#D8C5A0] font-medium">
+                    {suggestions.length} found
+                  </span>
+                </div>
+
+                <div className="max-h-[360px] overflow-y-auto divide-y divide-[#C5963A]/15">
+                  {suggestions.map((item, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => handleSuggestionClick(item)}
+                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-[#C5963A]/15 transition-all text-left group"
+                    >
+                      <span className="text-xl flex-shrink-0 w-8 h-8 rounded-full bg-[#082B49]/5 flex items-center justify-center">
+                        {item.icon}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[#082B49] text-xs sm:text-sm font-semibold truncate group-hover:text-[#C5963A] transition-colors" style={{ fontFamily: "'Inter', sans-serif" }}>
+                          {item.title}
+                        </p>
+                        <p className="text-[#765334] text-[0.6875rem] font-medium tracking-wider uppercase mt-0.5">
+                          {item.type}
+                        </p>
+                      </div>
+                      <span className="text-[#C5963A] text-xs font-bold whitespace-nowrap flex-shrink-0 opacity-80 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all">
+                        View →
+                      </span>
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
           </div>

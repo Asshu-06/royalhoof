@@ -228,12 +228,30 @@ export default function EnquiryPage() {
                     Your Message *
                   </label>
                   <textarea
+                    maxLength={1000}
                     value={enquiryForm.message}
                     onChange={e => setEnquiryForm({ ...enquiryForm, message: e.target.value })}
-                    placeholder="Tell us what you'd like to know..."
+                    onPaste={e => {
+                      const items = e.clipboardData?.items
+                      if (items) {
+                        for (let i = 0; i < items.length; i++) {
+                          if (items[i].type.indexOf("image") !== -1) {
+                            e.preventDefault()
+                            toast.error("Images are not allowed in the message field")
+                            return
+                          }
+                        }
+                      }
+                    }}
+                    placeholder="Tell us what you'd like to know... (Max 1000 characters)"
                     rows={6}
                     className={inputClass}
                   />
+                  <div className="text-right mt-1">
+                    <span className="text-xs text-[#765334]">
+                      {(enquiryForm.message || "").length}/1000
+                    </span>
+                  </div>
                 </div>
 
                 <button
@@ -328,12 +346,30 @@ export default function EnquiryPage() {
                 <div>
                   <label className={labelClass}>Additional Notes</label>
                   <textarea
+                    maxLength={1000}
                     value={demoForm.notes}
                     onChange={e => setDemoForm({ ...demoForm, notes: e.target.value })}
-                    placeholder="Any specific requirements or questions..."
+                    onPaste={e => {
+                      const items = e.clipboardData?.items
+                      if (items) {
+                        for (let i = 0; i < items.length; i++) {
+                          if (items[i].type.indexOf("image") !== -1) {
+                            e.preventDefault()
+                            toast.error("Images are not allowed in the message field")
+                            return
+                          }
+                        }
+                      }
+                    }}
+                    placeholder="Any specific requirements or questions... (Max 1000 characters)"
                     rows={4}
                     className={inputClass}
                   />
+                  <div className="text-right mt-1">
+                    <span className="text-xs text-[#765334]">
+                      {(demoForm.notes || "").length}/1000
+                    </span>
+                  </div>
                 </div>
 
                 <button
