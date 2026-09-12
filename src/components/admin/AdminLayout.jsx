@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import {
   LayoutDashboard, ShoppingBag, Users, Bell, Menu, X,
   LogOut, ChevronRight, AlertTriangle, Store, Calendar, MessageSquare,
-  Image, Gift, FileText, CheckCircle, Heart, Sparkles
+  Image, Gift, FileText, CheckCircle, Heart, Sparkles, Layers
 } from "lucide-react"
 import { useAuthStore } from "../../store/authStore"
 import { useAdminStore } from "../../store/adminStore"
@@ -17,6 +17,7 @@ import logoImg from "../../assets/logo.png"
 
 const NAV = [
   { path: "/admin", label: "Dashboard", icon: LayoutDashboard },
+  { path: "/admin/offerings", label: "What We Offer", icon: Layers },
   { path: "/admin/events", label: "Events", icon: Calendar },
   { path: "/admin/packages", label: "Packages", icon: Gift },
   { path: "/admin/gallery", label: "Gallery", icon: Image },

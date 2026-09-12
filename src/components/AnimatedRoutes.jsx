@@ -26,6 +26,7 @@ const TestimonialsPage = lazy(() => import('../pages/TestimonialsPage'))
 const FAQPage = lazy(() => import('../pages/FAQPage'))
 const AboutPage = lazy(() => import('../pages/AboutPage'))
 const CSRPage = lazy(() => import('../pages/CSRPage'))
+const ProgramDetailPage = lazy(() => import('../pages/ProgramDetailPage'))
 
 const PageLoader = () => (
   <div className="min-h-[60vh] flex items-center justify-center bg-royal-cream">
@@ -116,6 +117,24 @@ export default function AnimatedRoutes() {
             <ErrorBoundary>
               <Suspense fallback={<PageLoader />}>
                 <PackagesPage />
+              </Suspense>
+            </ErrorBoundary>
+          </PageTransition>
+        } />
+        <Route path="/programs/:slug" element={
+          <PageTransition>
+            <ErrorBoundary>
+              <Suspense fallback={<PageLoader />}>
+                <ProgramDetailPage />
+              </Suspense>
+            </ErrorBoundary>
+          </PageTransition>
+        } />
+        <Route path="/offerings/:slug" element={
+          <PageTransition>
+            <ErrorBoundary>
+              <Suspense fallback={<PageLoader />}>
+                <ProgramDetailPage />
               </Suspense>
             </ErrorBoundary>
           </PageTransition>

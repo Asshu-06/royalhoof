@@ -3,42 +3,14 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 export default function IntroAnimation({ onComplete }) {
   const [isVisible, setIsVisible] = useState(true)
-  const canvasRef = useRef(null)
 
   useEffect(() => {
-    let dotLottie = null
-
-    const loadDotLottie = async () => {
-      if (canvasRef.current) {
-        try {
-          // Use dynamic import for DotLottie
-          const { DotLottie } = await import('@lottiefiles/dotlottie-web')
-          
-          dotLottie = new DotLottie({
-            canvas: canvasRef.current,
-            src: '/Horse Run.lottie',
-            loop: true,
-            autoplay: true,
-          })
-        } catch (error) {
-          console.error('Failed to load DotLottie:', error)
-        }
-      }
-    }
-
-    loadDotLottie()
-
     // Auto-complete after 4 seconds
     const timer = setTimeout(() => {
       handleComplete()
     }, 4000)
 
-    return () => {
-      clearTimeout(timer)
-      if (dotLottie) {
-        dotLottie.destroy()
-      }
-    }
+    return () => clearTimeout(timer)
   }, [])
 
   const handleComplete = () => {
@@ -71,25 +43,23 @@ export default function IntroAnimation({ onComplete }) {
         `}</style>
         
         <div className="relative flex flex-col items-center justify-center">
-          {/* Horse Animation */}
+          {/* Horse & Rider Video Animation */}
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.6 }}
-            className="flex items-center justify-center"
+            className="relative flex items-center justify-center"
           >
-            <canvas 
-              ref={canvasRef}
-              width={400}
-              height={400}
-              style={{ 
-                width: '400px', 
-                height: '400px',
-                maxWidth: '90vw',
-                maxHeight: '90vw',
-                filter: 'brightness(0) invert(1) sepia(1) saturate(3) hue-rotate(5deg)'
-              }}
-            />
+            <div className="relative p-1 rounded-full border-2 border-[#C5963A]/50 shadow-2xl overflow-hidden bg-[#082B49]">
+              <video 
+                src="/animation.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-[300px] h-[300px] max-w-[80vw] max-h-[80vw] object-cover rounded-full"
+              />
+            </div>
           </motion.div>
           
           {/* Brand text */}

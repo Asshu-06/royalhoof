@@ -296,15 +296,15 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     padding: 0.875rem 2rem;
-    border: 1px solid var(--royal-navy);
-    border-radius: 2px;
+    border: 1.5px solid var(--royal-gold);
+    border-radius: 4px;
     transition: all 0.35s ease;
     font-family: 'Inter', sans-serif;
     box-shadow: var(--shadow-soft);
   }
   .btn-primary-equestrian:hover {
     background: var(--royal-navy-mid);
-    border-color: var(--royal-gold);
+    border-color: var(--royal-gold-light);
     color: var(--royal-cream-light);
     transform: translateY(-2px);
     box-shadow: var(--shadow-gold);

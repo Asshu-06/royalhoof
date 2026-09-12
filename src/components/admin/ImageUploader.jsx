@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react'
-import { Upload, X, Loader2, Image as ImageIcon } from 'lucide-react'
+import { useState, useRef, useEffect } from 'react'
+import { Upload, X, Loader2, Image as ImageIcon, AlertCircle } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import toast from 'react-hot-toast'
 
@@ -20,7 +20,22 @@ export default function ImageUploader({
 }) {
   const [uploading, setUploading] = useState(false)
   const [preview, setPreview] = useState(value || null)
+  const [hasError, setHasError] = useState(false)
   const fileRef = useRef(null)
+
+  useEffect(() => {
+    setPreview(value || null)
+    setHasError(false)
+  }, [value])
+
+  const readFileAsDataUrl = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => resolve(reader.result)
+      reader.onerror = (err) => reject(err)
+      reader.readAsDataURL(file)
+    })
+  }
 
   const handleFileSelect = async (e) => {
     const file = e.target.files?.[0]
@@ -39,38 +54,49 @@ export default function ImageUploader({
     }
 
     setUploading(true)
+    setHasError(false)
 
     try {
-      // Generate unique filename
-      const ext = file.name.split('.').pop()
-      const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${ext}`
-      const filePath = `uploads/${fileName}`
+      // Create local Data URL first for instant guaranteed preview
+      const localDataUrl = await readFileAsDataUrl(file)
 
-      // Upload to Supabase Storage
-      const { error: uploadError } = await supabase.storage
-        .from(bucket)
-        .upload(filePath, file, {
-          contentType: file.type,
-          upsert: false
-        })
+      // Try uploading to Supabase Storage
+      try {
+        const ext = file.name.split('.').pop()
+        const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${ext}`
+        const filePath = `uploads/${fileName}`
 
-      if (uploadError) throw uploadError
+        const { error: uploadError } = await supabase.storage
+          .from(bucket)
+          .upload(filePath, file, {
+            contentType: file.type,
+            upsert: true
+          })
 
-      // Get public URL
-      const { data: urlData } = supabase.storage
-        .from(bucket)
-        .getPublicUrl(filePath)
+        if (!uploadError) {
+          const { data: urlData } = supabase.storage
+            .from(bucket)
+            .getPublicUrl(filePath)
 
-      const publicUrl = urlData.publicUrl
+          if (urlData?.publicUrl) {
+            setPreview(urlData.publicUrl)
+            onChange(urlData.publicUrl)
+            toast.success('Image uploaded successfully!')
+            return
+          }
+        }
+      } catch (storageErr) {
+        console.warn('Supabase storage upload failed, using local Data URL fallback:', storageErr)
+      }
 
-      // Set preview and call onChange
-      setPreview(publicUrl)
-      onChange(publicUrl)
-      toast.success('Image uploaded successfully!')
+      // Fallback to Data URL if Supabase bucket fails or returns error
+      setPreview(localDataUrl)
+      onChange(localDataUrl)
+      toast.success('Image processed successfully!')
 
     } catch (error) {
-      console.error('Upload error:', error)
-      toast.error(error.message || 'Failed to upload image')
+      console.error('File selection error:', error)
+      toast.error('Failed to process image file')
     } finally {
       setUploading(false)
     }
@@ -78,6 +104,7 @@ export default function ImageUploader({
 
   const handleRemove = () => {
     setPreview(null)
+    setHasError(false)
     onChange('')
     if (fileRef.current) {
       fileRef.current.value = ''
@@ -85,29 +112,49 @@ export default function ImageUploader({
   }
 
   const handleUrlChange = (url) => {
-    setPreview(url)
-    onChange(url)
+    const trimmed = (url || '').trim()
+    setPreview(trimmed || null)
+    setHasError(false)
+    onChange(trimmed)
   }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       {showPreview && preview && (
         <div style={{ position: 'relative', marginBottom: 8 }}>
-          <img 
-            src={preview} 
-            alt="Preview" 
-            style={{ 
-              width: '100%', 
-              maxHeight: 200, 
-              objectFit: 'cover', 
+          {!hasError ? (
+            <img 
+              src={preview} 
+              alt="Preview" 
+              style={{ 
+                width: '100%', 
+                maxHeight: 200, 
+                objectFit: 'cover', 
+                borderRadius: 8, 
+                border: `2px solid ${CARD_BORDER}` 
+              }} 
+              onError={() => {
+                setHasError(true)
+              }}
+            />
+          ) : (
+            <div style={{ 
+              padding: 24, 
               borderRadius: 8, 
-              border: `2px solid ${CARD_BORDER}` 
-            }} 
-            onError={(e) => {
-              e.target.style.display = 'none'
-              toast.error('Failed to load image preview')
-            }}
-          />
+              border: `2px dashed #ef4444`, 
+              background: '#fef2f2',
+              color: '#991b1b',
+              textAlign: 'center',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 6
+            }}>
+              <AlertCircle size={24} style={{ color: '#ef4444' }} />
+              <p style={{ fontSize: '0.8125rem', fontWeight: 600 }}>Invalid or Broken Image Link</p>
+              <p style={{ fontSize: '0.75rem', color: '#b91c1c' }}>Please paste a direct image URL (ending in .jpg, .png, etc.)</p>
+            </div>
+          )}
           <button
             type="button"
             onClick={handleRemove}
@@ -125,7 +172,8 @@ export default function ImageUploader({
               display: 'flex', 
               alignItems: 'center', 
               justifyContent: 'center',
-              transition: 'all 0.2s'
+              transition: 'all 0.2s',
+              zIndex: 10
             }}
             onMouseEnter={e => e.currentTarget.style.background = 'rgba(239,68,68,0.9)'}
             onMouseLeave={e => e.currentTarget.style.background = 'rgba(0,0,0,0.7)'}
@@ -141,7 +189,7 @@ export default function ImageUploader({
           style={{ 
             border: `2px dashed ${CARD_BORDER}`, 
             borderRadius: 8, 
-            padding: 32, 
+            padding: 28, 
             textAlign: 'center', 
             cursor: uploading ? 'not-allowed' : 'pointer',
             background: 'rgba(8,43,73,0.02)',
@@ -165,11 +213,11 @@ export default function ImageUploader({
             </div>
           ) : (
             <>
-              <ImageIcon size={40} style={{ color: TEXT_MUTED, margin: '0 auto 12px', opacity: 0.6 }} strokeWidth={1.5} />
-              <p style={{ color: TEXT_PRIMARY, fontSize: '0.9375rem', fontWeight: 600, marginBottom: 4 }}>
+              <ImageIcon size={36} style={{ color: TEXT_MUTED, margin: '0 auto 10px', opacity: 0.6 }} strokeWidth={1.5} />
+              <p style={{ color: TEXT_PRIMARY, fontSize: '0.875rem', fontWeight: 600, marginBottom: 4 }}>
                 Click to upload {label.toLowerCase()}
               </p>
-              <p style={{ color: TEXT_MUTED, fontSize: '0.8125rem' }}>
+              <p style={{ color: TEXT_MUTED, fontSize: '0.75rem' }}>
                 JPG, PNG, WEBP, GIF · Max {Math.round(maxSize / 1024 / 1024)}MB
               </p>
             </>

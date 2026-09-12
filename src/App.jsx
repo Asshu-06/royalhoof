@@ -44,6 +44,7 @@ const AdminEnquiries = lazy(() => import('./pages/admin/AdminEnquiries'))
 const AdminGallery = lazy(() => import('./pages/admin/AdminGallery'))
 const AdminPackages = lazy(() => import('./pages/admin/AdminPackages'))
 const AdminTestimonials = lazy(() => import('./pages/admin/AdminTestimonials'))
+const AdminOfferings = lazy(() => import('./pages/admin/AdminOfferings'))
 
 
 const PageLoader = () => (
@@ -53,10 +54,39 @@ const PageLoader = () => (
 )
 
 function ScrollToTop() {
-  const { pathname } = useLocation()
+  const { pathname, search, hash } = useLocation()
+
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual'
+    }
+  }, [])
+
   useEffect(() => { 
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
-  }, [pathname])
+    // If navigating with an explicit anchor hash, allow smooth scroll to that element
+    if (hash) {
+      const element = document.getElementById(hash.replace('#', ''))
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+        return
+      }
+    }
+
+    // Instant scroll to top on route change
+    window.scrollTo(0, 0)
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+
+    // Backup scroll reset to catch lazy-loaded route renders & layout expansion
+    const timer = setTimeout(() => {
+      window.scrollTo(0, 0)
+      document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
+    }, 100)
+
+    return () => clearTimeout(timer)
+  }, [pathname, search])
+
   return null
 }
 
@@ -80,7 +110,13 @@ export default function App() {
 
   const handleIntroComplete = () => {
     setIntroComplete(true)
-    setTimeout(() => setShowIntro(false), 500)
+    window.scrollTo(0, 0)
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+    setTimeout(() => {
+      setShowIntro(false)
+      window.scrollTo(0, 0)
+    }, 500)
   }
 
   return (
@@ -109,6 +145,7 @@ export default function App() {
                       <Route path="packages" element={<AdminPackages />} />
                       <Route path="gallery" element={<AdminGallery />} />
                       <Route path="testimonials" element={<AdminTestimonials />} />
+                      <Route path="offerings" element={<AdminOfferings />} />
                       <Route path="enquiries" element={<AdminEnquiries />} />
                       <Route path="analytics" element={<AdminAnalytics />} />
                       <Route path="users" element={<AdminUsers />} />

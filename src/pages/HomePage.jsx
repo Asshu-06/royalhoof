@@ -15,6 +15,7 @@ import ScrollReveal from "../components/ScrollReveal"
 import ReviewsSection from "../components/ReviewsSection"
 import hero1Img from "../assets/hero1.png"
 import { DEFAULT_BENEFITS } from "../data/defaultBenefits"
+import { DEFAULT_OFFERINGS, DEFAULT_OFFERINGS_HEADER } from "../data/defaultOfferings"
 import { isValidPhone, isValidEmail } from '../utils/validation'
 
 const LOCAL_HERO_FALLBACK = hero1Img
@@ -237,56 +238,46 @@ function AboutSection() {
 
 /* --- What We Offer Section --- */
 function WhatWeOfferSection() {
-  const OFFERS = [
-    {
-      icon: <Target size={26} />,
-      tag: "CORE PROGRAM",
-      title: "Beginner to Advanced Horse Riding Training",
-      desc: "Structured progressive riding curriculum tailored for novices through competitive equestrians with certified instructors."
-    },
-    {
-      icon: <Sparkles size={26} />,
-      tag: "KIDS & JUNIORS",
-      title: "Children's Riding Programs",
-      desc: "Fun, safe, and nurturing riding experiences designed to build confidence, posture, and lifelong equestrian passion."
-    },
-    {
-      icon: <Calendar size={26} />,
-      tag: "RECREATIONAL",
-      title: "Weekend & Recreational Riding Sessions",
-      desc: "Relaxing weekend riding slots and flexible sessions perfect for busy professionals, families, and leisure riders."
-    },
-    {
-      icon: <Heart size={26} />,
-      tag: "HANDS-ON CARE",
-      title: "Horse Grooming & Care Education",
-      desc: "Learn essential equine hygiene, feeding, stable management, and bonding directly with our gentle, healthy horses."
-    },
-    {
-      icon: <Users size={26} />,
-      tag: "ACADEMIC",
-      title: "School & College Partnership Programs",
-      desc: "Customized sports programs, educational field trips, and accredited equestrian training for schools and universities."
-    },
-    {
-      icon: <Shield size={26} />,
-      tag: "CORPORATE",
-      title: "Corporate Team-Building Activities",
-      desc: "Unique outdoor team bonding experiences focusing on leadership, trust, communication, and equine harmony."
-    },
-    {
-      icon: <Trophy size={26} />,
-      tag: "COMPETITIONS",
-      title: "Equestrian Events and Competitions",
-      desc: "Host and participate in intra-club showcases, dressage, showjumping, and regional equestrian tournaments."
-    },
-    {
-      icon: <Star size={26} />,
-      tag: "VIP CLUB",
-      title: "Club Membership & Exclusive Riding Benefits",
-      desc: "Priority booking, exclusive arena access, horse boarding privileges, and private club member discounts."
+  const [header, setHeader] = useState(DEFAULT_OFFERINGS_HEADER)
+  const [offers, setOffers] = useState(DEFAULT_OFFERINGS)
+
+  useEffect(() => {
+    async function loadOfferings() {
+      try {
+        const customHeader = await getSetting('site_offerings_header')
+        const customOffers = await getSetting('site_offerings')
+        if (customHeader) setHeader(customHeader)
+        if (customOffers && Array.isArray(customOffers) && customOffers.length > 0) {
+          setOffers(customOffers)
+        }
+      } catch (err) {
+        console.error("Error fetching homepage offerings:", err)
+      }
     }
-  ]
+    loadOfferings()
+
+    const handleUpdate = (e) => {
+      if (e.detail?.key === 'site_offerings_header' && e.detail?.value) {
+        setHeader(e.detail.value)
+      }
+      if (e.detail?.key === 'site_offerings' && Array.isArray(e.detail?.value)) {
+        setOffers(e.detail.value)
+      }
+    }
+    window.addEventListener('site_settings_updated', handleUpdate)
+    return () => window.removeEventListener('site_settings_updated', handleUpdate)
+  }, [])
+
+  const ICON_MAP = {
+    Target: <Target size={26} />,
+    Sparkles: <Sparkles size={26} />,
+    Calendar: <Calendar size={26} />,
+    Heart: <Heart size={26} />,
+    Users: <Users size={26} />,
+    Shield: <Shield size={26} />,
+    Trophy: <Trophy size={26} />,
+    Star: <Star size={26} />
+  }
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -316,19 +307,19 @@ function WhatWeOfferSection() {
 
       <ScrollReveal>
         <div className="text-center max-w-3xl mx-auto mb-16 relative z-10">
-          <p className="eyebrow-label mb-3">OUR SERVICES & PROGRAMS</p>
+          <p className="eyebrow-label mb-3">{header.eyebrow || "OUR SERVICES & PROGRAMS"}</p>
           <h2 className="heading-editorial font-medium tracking-[0.04em]"
             style={{ fontSize: "clamp(2rem, 3.5vw, 2.75rem)" }}>
-            What We Offer
+            {header.title || "What We Offer"}
           </h2>
           <div className="equestrian-divider w-28 mx-auto mt-4 mb-5" />
           <p className="text-base text-[#765334] font-medium max-w-xl mx-auto" style={{ fontFamily: "'Inter', sans-serif" }}>
-            Explore our comprehensive range of equestrian training, recreational riding, academic programs, and exclusive club privileges.
+            {header.subtitle || "Explore our comprehensive range of equestrian training, recreational riding, academic programs, and exclusive club privileges."}
           </p>
         </div>
       </ScrollReveal>
 
-      {/* Grid of 8 Offers */}
+      {/* Grid of Offers */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -336,46 +327,55 @@ function WhatWeOfferSection() {
         viewport={{ once: true, amount: 0.15 }}
         className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10"
       >
-        {OFFERS.map((item, index) => (
-          <motion.div
-            key={index}
-            variants={cardVariants}
-            whileHover={{ y: -8, scale: 1.02 }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ duration: 0.3 }}
-            className="group relative p-7 rounded-lg bg-[#FAF3E4] border-2 border-[#C5963A]/25 shadow-md hover:shadow-[0_12px_36px_rgba(8,43,73,0.2)] hover:border-[#082B49] transition-all duration-300 flex flex-col justify-between"
-            style={{
-              background: "linear-gradient(145deg, #FAF3E4 0%, #F4E9D2 100%)",
-            }}
-          >
-            {/* Top blue line accent on hover */}
-            <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#082B49] opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-lg" />
+        {offers.map((item, index) => {
+          const iconElem = ICON_MAP[item.icon] || <Target size={26} />
+          const linkPath = `/programs/${item.slug || item.id}`
 
-            <div>
-              <div className="flex items-center justify-between mb-5">
-                <div className="w-12 h-12 rounded-full bg-[#082B49] text-[#C5963A] flex items-center justify-center shadow-md group-hover:bg-[#082B49] group-hover:text-[#C5963A] group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(8,43,73,0.3)] transition-all duration-300 transform group-hover:rotate-6">
-                  {item.icon}
+          return (
+            <motion.div
+              key={item.id || index}
+              variants={cardVariants}
+              whileHover={{ y: -8, scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Link
+                to={linkPath}
+                className="group relative p-7 rounded-lg bg-[#FAF3E4] border-2 border-[#C5963A]/25 shadow-md hover:shadow-[0_12px_36px_rgba(8,43,73,0.2)] hover:border-[#082B49] transition-all duration-300 flex flex-col justify-between h-full block cursor-pointer"
+                style={{
+                  background: "linear-gradient(145deg, #FAF3E4 0%, #F4E9D2 100%)",
+                }}
+              >
+                {/* Top blue line accent on hover */}
+                <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#082B49] opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-lg" />
+
+                <div>
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="w-12 h-12 rounded-full bg-[#082B49] text-[#C5963A] flex items-center justify-center shadow-md group-hover:bg-[#082B49] group-hover:text-[#C5963A] group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(8,43,73,0.3)] transition-all duration-300 transform group-hover:rotate-6">
+                      {iconElem}
+                    </div>
+                    <span className="text-[0.6875rem] font-bold tracking-[0.15em] uppercase text-[#C5963A] bg-[#C5963A]/10 px-2.5 py-1 rounded border border-[#C5963A]/20 group-hover:bg-[#082B49] group-hover:text-[#C5963A] group-hover:border-[#082B49] transition-all duration-300" style={{ fontFamily: "'Inter', sans-serif" }}>
+                      {item.tag}
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-[#082B49] mb-3 group-hover:text-[#082B49] transition-colors leading-snug" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                    {item.title}
+                  </h3>
+
+                  <p className="text-xs sm:text-sm text-[#5A4430] leading-relaxed group-hover:text-[#292725] transition-colors" style={{ fontFamily: "'Inter', sans-serif" }}>
+                    {item.shortDesc || item.desc}
+                  </p>
                 </div>
-                <span className="text-[0.6875rem] font-bold tracking-[0.15em] uppercase text-[#C5963A] bg-[#C5963A]/10 px-2.5 py-1 rounded border border-[#C5963A]/20 group-hover:bg-[#082B49] group-hover:text-[#C5963A] group-hover:border-[#082B49] transition-all duration-300" style={{ fontFamily: "'Inter', sans-serif" }}>
-                  {item.tag}
-                </span>
-              </div>
 
-              <h3 className="text-xl font-bold text-[#082B49] mb-3 group-hover:text-[#082B49] transition-colors leading-snug" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                {item.title}
-              </h3>
-
-              <p className="text-xs sm:text-sm text-[#5A4430] leading-relaxed group-hover:text-[#292725] transition-colors" style={{ fontFamily: "'Inter', sans-serif" }}>
-                {item.desc}
-              </p>
-            </div>
-
-            <div className="pt-6 mt-6 border-t border-[#C5963A]/15 group-hover:border-[#082B49]/30 flex items-center justify-between text-xs font-semibold text-[#082B49] transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
-              <span className="text-[#765334] group-hover:text-[#082B49] font-bold transition-colors">Explore Program</span>
-              <ArrowRight size={14} className="text-[#C5963A] group-hover:text-[#082B49] group-hover:translate-x-1.5 transition-all duration-300" />
-            </div>
-          </motion.div>
-        ))}
+                <div className="pt-6 mt-6 border-t border-[#C5963A]/15 group-hover:border-[#082B49]/30 flex items-center justify-between text-xs font-semibold text-[#082B49] transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  <span className="text-[#765334] group-hover:text-[#082B49] font-bold transition-colors">Explore Program</span>
+                  <ArrowRight size={14} className="text-[#C5963A] group-hover:text-[#082B49] group-hover:translate-x-1.5 transition-all duration-300" />
+                </div>
+              </Link>
+            </motion.div>
+          )
+        })}
       </motion.div>
 
       {/* Bottom CTA bar */}
@@ -888,30 +888,8 @@ function getIconByName(iconName, size = 22) {
 }
 
 function WhyChooseUs({ customData }) {
-  const canvasRef = useRef(null)
   const d = customData || DEFAULT_WHY_CHOOSE
   const featuresList = d.features && d.features.length ? d.features : DEFAULT_WHY_CHOOSE.features
-
-  useEffect(() => {
-    let dotLottie = null
-    const loadDotLottie = async () => {
-      if (canvasRef.current) {
-        try {
-          const { DotLottie } = await import('@lottiefiles/dotlottie-web')
-          dotLottie = new DotLottie({
-            canvas: canvasRef.current,
-            src: '/Horse Run.lottie',
-            loop: true,
-            autoplay: true,
-          })
-        } catch (error) {
-          console.error('Failed to load DotLottie:', error)
-        }
-      }
-    }
-    loadDotLottie()
-    return () => { if (dotLottie) dotLottie.destroy() }
-  }, [])
 
   return (
     <section className={`w-full py-20 ${PX}`} style={{ background: "#F4E9D2", borderTop: "1px solid rgba(197, 150, 58, 0.15)", borderBottom: "1px solid rgba(197, 150, 58, 0.15)" }}>
@@ -929,20 +907,16 @@ function WhyChooseUs({ customData }) {
       </div>
 
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
-        {/* Central Lottie Horse Banner */}
+        {/* Central Horse & Rider Video Banner */}
         <div className="w-full lg:w-1/3 flex flex-col items-center justify-center relative">
-          <div className="relative p-6 rounded-full bg-[#FAF3E4] border border-[#C5963A]/30 shadow-xl flex items-center justify-center">
-            <canvas 
-              ref={canvasRef}
-              width={260}
-              height={260}
-              style={{ 
-                width: '260px', 
-                height: '260px',
-                maxWidth: '80vw',
-                maxHeight: '80vw',
-                filter: 'brightness(0) saturate(100%) invert(15%) sepia(30%) saturate(2000%) hue-rotate(170deg) brightness(0.35)'
-              }}
+          <div className="relative p-1.5 rounded-full bg-[#FAF3E4] border-2 border-[#C5963A]/40 shadow-xl flex items-center justify-center overflow-hidden w-[260px] h-[260px] max-w-[75vw] max-h-[75vw]">
+            <video 
+              src="/animation.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover rounded-full"
             />
           </div>
           <div className="mt-4 text-center">
