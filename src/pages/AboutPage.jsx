@@ -64,12 +64,15 @@ export default function AboutPage() {
     ]).then(([content, img]) => {
       if (content) {
         try {
-          setData(prev => ({ ...prev, ...JSON.parse(content) }))
+          const parsed = typeof content === 'string' ? JSON.parse(content) : content
+          if (parsed && typeof parsed === 'object') {
+            setData(prev => ({ ...prev, ...parsed }))
+          }
         } catch (e) {
-          // Keep default
+          console.warn("Error parsing about_section_en:", e)
         }
       }
-      if (img) setImageUrl(img)
+      if (img && typeof img === 'string') setImageUrl(img)
     })
   }, [])
 

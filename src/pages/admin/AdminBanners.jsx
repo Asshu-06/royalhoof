@@ -388,7 +388,7 @@ function HeroBgManager() {
         <ImageCropper
           imageSrc={cropSrc}
           aspect={16 / 5}
-          title="Crop Hero Image (16:5 � fits desktop & mobile)"
+          title="Crop Hero Image (16:5 - fits desktop & mobile)"
           onCrop={handleCropped}
           onCancel={() => setCropSrc(null)}
         />
@@ -399,7 +399,7 @@ function HeroBgManager() {
         <h2 className="text-base font-bold text-[#082B49]" style={{ fontFamily: "Georgia, serif" }}>Hero Background Image</h2>
       </div>
       <p className="text-xs text-gray-500">
-        Upload a hero image. The built-in crop tool will let you select the exact visible area (16:5 ratio � works perfectly on both desktop and mobile).
+        Upload a hero image. The built-in crop tool will let you select the exact visible area (16:5 ratio - works perfectly on both desktop and mobile).
       </p>
 
       {loading ? <div className="flex items-center gap-2 text-gray-400 text-sm"><Loader2 size={14} className="animate-spin" /> Loading...</div> : (

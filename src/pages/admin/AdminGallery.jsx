@@ -49,6 +49,13 @@ export default function AdminGallery() {
   const [itemsPerPage, setItemsPerPage] = useState(8)
   const [currentPage, setCurrentPage] = useState(1)
 
+  // Calculate pagination variables
+  const totalPages = itemsPerPage === 'all' ? 1 : Math.max(1, Math.ceil(items.length / (typeof itemsPerPage === 'number' ? itemsPerPage : 1)))
+  const safeCurrentPage = Math.min(currentPage, totalPages || 1)
+  const indexOfLastItem = itemsPerPage === 'all' ? items.length : safeCurrentPage * (typeof itemsPerPage === 'number' ? itemsPerPage : items.length)
+  const indexOfFirstItem = itemsPerPage === 'all' ? 0 : (safeCurrentPage - 1) * (typeof itemsPerPage === 'number' ? itemsPerPage : 0)
+  const currentItems = itemsPerPage === 'all' ? items : items.slice(indexOfFirstItem, indexOfLastItem)
+
   useEffect(() => { fetchItems() }, [])
 
   const fetchItems = async () => {
@@ -338,7 +345,7 @@ export default function AdminGallery() {
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16, background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderRadius: 8, padding: "12px 18px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, color: TEXT_SECONDARY, fontSize: "0.875rem", fontFamily: "'Inter', sans-serif" }}>
           <span>Showing</span>
-          <span style={{ fontWeight: 700, color: TEXT_PRIMARY }}>{items.length === 0 ? 0 : (itemsPerPage === 'all' ? 1 : (safeCurrentPage - 1) * itemsPerPage + 1)} - {itemsPerPage === 'all' ? items.length : Math.min(safeCurrentPage * itemsPerPage, items.length)}</span>
+          <span style={{ fontWeight: 700, color: TEXT_PRIMARY }}>{items.length === 0 ? 0 : (itemsPerPage === 'all' ? 1 : indexOfFirstItem + 1)} - {itemsPerPage === 'all' ? items.length : Math.min(indexOfLastItem, items.length)}</span>
           <span>of</span>
           <span style={{ fontWeight: 700, color: TEXT_PRIMARY }}>{items.length}</span>
           <span>photos</span>
@@ -380,7 +387,7 @@ export default function AdminGallery() {
 
       {/* Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-        {(itemsPerPage === 'all' ? items : items.slice(itemsPerPage === 'all' ? 0 : (safeCurrentPage - 1) * itemsPerPage, itemsPerPage === 'all' ? items.length : safeCurrentPage * itemsPerPage)).map(item => (
+        {currentItems.map(item => (
           <div key={item.id} style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderRadius: 8, overflow: "hidden" }}>
             {/* Preview */}
             <div style={{ width: "100%", aspectRatio: "16/10", overflow: "hidden", background: "rgba(255,255,255,0.03)" }}>
@@ -419,7 +426,7 @@ export default function AdminGallery() {
       </div>
 
       {/* Pagination Controls */}
-      {itemsPerPage !== 'all' && (itemsPerPage === 'all' ? 1 : Math.ceil(items.length / itemsPerPage)) > 1 && (
+      {itemsPerPage !== 'all' && totalPages > 1 && (
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginTop: 16 }}>
           <button
             disabled={safeCurrentPage === 1}
@@ -439,7 +446,7 @@ export default function AdminGallery() {
             Previous
           </button>
           
-          {Array.from({ length: (itemsPerPage === 'all' ? 1 : Math.ceil(items.length / itemsPerPage)) }, (_, i) => i + 1).map(page => (
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
             <button
               key={page}
               onClick={() => setCurrentPage(page)}
@@ -460,15 +467,15 @@ export default function AdminGallery() {
           ))}
 
           <button
-            disabled={safeCurrentPage === (itemsPerPage === 'all' ? 1 : Math.ceil(items.length / itemsPerPage))}
-            onClick={() => setCurrentPage(prev => Math.min(prev + 1, (itemsPerPage === 'all' ? 1 : Math.ceil(items.length / itemsPerPage))))}
+            disabled={safeCurrentPage === totalPages}
+            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
             style={{
               padding: "8px 16px",
               borderRadius: 6,
               border: `1px solid ${CARD_BORDER}`,
-              background: safeCurrentPage === (itemsPerPage === 'all' ? 1 : Math.ceil(items.length / itemsPerPage)) ? "rgba(8,43,73,0.05)" : "#FFFFFF",
-              color: safeCurrentPage === (itemsPerPage === 'all' ? 1 : Math.ceil(items.length / itemsPerPage)) ? TEXT_MUTED : TEXT_PRIMARY,
-              cursor: safeCurrentPage === (itemsPerPage === 'all' ? 1 : Math.ceil(items.length / itemsPerPage)) ? "not-allowed" : "pointer",
+              background: safeCurrentPage === totalPages ? "rgba(8,43,73,0.05)" : "#FFFFFF",
+              color: safeCurrentPage === totalPages ? TEXT_MUTED : TEXT_PRIMARY,
+              cursor: safeCurrentPage === totalPages ? "not-allowed" : "pointer",
               fontWeight: 600,
               fontSize: "0.8125rem",
               fontFamily: "'Inter', sans-serif"

@@ -155,7 +155,7 @@ function AboutSection() {
     title: "Royal Hoof Horse Riding Academy",
     subtitle: "Nallambakkam, Tamil Nadu",
     p1: "Welcome to Royal Hoof Horse Riding Academy, located at GIRI FARMS in Nallambakkam, Tamil Nadu. We offer professional horse riding lessons for all ages in a safe, nurturing environment.",
-    p2: "Our certified trainers are passionate about equestrian sports and dedicated to building a strong foundation for every rider � from complete beginners to experienced equestrians.",
+    p2: "Our certified trainers are passionate about equestrian sports and dedicated to building a strong foundation for every rider - from complete beginners to experienced equestrians.",
     p3: "We offer a wide range of programmes including beginner lessons, advanced training, competitive riding, and special kids' sessions designed to build confidence and develop lifelong skills.",
     p4: "Safety is our top priority. All sessions are supervised by experienced professionals, and our horses are well-trained, healthy, and temperament-tested for rider compatibility.",
     p5: "Located conveniently within the Uniworld City, Aspen Greens community, our facility is equipped with quality arena space, stables, and training equipment.",
@@ -164,8 +164,8 @@ function AboutSection() {
     yearsLabel: "Our Home",
     authentic: "All Ages",
     authenticLabel: "Welcome",
-    customers: "Mon � Sun",
-    customersLabel: "6 AM � 8 PM",
+    customers: "Mon - Sun",
+    customersLabel: "6 AM - 8 PM",
   }
 
   const stats = [
@@ -1090,7 +1090,7 @@ function BenefitsPosterSection() {
       .then(val => {
         if (val) {
           try {
-            const parsed = JSON.parse(val)
+            const parsed = typeof val === 'string' ? JSON.parse(val) : val
             if (parsed && Array.isArray(parsed.categories) && parsed.categories.length > 0) {
               setBenefitsData(parsed)
             }

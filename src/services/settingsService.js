@@ -8,7 +8,7 @@ export async function getSetting(key) {
   try {
     const raw = localStorage.getItem(`${CACHE_PREFIX}${key}`)
     if (raw) {
-      cachedValue = JSON.parse(raw)
+      cachedValue = JSON.parse(raw.replace(/\uFFFD/g, '-'))
     }
   } catch (e) {
     console.warn(`[getSetting] LocalStorage parse error for ${key}:`, e)
@@ -25,12 +25,28 @@ export async function getSetting(key) {
     if (!error && data?.value !== undefined && data?.value !== null) {
       let parsed = data.value
       if (typeof parsed === 'string') {
+        parsed = parsed.replace(/\uFFFD/g, '-')
         try {
           parsed = JSON.parse(parsed)
         } catch (e) {
           // Keep raw string if it is not valid JSON
         }
       }
+
+      // Recursively clean replacement characters from loaded settings
+      const cleanObj = (obj) => {
+        if (typeof obj === 'string') return obj.replace(/\uFFFD/g, '-')
+        if (Array.isArray(obj)) return obj.map(cleanObj)
+        if (typeof obj === 'object' && obj !== null) {
+          const res = {}
+          for (const k in obj) {
+            res[k] = cleanObj(obj[k])
+          }
+          return res
+        }
+        return obj
+      }
+      parsed = cleanObj(parsed)
 
       // Sync cache
       try {
