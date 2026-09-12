@@ -116,8 +116,10 @@ export default function CSRPage() {
       .then(val => {
         if (val) {
           try {
-            const parsed = JSON.parse(val)
-            setData(prev => ({ ...prev, ...parsed }))
+            const parsed = typeof val === 'string' ? JSON.parse(val) : val
+            if (parsed && typeof parsed === 'object') {
+              setData(prev => ({ ...prev, ...parsed }))
+            }
           } catch (e) {}
         }
       })

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react"
-import { Save, Loader2, RefreshCw, Upload, Trash2, Plus, Edit2, Activity, Heart, Target, Users, Sparkles, Image, CheckCircle, ChevronDown, ChevronUp } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
+import { Save, Loader2, RefreshCw, Upload, Trash2, Plus, Edit2, Activity, Heart, Target, Users, Sparkles, Image, CheckCircle, ChevronDown, ChevronUp, Check } from "lucide-react"
 import { getSetting, setSetting } from "../../services/settingsService"
 import { supabase } from "../../lib/supabase"
 import { DEFAULT_BENEFITS } from "../../data/defaultBenefits"
@@ -13,6 +14,104 @@ const ACCENT = "#C5963A"
 
 const inp = "w-full bg-[#FAF3E4] border border-[rgba(8,43,73,0.15)] rounded-lg px-3 py-2 text-sm text-[#292725] placeholder-[#765334]/50 focus:outline-none focus:border-[#082B49]"
 const lbl = "text-xs text-[#765334] mb-1 block font-medium"
+
+const BENEFIT_ICON_OPTIONS = [
+  { id: "Activity", label: "Activity / Physical" },
+  { id: "Heart", label: "Heart / Mental" },
+  { id: "Target", label: "Target / Growth" },
+  { id: "Users", label: "Users / Social" },
+  { id: "Sparkles", label: "Sparkles / Children" }
+]
+
+const BENEFIT_ICON_MAP = {
+  Activity,
+  Heart,
+  Target,
+  Users,
+  Sparkles
+}
+
+function BenefitIconPicker({ value, onChange }) {
+  const [isOpen, setIsOpen] = useState(false)
+  const dropdownRef = useRef(null)
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false)
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
+
+  const selectedOption = BENEFIT_ICON_OPTIONS.find(opt => opt.id === value) || BENEFIT_ICON_OPTIONS[0]
+  const SelectedIcon = BENEFIT_ICON_MAP[selectedOption.id] || Activity
+
+  return (
+    <div className="relative w-full" ref={dropdownRef}>
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-lg border border-[#082B49]/20 bg-[#082B49] text-[#F5EBD8] hover:bg-[#0B304D] transition-all shadow-sm text-left"
+      >
+        <div className="flex items-center gap-2.5 min-w-0">
+          <div className="w-7 h-7 rounded-md bg-[#C5963A]/20 text-[#C5963A] border border-[#C5963A]/40 flex items-center justify-center flex-shrink-0">
+            <SelectedIcon size={16} />
+          </div>
+          <span className="text-xs font-bold text-[#F5EBD8] truncate font-serif">
+            {selectedOption.label}
+          </span>
+        </div>
+        <ChevronDown size={16} className={`text-[#C5963A] transition-transform duration-200 flex-shrink-0 ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -6, scale: 0.98 }}
+            animate={{ opacity: 1, y: 4, scale: 1 }}
+            exit={{ opacity: 0, y: -6, scale: 0.98 }}
+            transition={{ duration: 0.15 }}
+            className="absolute left-0 right-0 z-50 mt-1.5 p-2 rounded-xl bg-[#082B49] border-2 border-[#C5963A] shadow-2xl overflow-hidden"
+          >
+            <div className="grid grid-cols-1 gap-1 max-h-56 overflow-y-auto">
+              {BENEFIT_ICON_OPTIONS.map(opt => {
+                const IconComp = BENEFIT_ICON_MAP[opt.id] || Activity
+                const isSelected = opt.id === value
+                return (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    onClick={() => {
+                      onChange(opt.id)
+                      setIsOpen(false)
+                    }}
+                    className={`flex items-center gap-2.5 p-2 rounded-lg border text-left transition-all ${
+                      isSelected
+                        ? "border-[#C5963A] bg-[#C5963A]/25 text-[#F5EBD8] font-bold shadow-sm"
+                        : "border-white/10 bg-white/5 text-[#D2AA55] hover:bg-white/15 hover:border-[#C5963A]/50"
+                    }`}
+                  >
+                    <div className={`w-6 h-6 rounded flex items-center justify-center flex-shrink-0 ${
+                      isSelected ? "bg-[#C5963A] text-[#082B49]" : "bg-[#C5963A]/20 text-[#C5963A]"
+                    }`}>
+                      <IconComp size={14} />
+                    </div>
+                    <span className="text-xs font-serif truncate leading-tight text-[#F5EBD8] flex-1">
+                      {opt.label}
+                    </span>
+                    {isSelected && <Check size={14} className="text-[#C5963A] flex-shrink-0" />}
+                  </button>
+                )
+              })}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
 
 export default function AdminBenefits() {
   const [data, setData] = useState(DEFAULT_BENEFITS)
@@ -291,17 +390,10 @@ export default function AdminBenefits() {
 
               <div>
                 <label className={lbl}>Category Icon</label>
-                <select
+                <BenefitIconPicker
                   value={currentCat.iconName || "Activity"}
-                  onChange={e => handleCategoryChange(activeCategoryIdx, "iconName", e.target.value)}
-                  className={inp}
-                >
-                  <option value="Activity">Activity (Physical)</option>
-                  <option value="Heart">Heart (Mental)</option>
-                  <option value="Target">Target (Growth)</option>
-                  <option value="Users">Users (Social)</option>
-                  <option value="Sparkles">Sparkles (Children)</option>
-                </select>
+                  onChange={newIcon => handleCategoryChange(activeCategoryIdx, "iconName", newIcon)}
+                />
               </div>
             </div>
 

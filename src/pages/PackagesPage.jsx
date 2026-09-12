@@ -298,12 +298,12 @@ export default function PackagesPage() {
                         variants={cardVariants}
                         whileHover={{ y: -6, transition: { duration: 0.3 } }}
                         onClick={(e) => handleCardClick(e, pkg.id)}
-                        className={`group relative rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 cursor-pointer select-none ${
+                        className={`group relative rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 cursor-pointer select-none border border-[#C5963A] ${
                           isCardActive 
-                            ? 'bg-[#082B49] border-2 border-[#C5963A] shadow-xl shadow-[#082B49]/40' 
+                            ? 'bg-[#082B49] shadow-xl shadow-[#082B49]/40' 
                             : (pkg.popular 
-                                ? 'bg-white border-2 border-[#C5963A] ring-4 ring-[#C5963A] shadow-xl shadow-[#C5963A]/20 hover:bg-[#082B49] hover:border-[#C5963A] hover:shadow-2xl hover:shadow-[#082B49]/40' 
-                                : 'bg-white border-2 border-[#C5963A] hover:bg-[#082B49] hover:border-[#C5963A] hover:shadow-xl hover:shadow-[#082B49]/30')
+                                ? 'bg-white shadow-xl shadow-[#C5963A]/20 hover:bg-[#082B49] hover:shadow-2xl hover:shadow-[#082B49]/40' 
+                                : 'bg-white hover:bg-[#082B49] hover:shadow-xl hover:shadow-[#082B49]/30')
                         }`}
                       >
                         {pkg.popular && (
@@ -423,7 +423,7 @@ export default function PackagesPage() {
                         variants={cardVariants}
                         whileHover={{ y: -6, transition: { duration: 0.3 } }}
                         onClick={(e) => handleCardClick(e, pkg.id)}
-                        className={`group relative rounded-2xl p-6 border-2 border-[#C5963A] flex flex-col justify-between transition-all duration-300 cursor-pointer select-none ${
+                        className={`group relative rounded-2xl p-6 border border-[#C5963A] flex flex-col justify-between transition-all duration-300 cursor-pointer select-none ${
                           isCardActive
                             ? 'bg-[#082B49] text-[#F5EBD8] shadow-xl shadow-[#082B49]/40'
                             : 'bg-white text-[#292725] hover:bg-[#082B49] hover:text-[#F5EBD8] hover:shadow-xl hover:shadow-[#082B49]/30'

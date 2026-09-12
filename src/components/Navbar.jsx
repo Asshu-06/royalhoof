@@ -245,13 +245,9 @@ export default function Navbar() {
   }
 
   const navStyle = {
-    background: scrolled
-      ? "rgba(8, 43, 73, 0.98)"
-      : (pathname === "/" ? "rgba(8, 43, 73, 0.95)" : "rgba(8, 43, 73, 0.98)"),
-    backdropFilter: "blur(12px)",
-    WebkitBackdropFilter: "blur(12px)",
+    background: "#082B49",
     borderBottom: "1px solid rgba(197, 150, 58, 0.35)",
-    boxShadow: scrolled ? "0 4px 24px rgba(8, 43, 73, 0.2)" : "none",
+    boxShadow: scrolled ? "0 4px 24px rgba(8, 43, 73, 0.3)" : "0 2px 12px rgba(8, 43, 73, 0.15)",
     transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
   }
 

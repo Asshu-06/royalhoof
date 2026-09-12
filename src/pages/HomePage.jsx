@@ -55,13 +55,9 @@ function HeroSlider() {
         <source src="/herovideo.mp4" type="video/mp4" />
       </video>
       
-      {/* Cinematic overlay - Enhanced for better text contrast */}
-      <div className="absolute inset-0" style={{ 
-        background: "linear-gradient(to top, rgba(244,233,210,0.35) 0%, rgba(244,233,210,0.25) 45%, rgba(8,43,73,0.30) 100%)" 
-      }} />
-      {/* Subtle gold vignette */}
-      <div className="absolute inset-0 pointer-events-none" style={{
-        background: "radial-gradient(ellipse at 50% 80%, rgba(197, 150, 58,0.08) 0%, transparent 60%)",
+      {/* Reduced Subtle Video Overlay */}
+      <div className="absolute inset-0 pointer-events-none" style={{ 
+        background: "linear-gradient(to top, rgba(8,43,73,0.25) 0%, rgba(8,43,73,0.08) 50%, rgba(8,43,73,0.15) 100%)" 
       }} />
       
       {/* Content */}
@@ -1011,7 +1007,7 @@ function PackageCard({ pkg, isActive, onToggleActive }) {
   return (
     <div 
       onClick={handleClick}
-      className={`group relative rounded-xl p-6 h-full flex flex-col justify-between transition-all duration-300 cursor-pointer select-none border-2 border-[#C5963A] ${
+      className={`group relative rounded-xl p-6 h-full flex flex-col justify-between transition-all duration-300 cursor-pointer select-none border border-[#C5963A] ${
         isCardActive
           ? 'bg-[#082B49] text-[#F5EBD8] shadow-xl shadow-[#082B49]/40 -translate-y-1.5'
           : 'bg-[#FAF3E4] text-[#292725] hover:bg-[#082B49] hover:text-[#F5EBD8] hover:shadow-xl hover:shadow-[#082B49]/30 hover:-translate-y-1.5'

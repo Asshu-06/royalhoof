@@ -28,6 +28,17 @@ const ICON_OPTIONS = [
   { id: "Star", label: "Star / VIP & Club" }
 ]
 
+const ICON_COMPONENTS = {
+  Target,
+  Sparkles,
+  Calendar,
+  Heart,
+  Users,
+  Shield,
+  Trophy,
+  Star
+}
+
 const inputStyle = {
   width: "100%",
   background: "#FFFFFF",
@@ -141,6 +152,98 @@ function CustomProgramSelect({ programs, selectedId, onSelect, onAddNew }) {
                 <Plus size={16} />
                 <span>+ Add New Program...</span>
               </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
+function ProgramIconPicker({ value, onChange }) {
+  const [isOpen, setIsOpen] = useState(false)
+  const dropdownRef = useRef(null)
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false)
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
+
+  const selectedOption = ICON_OPTIONS.find(opt => opt.id === value) || ICON_OPTIONS[0]
+  const SelectedIcon = ICON_COMPONENTS[selectedOption.id] || Target
+
+  return (
+    <div className="relative w-full" ref={dropdownRef}>
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between gap-3 px-3.5 py-2 rounded-lg border border-[#C5963A]/40 bg-[#082B49] text-[#F5EBD8] hover:bg-[#0B304D] transition-all shadow-sm text-left"
+      >
+        <div className="flex items-center gap-2.5 min-w-0">
+          <div className="w-7 h-7 rounded-md bg-[#C5963A]/20 text-[#C5963A] border border-[#C5963A]/40 flex items-center justify-center flex-shrink-0">
+            <SelectedIcon size={16} />
+          </div>
+          <div className="min-w-0">
+            <span className="block text-xs font-bold text-[#F5EBD8] truncate font-serif">
+              {selectedOption.label}
+            </span>
+          </div>
+        </div>
+        <ChevronDown size={16} className={`text-[#C5963A] transition-transform duration-200 flex-shrink-0 ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -6, scale: 0.98 }}
+            animate={{ opacity: 1, y: 4, scale: 1 }}
+            exit={{ opacity: 0, y: -6, scale: 0.98 }}
+            transition={{ duration: 0.15 }}
+            className="absolute left-0 right-0 z-50 mt-1.5 p-2.5 rounded-xl bg-[#082B49] border-2 border-[#C5963A] shadow-2xl overflow-hidden"
+          >
+            <div className="text-[10px] font-bold text-[#C5963A] uppercase tracking-wider mb-2 px-1 font-serif">
+              Select Program Icon
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 max-h-60 overflow-y-auto pr-0.5">
+              {ICON_OPTIONS.map(opt => {
+                const IconComp = ICON_COMPONENTS[opt.id] || Target
+                const isSelected = opt.id === value
+                return (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    onClick={() => {
+                      onChange(opt.id)
+                      setIsOpen(false)
+                    }}
+                    className={`flex items-center gap-2.5 p-2 rounded-lg border text-left transition-all ${
+                      isSelected
+                        ? "border-[#C5963A] bg-[#C5963A]/25 text-[#F5EBD8] font-bold shadow-sm ring-1 ring-[#C5963A]"
+                        : "border-white/10 bg-white/5 text-[#D2AA55] hover:bg-white/15 hover:border-[#C5963A]/50"
+                    }`}
+                  >
+                    <div className={`w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0 ${
+                      isSelected ? "bg-[#C5963A] text-[#082B49]" : "bg-[#C5963A]/20 text-[#C5963A]"
+                    }`}>
+                      <IconComp size={16} />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <span className="block text-xs font-serif truncate leading-tight text-[#F5EBD8]">
+                        {opt.id}
+                      </span>
+                      <span className="block text-[10px] opacity-75 truncate leading-tight text-[#FAF3E4]">
+                        {opt.label.split('/')[1]?.trim() || opt.label}
+                      </span>
+                    </div>
+                    {isSelected && <Check size={14} className="text-[#C5963A] flex-shrink-0" />}
+                  </button>
+                )
+              })}
             </div>
           </motion.div>
         )}
@@ -465,15 +568,10 @@ export default function AdminOfferings() {
 
               <div>
                 <label style={labelStyle}>Program Icon</label>
-                <select
-                  style={inputStyle}
+                <ProgramIconPicker
                   value={currentProgram.icon}
-                  onChange={e => handleUpdateCurrent('icon', e.target.value)}
-                >
-                  {ICON_OPTIONS.map(opt => (
-                    <option key={opt.id} value={opt.id}>{opt.label}</option>
-                  ))}
-                </select>
+                  onChange={newIcon => handleUpdateCurrent('icon', newIcon)}
+                />
               </div>
 
               <div>

@@ -116,8 +116,10 @@ export default function AdminCSR() {
       .then(val => {
         if (val) {
           try {
-            const parsed = JSON.parse(val)
-            setData({ ...DEFAULT_CSR, ...parsed })
+            const parsed = typeof val === 'string' ? JSON.parse(val) : val
+            if (parsed && typeof parsed === 'object') {
+              setData({ ...DEFAULT_CSR, ...parsed })
+            }
           } catch (e) {}
         }
         setLoading(false)

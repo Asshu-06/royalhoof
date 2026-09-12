@@ -296,7 +296,7 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     padding: 0.875rem 2rem;
-    border: 1.5px solid var(--royal-gold);
+    border: 1.5px solid transparent;
     border-radius: 4px;
     transition: all 0.35s ease;
     font-family: 'Inter', sans-serif;
@@ -304,7 +304,7 @@
   }
   .btn-primary-equestrian:hover {
     background: var(--royal-navy-mid);
-    border-color: var(--royal-gold-light);
+    border-color: var(--royal-gold);
     color: var(--royal-cream-light);
     transform: translateY(-2px);
     box-shadow: var(--shadow-gold);

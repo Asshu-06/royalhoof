@@ -89,8 +89,10 @@ export default function AdminWhyChoose() {
       .then(val => {
         if (val) {
           try {
-            const parsed = JSON.parse(val)
-            setData({ ...DEFAULT_SETTINGS, ...parsed })
+            const parsed = typeof val === 'string' ? JSON.parse(val) : val
+            if (parsed && typeof parsed === 'object') {
+              setData({ ...DEFAULT_SETTINGS, ...parsed })
+            }
           } catch (e) {
             // fallback
           }
