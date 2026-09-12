@@ -12,6 +12,14 @@ export default function PackagesPage() {
   const [adultPackages, setAdultPackages] = useState([])
   const [kidsPackages, setKidsPackages] = useState([])
   const [loading, setLoading] = useState(true)
+  const [activeCardId, setActiveCardId] = useState(null)
+
+  const handleCardClick = (e, pkgId) => {
+    if (e.target.closest('button') || e.target.closest('a')) {
+      return
+    }
+    setActiveCardId(prev => prev === pkgId ? null : pkgId)
+  }
 
   useEffect(() => {
     loadPackages()
@@ -279,90 +287,108 @@ export default function PackagesPage() {
                 </motion.div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-                  {adultPackages.map((pkg, index) => (
-                    <motion.div
-                      key={pkg.id}
-                      custom={index}
-                      initial="hidden"
-                      animate="visible"
-                      variants={cardVariants}
-                      whileHover={{ y: -6, transition: { duration: 0.3 } }}
-                      className={`group relative bg-white rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 ${
-                        pkg.popular 
-                          ? 'ring-4 ring-[#C5963A] shadow-xl shadow-[#C5963A]/20' 
-                          : 'border-2 border-[#C5963A] hover:border-[#C5963A] hover:shadow-lg hover:shadow-[#C5963A]/15'
-                      }`}
-                      style={{
-                        background: pkg.popular 
-                          ? 'linear-gradient(135deg, #FFFFFF 0%, #FAF3E4 100%)'
-                          : '#FFFFFF'
-                      }}
-                    >
-                      {pkg.popular && (
-                        <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
-                          <div className="bg-gradient-to-r from-[#C5963A] to-[#D2AA55] text-white px-5 py-1.5 rounded-full text-xs font-bold uppercase flex items-center gap-1.5 shadow-md shadow-[#C5963A]/30">
-                            <Star size={14} fill="currentColor" />
-                            Most Popular
-                          </div>
-                        </div>
-                      )}
-
-                      <div>
-                        {/* Package Name & Description */}
-                        <div className="mb-4 pt-2">
-                          <h3 className="heading-editorial text-2.5xl text-2rem mb-1" style={{ color: "#292725" }}>
-                            {pkg.name}
-                          </h3>
-                          {pkg.description && (
-                            <p className="text-[#9A8870] text-xs font-medium">{pkg.description}</p>
-                          )}
-                        </div>
-                        
-                        {/* Price */}
-                        <div className="mb-4">
-                          <div className="flex items-baseline gap-1.5">
-                            <span className="text-4xl font-bold" style={{ 
-                              background: `linear-gradient(135deg, ${pkg.color} 0%, ${pkg.popular ? '#D2AA55' : '#8A6640'} 100%)`,
-                              WebkitBackgroundClip: "text",
-                              WebkitTextFillColor: "transparent",
-                              backgroundClip: "text"
-                            }}>
-                              ₹{pkg.price.toLocaleString('en-IN')}
-                            </span>
-                            <span className="text-[#9A8870] text-sm font-medium">/{pkg.duration}</span>
-                          </div>
-                        </div>
-
-                        {/* Divider */}
-                        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#C5963A]/30 to-transparent my-4" />
-
-                        {/* Features */}
-                        <ul className="space-y-3 mb-6">
-                          {pkg.features.map((feature, i) => (
-                            <li key={i} className="flex items-start gap-2.5 text-[#765334] text-xs leading-snug group/item">
-                              <div className="mt-0.5 flex-shrink-0 w-4 h-4 rounded-full bg-gradient-to-br from-[#C5963A]/20 to-[#C5963A]/10 flex items-center justify-center group-hover/item:from-[#C5963A] group-hover/item:to-[#D2AA55] transition-all duration-300">
-                                <Check size={12} className="text-[#C5963A] group-hover/item:text-white" strokeWidth={3} />
-                              </div>
-                              <span className="group-hover/item:text-[#292725] transition-colors">{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      {/* Button */}
-                      <button
-                        onClick={() => handleEnquiry(pkg)}
-                        className={`w-full py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-300 text-xs relative overflow-hidden group/btn mt-auto ${
-                          pkg.popular
-                            ? 'bg-gradient-to-r from-[#C5963A] to-[#D2AA55] text-white shadow-md shadow-[#C5963A]/30'
-                            : 'bg-[#292725] text-white hover:bg-[#C5963A]'
+                  {adultPackages.map((pkg, index) => {
+                    const isCardActive = activeCardId === pkg.id
+                    return (
+                      <motion.div
+                        key={pkg.id}
+                        custom={index}
+                        initial="hidden"
+                        animate="visible"
+                        variants={cardVariants}
+                        whileHover={{ y: -6, transition: { duration: 0.3 } }}
+                        onClick={(e) => handleCardClick(e, pkg.id)}
+                        className={`group relative rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 cursor-pointer select-none ${
+                          isCardActive 
+                            ? 'bg-[#082B49] border-2 border-[#C5963A] shadow-xl shadow-[#082B49]/40' 
+                            : (pkg.popular 
+                                ? 'bg-white border-2 border-[#C5963A] ring-4 ring-[#C5963A] shadow-xl shadow-[#C5963A]/20 hover:bg-[#082B49] hover:border-[#C5963A] hover:shadow-2xl hover:shadow-[#082B49]/40' 
+                                : 'bg-white border-2 border-[#C5963A] hover:bg-[#082B49] hover:border-[#C5963A] hover:shadow-xl hover:shadow-[#082B49]/30')
                         }`}
                       >
-                        <span className="relative z-10">View Details →</span>
-                        <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700" />
-                      </button>
-                    </motion.div>
-                  ))}
+                        {pkg.popular && (
+                          <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+                            <div className="bg-gradient-to-r from-[#C5963A] to-[#D2AA55] text-white px-5 py-1.5 rounded-full text-xs font-bold uppercase flex items-center gap-1.5 shadow-md shadow-[#C5963A]/30">
+                              <Star size={14} fill="currentColor" />
+                              Most Popular
+                            </div>
+                          </div>
+                        )}
+
+                        <div>
+                          {/* Package Name & Description */}
+                          <div className="mb-4 pt-2">
+                            <h3 className={`heading-editorial text-2.5xl text-2rem mb-1 transition-colors duration-300 ${
+                              isCardActive ? 'text-[#F5EBD8]' : 'text-[#292725] group-hover:text-[#F5EBD8]'
+                            }`}>
+                              {pkg.name}
+                            </h3>
+                            {pkg.description && (
+                              <p className={`text-xs font-medium transition-colors duration-300 ${
+                                isCardActive ? 'text-[#D8C5A0]' : 'text-[#9A8870] group-hover:text-[#D8C5A0]'
+                              }`}>
+                                {pkg.description}
+                              </p>
+                            )}
+                          </div>
+                          
+                          {/* Price */}
+                          <div className="mb-4">
+                            <div className="flex items-baseline gap-1.5">
+                              <span className={`text-4xl font-bold transition-colors duration-300 ${
+                                isCardActive ? 'text-[#D2AA55]' : 'text-[#C5963A] group-hover:text-[#D2AA55]'
+                              }`}>
+                                ₹{pkg.price.toLocaleString('en-IN')}
+                              </span>
+                              <span className={`text-sm font-medium transition-colors duration-300 ${
+                                isCardActive ? 'text-[#D8C5A0]' : 'text-[#9A8870] group-hover:text-[#D8C5A0]'
+                              }`}>
+                                /{pkg.duration}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Divider */}
+                          <div className="w-full h-px bg-gradient-to-r from-transparent via-[#C5963A]/30 to-transparent my-4" />
+
+                          {/* Features */}
+                          <ul className="space-y-3 mb-6">
+                            {pkg.features.map((feature, i) => (
+                              <li key={i} className="flex items-start gap-2.5 text-xs leading-snug group/item">
+                                <div className={`mt-0.5 flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center transition-all duration-300 ${
+                                  isCardActive 
+                                    ? 'bg-[#C5963A] text-[#082B49]' 
+                                    : 'bg-[#C5963A]/20 text-[#C5963A] group-hover:bg-[#C5963A] group-hover:text-[#082B49]'
+                                }`}>
+                                  <Check size={12} strokeWidth={3} />
+                                </div>
+                                <span className={`transition-colors duration-300 ${
+                                  isCardActive ? 'text-[#F5EBD8]' : 'text-[#765334] group-hover:text-[#F5EBD8]'
+                                }`}>
+                                  {feature}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        {/* Button */}
+                        <button
+                          onClick={() => handleEnquiry(pkg)}
+                          className={`w-full py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-300 text-xs relative overflow-hidden group/btn mt-auto ${
+                            isCardActive
+                              ? 'bg-gradient-to-r from-[#C5963A] to-[#D2AA55] text-[#082B49] shadow-md shadow-[#C5963A]/30 font-extrabold'
+                              : (pkg.popular
+                                  ? 'bg-gradient-to-r from-[#C5963A] to-[#D2AA55] text-white shadow-md shadow-[#C5963A]/30 group-hover:text-[#082B49] group-hover:font-extrabold'
+                                  : 'bg-[#292725] text-white group-hover:bg-gradient-to-r group-hover:from-[#C5963A] group-hover:to-[#D2AA55] group-hover:text-[#082B49] group-hover:font-extrabold')
+                          }`}
+                        >
+                          <span className="relative z-10">View Details →</span>
+                          <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700" />
+                        </button>
+                      </motion.div>
+                    )
+                  })}
                 </div>
               )}
             </>
@@ -386,66 +412,98 @@ export default function PackagesPage() {
                 </motion.div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-16">
-                  {kidsPackages.map((pkg, index) => (
-                    <motion.div
-                      key={pkg.id}
-                      custom={index}
-                      initial="hidden"
-                      animate="visible"
-                      variants={cardVariants}
-                      whileHover={{ y: -6, transition: { duration: 0.3 } }}
-                      className="group relative bg-white rounded-2xl p-6 border-2 border-[#C5963A] hover:border-[#C5963A] transition-all duration-300 hover:shadow-lg hover:shadow-[#C5963A]/15 flex flex-col justify-between"
-                    >
-                      <div>
-                        {/* Package Name & Age Group */}
-                        <div className="mb-4">
-                          <h3 className="heading-editorial text-2.5xl text-2rem mb-1.5" style={{ color: "#292725" }}>
-                            {pkg.name}
-                          </h3>
-                          <div className="inline-block bg-gradient-to-r from-[#C5963A]/10 to-[#D2AA55]/10 border border-[#C5963A]/30 px-3 py-1 rounded-lg">
-                            <span className="text-[#C5963A] text-xs font-bold">{pkg.ageGroup}</span>
-                          </div>
-                          {pkg.description && (
-                            <p className="text-[#9A8870] text-xs font-medium mt-2">{pkg.description}</p>
-                          )}
-                        </div>
-                        
-                        {/* Price */}
-                        <div className="mb-4">
-                          <div className="flex items-baseline gap-1.5">
-                            <span className="text-4xl font-bold text-[#C5963A]">
-                              ₹{pkg.price.toLocaleString('en-IN')}
-                            </span>
-                            <span className="text-[#9A8870] text-sm font-medium">/{pkg.duration}</span>
-                          </div>
-                        </div>
-
-                        {/* Divider */}
-                        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#C5963A]/30 to-transparent my-4" />
-
-                        {/* Features */}
-                        <ul className="space-y-3 mb-6">
-                          {pkg.features.map((feature, i) => (
-                            <li key={i} className="flex items-start gap-2.5 text-[#765334] text-xs leading-snug group/item">
-                              <div className="mt-0.5 flex-shrink-0 w-4 h-4 rounded-full bg-gradient-to-br from-[#C5963A]/20 to-[#C5963A]/10 flex items-center justify-center group-hover/item:from-[#C5963A] group-hover/item:to-[#D2AA55] transition-all duration-300">
-                                <Check size={12} className="text-[#C5963A] group-hover/item:text-white" strokeWidth={3} />
-                              </div>
-                              <span className="group-hover/item:text-[#292725] transition-colors">{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      {/* Button */}
-                      <button
-                        onClick={() => handleEnquiry(pkg)}
-                        className="w-full bg-gradient-to-r from-[#C5963A] to-[#D2AA55] hover:from-[#8A6640] hover:to-[#C5963A] text-white py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-300 text-xs shadow-md shadow-[#C5963A]/30 relative overflow-hidden group/btn mt-auto"
+                  {kidsPackages.map((pkg, index) => {
+                    const isCardActive = activeCardId === pkg.id
+                    return (
+                      <motion.div
+                        key={pkg.id}
+                        custom={index}
+                        initial="hidden"
+                        animate="visible"
+                        variants={cardVariants}
+                        whileHover={{ y: -6, transition: { duration: 0.3 } }}
+                        onClick={(e) => handleCardClick(e, pkg.id)}
+                        className={`group relative rounded-2xl p-6 border-2 border-[#C5963A] flex flex-col justify-between transition-all duration-300 cursor-pointer select-none ${
+                          isCardActive
+                            ? 'bg-[#082B49] text-[#F5EBD8] shadow-xl shadow-[#082B49]/40'
+                            : 'bg-white text-[#292725] hover:bg-[#082B49] hover:text-[#F5EBD8] hover:shadow-xl hover:shadow-[#082B49]/30'
+                        }`}
                       >
-                        <span className="relative z-10">View Details →</span>
-                        <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700" />
-                      </button>
-                    </motion.div>
-                  ))}
+                        <div>
+                          {/* Package Name & Age Group */}
+                          <div className="mb-4">
+                            <h3 className={`heading-editorial text-2.5xl text-2rem mb-1.5 transition-colors duration-300 ${
+                              isCardActive ? 'text-[#F5EBD8]' : 'text-[#292725] group-hover:text-[#F5EBD8]'
+                            }`}>
+                              {pkg.name}
+                            </h3>
+                            <div className="inline-block bg-gradient-to-r from-[#C5963A]/10 to-[#D2AA55]/10 border border-[#C5963A]/30 px-3 py-1 rounded-lg">
+                              <span className="text-[#C5963A] text-xs font-bold">{pkg.ageGroup}</span>
+                            </div>
+                            {pkg.description && (
+                              <p className={`text-xs font-medium mt-2 transition-colors duration-300 ${
+                                isCardActive ? 'text-[#D8C5A0]' : 'text-[#9A8870] group-hover:text-[#D8C5A0]'
+                              }`}>
+                                {pkg.description}
+                              </p>
+                            )}
+                          </div>
+                          
+                          {/* Price */}
+                          <div className="mb-4">
+                            <div className="flex items-baseline gap-1.5">
+                              <span className={`text-4xl font-bold transition-colors duration-300 ${
+                                isCardActive ? 'text-[#D2AA55]' : 'text-[#C5963A] group-hover:text-[#D2AA55]'
+                              }`}>
+                                ₹{pkg.price.toLocaleString('en-IN')}
+                              </span>
+                              <span className={`text-sm font-medium transition-colors duration-300 ${
+                                isCardActive ? 'text-[#D8C5A0]' : 'text-[#9A8870] group-hover:text-[#D8C5A0]'
+                              }`}>
+                                /{pkg.duration}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Divider */}
+                          <div className="w-full h-px bg-gradient-to-r from-transparent via-[#C5963A]/30 to-transparent my-4" />
+
+                          {/* Features */}
+                          <ul className="space-y-3 mb-6">
+                            {pkg.features.map((feature, i) => (
+                              <li key={i} className="flex items-start gap-2.5 text-xs leading-snug group/item">
+                                <div className={`mt-0.5 flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center transition-all duration-300 ${
+                                  isCardActive 
+                                    ? 'bg-[#C5963A] text-[#082B49]' 
+                                    : 'bg-[#C5963A]/20 text-[#C5963A] group-hover:bg-[#C5963A] group-hover:text-[#082B49]'
+                                }`}>
+                                  <Check size={12} strokeWidth={3} />
+                                </div>
+                                <span className={`transition-colors duration-300 ${
+                                  isCardActive ? 'text-[#F5EBD8]' : 'text-[#765334] group-hover:text-[#F5EBD8]'
+                                }`}>
+                                  {feature}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        {/* Button */}
+                        <button
+                          onClick={() => handleEnquiry(pkg)}
+                          className={`w-full py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-300 text-xs shadow-md shadow-[#C5963A]/30 relative overflow-hidden group/btn mt-auto ${
+                            isCardActive
+                              ? 'bg-gradient-to-r from-[#C5963A] to-[#D2AA55] text-[#082B49] font-extrabold'
+                              : 'bg-gradient-to-r from-[#C5963A] to-[#D2AA55] text-white group-hover:text-[#082B49] group-hover:font-extrabold'
+                          }`}
+                        >
+                          <span className="relative z-10">View Details →</span>
+                          <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700" />
+                        </button>
+                      </motion.div>
+                    )
+                  })}
                 </div>
               )}
             </>

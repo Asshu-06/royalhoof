@@ -43,6 +43,7 @@ const AdminEvents = lazy(() => import('./pages/admin/AdminEvents'))
 const AdminEnquiries = lazy(() => import('./pages/admin/AdminEnquiries'))
 const AdminGallery = lazy(() => import('./pages/admin/AdminGallery'))
 const AdminPackages = lazy(() => import('./pages/admin/AdminPackages'))
+const AdminTestimonials = lazy(() => import('./pages/admin/AdminTestimonials'))
 
 
 const PageLoader = () => (
@@ -107,6 +108,7 @@ export default function App() {
                       <Route path="events" element={<AdminEvents />} />
                       <Route path="packages" element={<AdminPackages />} />
                       <Route path="gallery" element={<AdminGallery />} />
+                      <Route path="testimonials" element={<AdminTestimonials />} />
                       <Route path="enquiries" element={<AdminEnquiries />} />
                       <Route path="analytics" element={<AdminAnalytics />} />
                       <Route path="users" element={<AdminUsers />} />

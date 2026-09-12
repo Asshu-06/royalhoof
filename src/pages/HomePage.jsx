@@ -1014,39 +1014,74 @@ function GalleryItemCard({ item }) {
 }
 
 /* --- Package Item Component --- */  
-function PackageCard({ pkg }) {
+function PackageCard({ pkg, isActive, onToggleActive }) {
+  const handleClick = (e) => {
+    if (e.target.closest('a') || e.target.closest('button')) {
+      return
+    }
+    onToggleActive?.(pkg.id)
+  }
+
+  const isCardActive = Boolean(isActive)
+
   return (
-    <Link to="/packages" className="group block">
-      <div className="rounded-lg p-5 h-full group-hover:scale-105 group-hover:shadow-[0_4px_20px_rgba(197,150,58,0.25)] transition-all duration-300"
-        style={{
-          background: "#FAF3E4",
-          border: "1px solid #C5963A",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.06)"
-        }}>
-        <h3 className="text-lg font-bold text-[#292725] mb-2" style={{ fontFamily: "'Inter', sans-serif" }}>
+    <div 
+      onClick={handleClick}
+      className={`group relative rounded-xl p-6 h-full flex flex-col justify-between transition-all duration-300 cursor-pointer select-none border-2 border-[#C5963A] ${
+        isCardActive
+          ? 'bg-[#082B49] text-[#F5EBD8] shadow-xl shadow-[#082B49]/40 -translate-y-1.5'
+          : 'bg-[#FAF3E4] text-[#292725] hover:bg-[#082B49] hover:text-[#F5EBD8] hover:shadow-xl hover:shadow-[#082B49]/30 hover:-translate-y-1.5'
+      }`}
+    >
+      <div>
+        <h3 className={`text-xl font-bold mb-2 transition-colors duration-300 ${
+          isCardActive ? 'text-[#F5EBD8]' : 'text-[#292725] group-hover:text-[#F5EBD8]'
+        }`} style={{ fontFamily: "'Cormorant Garamond', 'Cinzel', serif", letterSpacing: "0.02em" }}>
           {pkg.name}
         </h3>
-        <div className="mb-4">
-          <span className="text-2xl font-bold text-[#C5963A]">
+
+        <div className="mb-4 flex items-baseline gap-1.5">
+          <span className={`text-3xl font-bold transition-colors duration-300 ${
+            isCardActive ? 'text-[#D2AA55]' : 'text-[#C5963A] group-hover:text-[#D2AA55]'
+          }`}>
             ₹{pkg.price?.toLocaleString('en-IN') || '0'}
           </span>
-          <span className="text-[#765334] text-sm">/{pkg.duration}</span>
+          <span className={`text-sm font-medium transition-colors duration-300 ${
+            isCardActive ? 'text-[#D8C5A0]' : 'text-[#765334] group-hover:text-[#D8C5A0]'
+          }`}>
+            /{pkg.duration}
+          </span>
         </div>
+
         {pkg.age_group && (
-          <p className="text-[#C5963A] text-sm mb-3 font-medium">{pkg.age_group}</p>
+          <div className="inline-block bg-[#C5963A]/15 border border-[#C5963A]/30 px-3 py-1 rounded-md mb-3">
+            <span className="text-[#C5963A] text-xs font-bold">{pkg.age_group}</span>
+          </div>
         )}
+
         {pkg.description && (
-          <p className="text-[#765334] text-sm mb-4 leading-relaxed line-clamp-2">
+          <p className={`text-sm mb-6 leading-relaxed line-clamp-3 transition-colors duration-300 ${
+            isCardActive ? 'text-[#F5EBD8]/90' : 'text-[#765334] group-hover:text-[#F5EBD8]/90'
+          }`}>
             {pkg.description}
           </p>
         )}
-        <div className="mt-auto">
-          <div className="flex items-center gap-2 text-[#082B49] text-sm font-medium">
-            View Details <ArrowRight size={16} />
-          </div>
-        </div>
       </div>
-    </Link>
+
+      <div className="mt-auto pt-4 border-t border-[#C5963A]/20">
+        <Link 
+          to="/packages" 
+          className={`inline-flex items-center gap-2 text-sm font-semibold transition-all duration-300 ${
+            isCardActive 
+              ? 'text-[#D2AA55] translate-x-1' 
+              : 'text-[#C5963A] group-hover:text-[#D2AA55] group-hover:translate-x-1'
+          }`}
+        >
+          <span>View Details</span>
+          <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+        </Link>
+      </div>
+    </div>
   )
 }
 
@@ -1332,6 +1367,7 @@ export default function HomePage() {
   const [packages, setPackages] = useState([])
   const [loadingGallery, setLoadingGallery] = useState(true)
   const [loadingPackages, setLoadingPackages] = useState(true)
+  const [activePackageId, setActivePackageId] = useState(null)
 
   useEffect(() => {
     // Load products
@@ -1510,7 +1546,11 @@ export default function HomePage() {
             </div>
           )) : packages.length > 0 ? packages.map((pkg, i) => (
             <ScrollReveal key={pkg.id} delay={i * 0.1}>
-              <PackageCard pkg={pkg} />
+              <PackageCard 
+                pkg={pkg} 
+                isActive={activePackageId === pkg.id}
+                onToggleActive={(id) => setActivePackageId(prev => prev === id ? null : id)}
+              />
             </ScrollReveal>
           )) : (
             <div className="col-span-full text-center py-12">
