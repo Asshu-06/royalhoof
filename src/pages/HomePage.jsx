@@ -341,36 +341,46 @@ function WhatWeOfferSection() {
             >
               <Link
                 to={linkPath}
-                className="group relative p-7 rounded-lg bg-[#FAF3E4] border-2 border-[#C5963A]/25 shadow-md hover:shadow-[0_12px_36px_rgba(8,43,73,0.2)] hover:border-[#082B49] transition-all duration-300 flex flex-col justify-between h-full block cursor-pointer"
-                style={{
-                  background: "linear-gradient(145deg, #FAF3E4 0%, #F4E9D2 100%)",
-                }}
+                className="group relative rounded-xl bg-[#FAF3E4] border-2 border-[#C5963A]/25 shadow-md hover:shadow-[0_12px_36px_rgba(8,43,73,0.2)] hover:border-[#082B49] transition-all duration-300 flex flex-col justify-between h-full block cursor-pointer overflow-hidden"
               >
-                {/* Top blue line accent on hover */}
-                <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#082B49] opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-lg" />
+                {/* Program Card Header Banner Image */}
+                <div className="w-full h-44 overflow-hidden relative border-b border-[#C5963A]/20 bg-[#082B49]/10">
+                  <img 
+                    src={item.bannerImage || "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=800&q=80"}
+                    alt={item.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.style.opacity = '0.6';
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#082B49]/80 via-black/20 to-transparent" />
 
-                <div>
-                  <div className="flex items-center justify-between mb-5">
-                    <div className="w-12 h-12 rounded-full bg-[#082B49] text-[#C5963A] flex items-center justify-center shadow-md group-hover:bg-[#082B49] group-hover:text-[#C5963A] group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(8,43,73,0.3)] transition-all duration-300 transform group-hover:rotate-6">
+                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
+                    <div className="w-10 h-10 rounded-full bg-[#082B49]/90 text-[#C5963A] border border-[#C5963A]/40 flex items-center justify-center shadow-md backdrop-blur-sm">
                       {iconElem}
                     </div>
-                    <span className="text-[0.6875rem] font-bold tracking-[0.15em] uppercase text-[#C5963A] bg-[#C5963A]/10 px-2.5 py-1 rounded border border-[#C5963A]/20 group-hover:bg-[#082B49] group-hover:text-[#C5963A] group-hover:border-[#082B49] transition-all duration-300" style={{ fontFamily: "'Inter', sans-serif" }}>
+                    <span className="text-[0.65rem] font-bold tracking-[0.15em] uppercase text-[#F5EBD8] bg-[#082B49]/90 backdrop-blur-sm px-2.5 py-1 rounded border border-[#C5963A]/40 font-sans">
                       {item.tag}
                     </span>
                   </div>
-
-                  <h3 className="text-xl font-bold text-[#082B49] mb-3 group-hover:text-[#082B49] transition-colors leading-snug" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                    {item.title}
-                  </h3>
-
-                  <p className="text-xs sm:text-sm text-[#5A4430] leading-relaxed group-hover:text-[#292725] transition-colors" style={{ fontFamily: "'Inter', sans-serif" }}>
-                    {item.shortDesc || item.desc}
-                  </p>
                 </div>
 
-                <div className="pt-6 mt-6 border-t border-[#C5963A]/15 group-hover:border-[#082B49]/30 flex items-center justify-between text-xs font-semibold text-[#082B49] transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
-                  <span className="text-[#765334] group-hover:text-[#082B49] font-bold transition-colors">Explore Program</span>
-                  <ArrowRight size={14} className="text-[#C5963A] group-hover:text-[#082B49] group-hover:translate-x-1.5 transition-all duration-300" />
+                <div className="p-6 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-xl font-bold text-[#082B49] mb-2 group-hover:text-[#C5963A] transition-colors leading-snug font-serif">
+                      {item.title}
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-[#5A4430] leading-relaxed font-sans line-clamp-3">
+                      {item.shortDesc || item.desc}
+                    </p>
+                  </div>
+
+                  <div className="pt-4 mt-4 border-t border-[#C5963A]/15 group-hover:border-[#082B49]/30 flex items-center justify-between text-xs font-bold text-[#082B49] transition-all font-sans">
+                    <span className="text-[#765334] group-hover:text-[#082B49]">Explore Program</span>
+                    <ArrowRight size={14} className="text-[#C5963A] group-hover:text-[#082B49] group-hover:translate-x-1.5 transition-all duration-300" />
+                  </div>
                 </div>
               </Link>
             </motion.div>

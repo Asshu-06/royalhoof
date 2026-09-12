@@ -23,11 +23,22 @@ export async function getSetting(key) {
       .maybeSingle()
 
     if (!error && data?.value !== undefined && data?.value !== null) {
+      let parsed = data.value
+      if (typeof parsed === 'string') {
+        try {
+          parsed = JSON.parse(parsed)
+        } catch (e) {
+          // Keep raw string if it is not valid JSON
+        }
+      }
+
       // Sync cache
       try {
-        localStorage.setItem(`${CACHE_PREFIX}${key}`, JSON.stringify(data.value))
-      } catch (e) {}
-      return data.value
+        localStorage.setItem(`${CACHE_PREFIX}${key}`, JSON.stringify(parsed))
+      } catch (e) {
+        console.warn(`[getSetting] LocalStorage sync warning for ${key}:`, e)
+      }
+      return parsed
     }
   } catch (err) {
     console.warn(`[getSetting] Supabase error for ${key}:`, err)
@@ -38,9 +49,11 @@ export async function getSetting(key) {
 }
 
 export async function setSetting(key, value) {
+  const stringifiedValue = typeof value === 'string' ? value : JSON.stringify(value)
+
   // 1. Always save to LocalStorage immediately for instant offline/online UI sync
   try {
-    localStorage.setItem(`${CACHE_PREFIX}${key}`, JSON.stringify(value))
+    localStorage.setItem(`${CACHE_PREFIX}${key}`, stringifiedValue)
     // Dispatch custom event for real-time UI updates across components/tabs
     window.dispatchEvent(new CustomEvent('site_settings_updated', { detail: { key, value } }))
   } catch (e) {
@@ -52,7 +65,7 @@ export async function setSetting(key, value) {
     const { error } = await supabase
       .from('site_settings')
       .upsert(
-        { key, value, updated_at: new Date().toISOString() },
+        { key, value: stringifiedValue, updated_at: new Date().toISOString() },
         { onConflict: 'key' }
       )
     if (error) {

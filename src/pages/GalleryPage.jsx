@@ -10,6 +10,8 @@ export default function GalleryPage() {
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [galleryItems, setGalleryItems] = useState([])
   const [loading, setLoading] = useState(true)
+  const [itemsPerPage, setItemsPerPage] = useState(8)
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
     loadGalleryItems()
@@ -57,6 +59,12 @@ export default function GalleryPage() {
 
   const allMedia = [...filteredImages.map(img => ({ ...img, type: 'image', src: img.media_url })), ...videos.map(vid => ({ ...vid, type: 'video', src: vid.media_url, thumbnail: vid.media_url }))]
   const displayMedia = activeTab === 'all' ? allMedia : activeTab === 'images' ? filteredImages.map(img => ({ ...img, type: 'image', src: img.media_url })) : videos.map(vid => ({ ...vid, type: 'video', src: vid.media_url, thumbnail: vid.media_url }))
+
+  const totalPages = itemsPerPage === 'all' ? 1 : Math.ceil(displayMedia.length / itemsPerPage)
+  const safeCurrentPage = Math.min(currentPage, totalPages || 1)
+  const paginatedMedia = itemsPerPage === 'all' 
+    ? displayMedia 
+    : displayMedia.slice((safeCurrentPage - 1) * itemsPerPage, safeCurrentPage * itemsPerPage)
 
   return (
     <>
@@ -112,6 +120,35 @@ export default function GalleryPage() {
             </div>
           )}
 
+          {/* Photos per page control bar */}
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-[#FAF3E4] border border-[rgba(197,150,58,0.3)] rounded-lg p-3 sm:px-6">
+            <div className="text-xs sm:text-sm text-[#765334] font-medium">
+              Showing <span className="font-bold text-[#082B49]">{displayMedia.length === 0 ? 0 : (itemsPerPage === 'all' ? 1 : (safeCurrentPage - 1) * itemsPerPage + 1)} - {itemsPerPage === 'all' ? displayMedia.length : Math.min(safeCurrentPage * itemsPerPage, displayMedia.length)}</span> of <span className="font-bold text-[#082B49]">{displayMedia.length}</span> photos
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <label className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#082B49]">
+                Photos per page:
+              </label>
+              <select
+                value={itemsPerPage}
+                onChange={(e) => {
+                  const val = e.target.value === 'all' ? 'all' : Number(e.target.value)
+                  setItemsPerPage(val)
+                  setCurrentPage(1)
+                }}
+                className="bg-white border border-[#C5963A]/40 rounded px-3 py-1 text-xs sm:text-sm font-bold text-[#082B49] focus:outline-none focus:border-[#082B49] cursor-pointer"
+              >
+                <option value={4}>4</option>
+                <option value={8}>8</option>
+                <option value={12}>12</option>
+                <option value={24}>24</option>
+                <option value={48}>48</option>
+                <option value="all">All</option>
+              </select>
+            </div>
+          </div>
+
           {/* Gallery Grid */}
           {loading ? (
             <div className="flex justify-center items-center py-20">
@@ -124,7 +161,7 @@ export default function GalleryPage() {
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {displayMedia.map(item => (
+              {paginatedMedia.map(item => (
                 <div
                   key={`${item.type}-${item.id}`}
                   onClick={() => setSelectedMedia(item)}
@@ -147,6 +184,41 @@ export default function GalleryPage() {
                   </div>
                 </div>
               ))}
+            </div>
+          )}
+
+          {/* Pagination Controls */}
+          {itemsPerPage !== 'all' && totalPages > 1 && (
+            <div className="flex justify-center items-center gap-2 mt-10">
+              <button
+                disabled={safeCurrentPage === 1}
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                className="px-4 py-2 text-xs uppercase font-bold tracking-wider rounded border border-[#C5963A]/30 bg-white text-[#082B49] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#C5963A] hover:text-[#082B49] transition-all"
+              >
+                Previous
+              </button>
+
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                <button
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  className={`w-9 h-9 rounded text-xs font-bold transition-all border ${
+                    page === safeCurrentPage
+                      ? 'bg-[#C5963A] text-[#082B49] border-[#C5963A]'
+                      : 'bg-white text-[#765334] border-[#C5963A]/30 hover:border-[#C5963A]'
+                  }`}
+                >
+                  {page}
+                </button>
+              ))}
+
+              <button
+                disabled={safeCurrentPage === totalPages}
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                className="px-4 py-2 text-xs uppercase font-bold tracking-wider rounded border border-[#C5963A]/30 bg-white text-[#082B49] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#C5963A] hover:text-[#082B49] transition-all"
+              >
+                Next
+              </button>
             </div>
           )}
         </div>

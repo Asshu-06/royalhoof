@@ -28,11 +28,46 @@ export default function ImageUploader({
     setHasError(false)
   }, [value])
 
-  const readFileAsDataUrl = (file) => {
-    return new Promise((resolve, reject) => {
+  const compressImageFile = (file, maxWidth = 1200, maxHeight = 1200, quality = 0.78) => {
+    return new Promise((resolve) => {
+      if (!file.type.startsWith('image/')) {
+        const reader = new FileReader()
+        reader.onload = () => resolve(reader.result)
+        reader.onerror = () => resolve('')
+        reader.readAsDataURL(file)
+        return
+      }
+
       const reader = new FileReader()
-      reader.onload = () => resolve(reader.result)
-      reader.onerror = (err) => reject(err)
+      reader.onload = (event) => {
+        const img = new Image()
+        img.src = event.target.result
+        img.onload = () => {
+          let width = img.width
+          let height = img.height
+
+          if (width > maxWidth || height > maxHeight) {
+            if (width > height) {
+              height = Math.round((height * maxWidth) / width)
+              width = maxWidth
+            } else {
+              width = Math.round((width * maxHeight) / height)
+              height = maxHeight
+            }
+          }
+
+          const canvas = document.createElement('canvas')
+          canvas.width = width
+          canvas.height = height
+          const ctx = canvas.getContext('2d')
+          ctx.drawImage(img, 0, 0, width, height)
+
+          const compressedDataUrl = canvas.toDataURL('image/jpeg', quality)
+          resolve(compressedDataUrl)
+        }
+        img.onerror = () => resolve(event.target.result)
+      }
+      reader.onerror = () => resolve('')
       reader.readAsDataURL(file)
     })
   }
@@ -57,8 +92,8 @@ export default function ImageUploader({
     setHasError(false)
 
     try {
-      // Create local Data URL first for instant guaranteed preview
-      const localDataUrl = await readFileAsDataUrl(file)
+      // Create lightweight compressed Data URL
+      const compressedDataUrl = await compressImageFile(file)
 
       // Try uploading to Supabase Storage
       try {
@@ -89,9 +124,9 @@ export default function ImageUploader({
         console.warn('Supabase storage upload failed, using local Data URL fallback:', storageErr)
       }
 
-      // Fallback to Data URL if Supabase bucket fails or returns error
-      setPreview(localDataUrl)
-      onChange(localDataUrl)
+      // Fallback to compressed Data URL if Supabase bucket fails or returns error
+      setPreview(compressedDataUrl)
+      onChange(compressedDataUrl)
       toast.success('Image processed successfully!')
 
     } catch (error) {
