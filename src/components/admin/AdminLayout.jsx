@@ -4,12 +4,13 @@ import { motion, AnimatePresence } from "framer-motion"
 import {
   LayoutDashboard, ShoppingBag, Users, Bell, Menu, X,
   LogOut, ChevronRight, AlertTriangle, Store, Calendar, MessageSquare,
-  Image, Gift, FileText
+  Image, Gift, FileText, CheckCircle, Heart, Sparkles
 } from "lucide-react"
 import { useAuthStore } from "../../store/authStore"
 import { useAdminStore } from "../../store/adminStore"
 import { supabase } from "../../lib/supabase"
 import toast from "react-hot-toast"
+import logoImg from "../../assets/logo.png"
 
 // Royal Hoof dark theme palette
 // bg: #082B49  sidebar: #082B49  card: #082B49  accent: #C5963A  text: #F5EBD8
@@ -22,6 +23,9 @@ const NAV = [
   { path: "/admin/enquiries", label: "Enquiries", icon: MessageSquare },
   { path: "/admin/testimonials", label: "Testimonials", icon: Users },
   { path: "/admin/about", label: "About Section", icon: FileText },
+  { path: "/admin/why-choose", label: "Why Choose Us", icon: CheckCircle },
+  { path: "/admin/benefits", label: "Benefits Section", icon: Sparkles },
+  { path: "/admin/csr", label: "CSR Section", icon: Heart },
   { path: "/admin/orders", label: "Orders", icon: ShoppingBag },
 ]
 
@@ -42,23 +46,21 @@ function Sidebar({ pathname, onSignOut, onNavClick, user, pendingCount }) {
       <div style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }} className="px-5 py-5">
         <Link to="/admin" onClick={onNavClick} className="flex items-center gap-3 select-none">
           <img 
-            src="/LOGO.png" 
+            src={logoImg} 
             alt="Royal Hoof Logo" 
             style={{
-              width: 36, 
-              height: 36, 
-              borderRadius: 4,
+              width: 42, 
+              height: 42, 
               objectFit: "contain",
-              background: "rgba(216,199,174,0.12)",
-              border: "1px solid rgba(216,199,174,0.2)",
-              padding: "4px"
+              flexShrink: 0
             }}
+            onError={(e) => { e.target.src = "/logo.png" }}
           />
           <div>
-            <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1rem", fontWeight: 700, color: "#F5EBD8", letterSpacing: "0.06em", display: "block" }}>
-              ROYALHOOF
+            <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.125rem", fontWeight: 700, color: "#C5963A", letterSpacing: "0.06em", display: "block" }}>
+              ROYAL HOOF
             </span>
-            <span style={{ fontSize: "0.625rem", letterSpacing: "0.18em", color: "#C5963A", textTransform: "uppercase", display: "block" }}>
+            <span style={{ fontSize: "0.625rem", letterSpacing: "0.18em", color: "#D2AA55", textTransform: "uppercase", display: "block" }}>
               Admin Panel
             </span>
           </div>

@@ -1,29 +1,29 @@
 import { useState, useRef, useEffect } from "react"
 import { Link, useNavigate, useLocation } from "react-router-dom"
 import { createPortal } from "react-dom"
-import { Search, Settings, Store } from "lucide-react"
+import { Search, Settings, Store, ChevronDown } from "lucide-react"
 import { useAuthStore } from "../store/authStore"
 import { useAdminStore } from "../store/adminStore"
 import { getSetting } from "../services/settingsService"
 import { isAdmin as checkIsAdmin } from "./AdminRoute"
+import logoImg from "../assets/logo.png"
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [suggestions, setSuggestions] = useState([])
   const [scrolled, setScrolled] = useState(false)
+  const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false)
+  const [mobileAboutOpen, setMobileAboutOpen] = useState(false)
   const { user } = useAuthStore()
   const { products, loadProducts } = useAdminStore()
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const userRef = useRef(null)
   const searchRef = useRef(null)
+  const aboutRef = useRef(null)
   const isAdmin = checkIsAdmin(user)
   const isOnAdminPanel = pathname.startsWith("/admin")
-
-  useEffect(() => {
-    getSetting("site_logo_url").catch(() => {})
-  }, [])
 
   useEffect(() => {
     if (!products.length) loadProducts()
@@ -41,6 +41,7 @@ export default function Navbar() {
         // Handle user menu if needed
       }
       if (searchRef.current && !searchRef.current.contains(e.target)) setSuggestions([])
+      if (aboutRef.current && !aboutRef.current.contains(e.target)) setAboutDropdownOpen(false)
     }
     document.addEventListener("mousedown", handler)
     document.addEventListener("touchstart", handler)
@@ -79,9 +80,16 @@ export default function Navbar() {
 
   const closeAll = () => { 
     setMenuOpen(false)
+    setAboutDropdownOpen(false)
   }
 
-  const isActive = (to) => to === "/" ? pathname === "/" : pathname.startsWith(to)
+  const isAboutActive = pathname.startsWith("/about") || pathname.startsWith("/vision") || pathname.startsWith("/mission")
+
+  const isActive = (to) => {
+    if (to === "/") return pathname === "/"
+    if (to === "/about") return isAboutActive
+    return pathname.startsWith(to)
+  }
 
   const navStyle = {
     background: scrolled
@@ -96,10 +104,21 @@ export default function Navbar() {
 
   const navLinks = [
     { to: "/", label: "Home" },
+    {
+      to: "/about",
+      label: "About Us",
+      hasDropdown: true,
+      items: [
+        { to: "/about#about", label: "About" },
+        { to: "/about#vision", label: "Our Vision" },
+        { to: "/about#mission", label: "Our Mission" },
+      ],
+    },
     { to: "/events", label: "Events" },
     { to: "/packages", label: "Packages" },
     { to: "/gallery", label: "Gallery" },
     { to: "/testimonials", label: "Testimonials" },
+    { to: "/csr", label: "CSR" },
     { to: "/faq", label: "FAQ" },
     { to: "/enquiry", label: "Enquiry" },
     { to: "/contact", label: "Contact" },
@@ -137,15 +156,18 @@ export default function Navbar() {
           padding: "20px 20px 16px",
           borderBottom: "1px solid rgba(197,150,58,0.25)",
         }}>
-          <span style={{
-            fontFamily: "'Cinzel', 'Cormorant Garamond', serif",
-            fontSize: "1.125rem",
-            fontWeight: 500,
-            color: '#F5EBD8',
-            letterSpacing: "0.06em",
-          }}>
-            ROYAL HOOF
-          </span>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <img src={logoImg} alt="Logo" style={{ width: 34, height: 34, objectFit: "contain" }} onError={(e) => { e.target.src = "/logo.png" }} />
+            <span style={{
+              fontFamily: "'Cinzel', 'Cormorant Garamond', serif",
+              fontSize: "1.125rem",
+              fontWeight: 600,
+              color: '#C5963A',
+              letterSpacing: "0.06em",
+            }}>
+              ROYAL HOOF
+            </span>
+          </div>
           <button
             onClick={() => setMenuOpen(false)}
             style={{ color: "#F5EBD8", background: "none", border: "none", cursor: "pointer", padding: "4px" }}
@@ -158,36 +180,88 @@ export default function Navbar() {
 
         {/* Nav links */}
         <nav style={{ flex: 1, overflowY: "auto", padding: "12px 0" }}>
-          {navLinks.map(item => (
-            <Link
-              key={item.to}
-              to={item.to}
-              onClick={() => setMenuOpen(false)}
-              style={{
-                display: "block",
-                padding: "13px 24px",
-                color: isActive(item.to) ? "#D2AA55" : "#F5EBD8",
-                textDecoration: "none",
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: "1.0625rem",
-                fontWeight: 500,
-                letterSpacing: "0.04em",
-                borderBottom: "1px solid rgba(197,150,58,0.12)",
-                borderLeft: isActive(item.to) ? "2px solid #C5963A" : "2px solid transparent",
-                transition: "background 0.2s, color 0.2s",
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = "rgba(197,150,58,0.1)"
-                e.currentTarget.style.color = "#D2AA55"
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = "transparent"
-                e.currentTarget.style.color = isActive(item.to) ? "#D2AA55" : "#F5EBD8"
-              }}
-            >
-              {item.label}
-            </Link>
-          ))}
+          {navLinks.map(item => {
+            if (item.hasDropdown) {
+              return (
+                <div key={item.to} style={{ borderBottom: "1px solid rgba(197,150,58,0.12)" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "13px 24px",
+                      color: isActive(item.to) ? "#D2AA55" : "#F5EBD8",
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontSize: "1.0625rem",
+                      fontWeight: 500,
+                      letterSpacing: "0.04em",
+                      borderLeft: isActive(item.to) ? "2px solid #C5963A" : "2px solid transparent",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
+                  >
+                    <span>{item.label}</span>
+                    <ChevronDown size={16} style={{ transform: mobileAboutOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }} />
+                  </div>
+                  {mobileAboutOpen && (
+                    <div style={{ background: "rgba(0,0,0,0.2)", padding: "4px 0" }}>
+                      {item.items.map(sub => (
+                        <Link
+                          key={sub.to}
+                          to={sub.to}
+                          onClick={() => setMenuOpen(false)}
+                          style={{
+                            display: "block",
+                            padding: "10px 24px 10px 36px",
+                            color: "#D8C5A0",
+                            textDecoration: "none",
+                            fontFamily: "'Inter', sans-serif",
+                            fontSize: "0.875rem",
+                            transition: "color 0.2s",
+                          }}
+                          onMouseEnter={e => { e.currentTarget.style.color = "#D2AA55" }}
+                          onMouseLeave={e => { e.currentTarget.style.color = "#D8C5A0" }}
+                        >
+                          • {sub.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )
+            }
+
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  display: "block",
+                  padding: "13px 24px",
+                  color: isActive(item.to) ? "#D2AA55" : "#F5EBD8",
+                  textDecoration: "none",
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: "1.0625rem",
+                  fontWeight: 500,
+                  letterSpacing: "0.04em",
+                  borderBottom: "1px solid rgba(197,150,58,0.12)",
+                  borderLeft: isActive(item.to) ? "2px solid #C5963A" : "2px solid transparent",
+                  transition: "background 0.2s, color 0.2s",
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.background = "rgba(197,150,58,0.1)"
+                  e.currentTarget.style.color = "#D2AA55"
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.background = "transparent"
+                  e.currentTarget.style.color = isActive(item.to) ? "#D2AA55" : "#F5EBD8"
+                }}
+              >
+                {item.label}
+              </Link>
+            )
+          })}
 
           {/* Admin button inside sidebar */}
           {isAdmin && (
@@ -228,26 +302,28 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 flex-shrink-0" onClick={closeAll}>
             <img 
-              src="/LOGO.png" 
+              src={logoImg} 
               alt="Royal Hoof Logo" 
-              className="h-11 w-11 object-contain flex-shrink-0"
+              className="h-12 w-12 object-contain flex-shrink-0"
               onError={(e) => {
-                e.target.style.display = 'none';
+                e.target.src = '/logo.png';
               }}
             />
             <div className="block leading-tight">
-              <div className="font-medium tracking-[0.06em] text-[1.125rem] sm:hidden text-[#F5EBD8]" 
+              <div className="font-medium tracking-[0.06em] text-[1.125rem] sm:hidden text-[#C5963A]" 
                 style={{ 
                   fontFamily: "'Cinzel', 'Cormorant Garamond', serif",
-                  letterSpacing: '0.06em'
+                  letterSpacing: '0.06em',
+                  color: '#C5963A'
                 }}>
                 ROYAL HOOF
               </div>
               <div className="hidden sm:block">
-                <div className="font-medium tracking-[0.06em] text-[1.125rem] text-[#F5EBD8]" 
+                <div className="font-medium tracking-[0.06em] text-[1.125rem] text-[#C5963A]" 
                   style={{ 
                     fontFamily: "'Cinzel', 'Cormorant Garamond', serif",
-                    letterSpacing: '0.06em'
+                    letterSpacing: '0.06em',
+                    color: '#C5963A'
                   }}>
                   ROYAL HOOF
                 </div>
@@ -255,7 +331,8 @@ export default function Navbar() {
                   style={{ 
                     fontFamily: "'Cinzel', 'Cormorant Garamond', serif",
                     fontWeight: 400,
-                    letterSpacing: '0.10em'
+                    letterSpacing: '0.10em',
+                    color: '#D2AA55'
                   }}>
                   Horse Riding Academy
                 </div>
@@ -266,22 +343,93 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           {!isOnAdminPanel && (
             <div className="hidden lg:flex items-center gap-1 flex-1 justify-center">
-              {navLinks.map(item => (
-                <Link key={item.to} to={item.to} onClick={closeAll}
-                  className="relative px-4 h-10 flex items-center text-[0.8125rem] font-medium tracking-[0.06em] transition-colors duration-300"
-                  style={{
-                    fontFamily: "'Cormorant Garamond', serif",
-                    color: isActive(item.to) ? "#D2AA55" : "rgba(245,235,216,0.8)",
-                  }}
-                  onMouseEnter={e => { if (!isActive(item.to)) e.currentTarget.style.color = "#F5EBD8" }}
-                  onMouseLeave={e => { if (!isActive(item.to)) e.currentTarget.style.color = "rgba(245,235,216,0.8)" }}
-                >
-                  {item.label}
-                  {isActive(item.to) && (
-                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-px bg-[#C5963A]" />
-                  )}
-                </Link>
-              ))}
+              {navLinks.map(item => {
+                if (item.hasDropdown) {
+                  return (
+                    <div
+                      key={item.to}
+                      ref={aboutRef}
+                      className="relative"
+                      onMouseEnter={() => setAboutDropdownOpen(true)}
+                      onMouseLeave={() => setAboutDropdownOpen(false)}
+                    >
+                      <Link
+                        to={item.to}
+                        onClick={closeAll}
+                        className="relative px-3.5 h-10 flex items-center gap-1 text-[0.8125rem] font-medium tracking-[0.06em] transition-colors duration-300"
+                        style={{
+                          fontFamily: "'Cormorant Garamond', serif",
+                          color: isActive(item.to) ? "#D2AA55" : "rgba(245,235,216,0.8)",
+                        }}
+                        onMouseEnter={e => { if (!isActive(item.to)) e.currentTarget.style.color = "#F5EBD8" }}
+                        onMouseLeave={e => { if (!isActive(item.to)) e.currentTarget.style.color = "rgba(245,235,216,0.8)" }}
+                      >
+                        {item.label}
+                        <ChevronDown size={14} className={`transition-transform duration-200 ${aboutDropdownOpen ? 'rotate-180 text-[#D2AA55]' : ''}`} />
+                        {isActive(item.to) && (
+                          <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-px bg-[#C5963A]" />
+                        )}
+                      </Link>
+
+                      {/* Dropdown Menu */}
+                      {aboutDropdownOpen && (
+                        <div
+                          className="absolute top-full left-0 mt-1 w-44 rounded-sm shadow-xl z-50 overflow-hidden py-1"
+                          style={{
+                            background: "#0B304D",
+                            border: "1px solid rgba(197, 150, 58, 0.35)",
+                            boxShadow: "0 12px 32px rgba(8, 43, 73, 0.35)"
+                          }}
+                        >
+                          {item.items.map(subItem => (
+                            <Link
+                              key={subItem.to}
+                              to={subItem.to}
+                              onClick={() => {
+                                setAboutDropdownOpen(false)
+                                closeAll()
+                              }}
+                              className="block px-4 py-2.5 text-xs tracking-wider transition-colors duration-200"
+                              style={{
+                                fontFamily: "'Inter', sans-serif",
+                                color: "#F5EBD8",
+                                borderBottom: "1px solid rgba(197,150,58,0.08)"
+                              }}
+                              onMouseEnter={e => {
+                                e.currentTarget.style.background = "rgba(197, 150, 58, 0.15)"
+                                e.currentTarget.style.color = "#D2AA55"
+                              }}
+                              onMouseLeave={e => {
+                                e.currentTarget.style.background = "transparent"
+                                e.currentTarget.style.color = "#F5EBD8"
+                              }}
+                            >
+                              {subItem.label}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )
+                }
+
+                return (
+                  <Link key={item.to} to={item.to} onClick={closeAll}
+                    className="relative px-3.5 h-10 flex items-center text-[0.8125rem] font-medium tracking-[0.06em] transition-colors duration-300"
+                    style={{
+                      fontFamily: "'Cormorant Garamond', serif",
+                      color: isActive(item.to) ? "#D2AA55" : "rgba(245,235,216,0.8)",
+                    }}
+                    onMouseEnter={e => { if (!isActive(item.to)) e.currentTarget.style.color = "#F5EBD8" }}
+                    onMouseLeave={e => { if (!isActive(item.to)) e.currentTarget.style.color = "rgba(245,235,216,0.8)" }}
+                  >
+                    {item.label}
+                    {isActive(item.to) && (
+                      <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-px bg-[#C5963A]" />
+                    )}
+                  </Link>
+                )
+              })}
             </div>
           )}
 

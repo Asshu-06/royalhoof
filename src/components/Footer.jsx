@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Phone, MapPin, Globe } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
+import logoImg from '../assets/logo.png'
 
 export default function Footer() {
   const { t } = useLanguage()
@@ -24,10 +25,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 lg:gap-16">
 
           <div className="col-span-1 md:col-span-2">
-            <h3 className="text-2xl md:text-3xl font-bold mb-1 text-[#F5EBD8]" style={{ fontFamily: "'Playfair Display', 'Cormorant Garamond', serif", letterSpacing: "0.06em" }}>
-              ROYAL HOOF
-            </h3>
-            <p className="text-xs font-semibold mb-5 tracking-[0.2em] uppercase text-[#C5963A]" style={{ fontFamily: "'Inter', sans-serif" }}>
+            <div className="flex items-center gap-3 mb-2">
+              <img src={logoImg} alt="Royal Hoof Logo" className="w-12 h-12 object-contain flex-shrink-0" onError={(e) => { e.target.src = "/logo.png" }} />
+              <h3 className="text-2xl md:text-3xl font-bold text-[#C5963A]" style={{ fontFamily: "'Playfair Display', 'Cormorant Garamond', serif", letterSpacing: "0.06em" }}>
+                ROYAL HOOF
+              </h3>
+            </div>
+            <p className="text-xs font-semibold mb-5 tracking-[0.2em] uppercase text-[#D2AA55]" style={{ fontFamily: "'Inter', sans-serif" }}>
               HORSE RIDING ACADEMY & CLUB
             </p>
             <p className="text-sm leading-relaxed mb-8 max-w-md text-[#D8C5A0]" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -81,6 +85,7 @@ export default function Footer() {
                 { to: "/events", label: "Upcoming Events" },
                 { to: "/packages", label: "Packages & Pricing" },
                 { to: "/gallery", label: "Visual Showcase" },
+                { to: "/csr", label: "CSR Initiatives" },
                 { to: "/enquiry", label: "Book a Session" },
                 { to: "/contact", label: "Contact Us" },
               ].map(item => (

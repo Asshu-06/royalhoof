@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async'
 import toast from 'react-hot-toast'
 import { Calendar, User, Mail, Phone, MessageSquare } from 'lucide-react'
 import { supabase } from '../lib/supabase'
+import { isValidPhone, isValidEmail } from '../utils/validation'
 
 const WHATSAPP_NUMBER = "919043700776"
 
@@ -31,6 +32,8 @@ export default function EnquiryPage() {
     e.preventDefault()
     if (!enquiryForm.name.trim()) { toast.error('Name required'); return }
     if (!enquiryForm.phone.trim()) { toast.error('Phone required'); return }
+    if (!isValidPhone(enquiryForm.phone)) { toast.error('Please enter a valid 10-digit mobile number'); return }
+    if (enquiryForm.email.trim() && !isValidEmail(enquiryForm.email)) { toast.error('Please enter a valid email address'); return }
     if (!enquiryForm.message.trim()) { toast.error('Message required'); return }
     
     setSubmittingEnquiry(true)
@@ -76,6 +79,8 @@ export default function EnquiryPage() {
     e.preventDefault()
     if (!demoForm.name.trim()) { toast.error('Name required'); return }
     if (!demoForm.phone.trim()) { toast.error('Phone required'); return }
+    if (!isValidPhone(demoForm.phone)) { toast.error('Please enter a valid 10-digit mobile number'); return }
+    if (demoForm.email.trim() && !isValidEmail(demoForm.email)) { toast.error('Please enter a valid email address'); return }
     if (!demoForm.date) { toast.error('Preferred date required'); return }
     
     setSubmittingDemo(true)

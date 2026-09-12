@@ -33,6 +33,9 @@ const PolicyPage = lazy(() => import('./pages/PolicyPage'))
 // Admin pages (code split)
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
 const AdminAbout = lazy(() => import('./pages/admin/AdminAbout'))
+const AdminWhyChoose = lazy(() => import('./pages/admin/AdminWhyChoose'))
+const AdminCSR = lazy(() => import('./pages/admin/AdminCSR'))
+const AdminBenefits = lazy(() => import('./pages/admin/AdminBenefits'))
 const AdminOrders = lazy(() => import('./pages/admin/AdminOrders'))
 const AdminAnalytics = lazy(() => import('./pages/admin/AdminAnalytics'))
 const AdminUsers = lazy(() => import('./pages/admin/AdminUsers'))
@@ -97,6 +100,9 @@ export default function App() {
                     <Routes>
                       <Route index element={<AdminDashboard />} />
                       <Route path="about" element={<AdminAbout />} />
+                      <Route path="why-choose" element={<AdminWhyChoose />} />
+                      <Route path="benefits" element={<AdminBenefits />} />
+                      <Route path="csr" element={<AdminCSR />} />
                       <Route path="orders" element={<AdminOrders />} />
                       <Route path="events" element={<AdminEvents />} />
                       <Route path="packages" element={<AdminPackages />} />

@@ -3,6 +3,7 @@ import { Mail, Phone, Clock, MapPin } from 'lucide-react'
 import { Helmet } from 'react-helmet-async'
 import toast from 'react-hot-toast'
 import { supabase } from '../lib/supabase'
+import { isValidPhone, isValidEmail } from '../utils/validation'
 
 const WHATSAPP_NUMBER = "919043700776"
 
@@ -17,8 +18,14 @@ export default function ContactPage() {
   const validate = () => {
     const e = {}
     if (name.trim().length < 3) e.name = "Name must be at least 3 characters"
-    if (email && !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) e.email = "Enter a valid email address"
-    if (!phone.trim()) e.phone = "Phone number is required"
+    if (!phone.trim()) {
+      e.phone = "Phone number is required"
+    } else if (!isValidPhone(phone)) {
+      e.phone = "Enter a valid 10-digit mobile number"
+    }
+    if (email.trim() && !isValidEmail(email)) {
+      e.email = "Enter a valid email address"
+    }
     if (!message.trim()) e.message = "Message is required"
     setErrors(e)
     return Object.keys(e).length === 0

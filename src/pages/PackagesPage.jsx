@@ -290,7 +290,7 @@ export default function PackagesPage() {
                       className={`group relative bg-white rounded-2xl p-8 transition-all duration-300 ${
                         pkg.popular 
                           ? 'ring-4 ring-[#C5963A] shadow-2xl shadow-[#C5963A]/20' 
-                          : 'border-2 border-[#C5963A]/10 hover:border-[#C5963A]/30 hover:shadow-xl'
+                          : 'border-2 border-[#C5963A] hover:border-[#C5963A] hover:shadow-xl hover:shadow-[#C5963A]/20'
                       }`}
                       style={{
                         background: pkg.popular 
@@ -392,7 +392,7 @@ export default function PackagesPage() {
                       animate="visible"
                       variants={cardVariants}
                       whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                      className="group relative bg-white rounded-2xl p-8 border-2 border-[#C5963A]/10 hover:border-[#C5963A]/30 transition-all duration-300 hover:shadow-xl"
+                      className="group relative bg-white rounded-2xl p-8 border-2 border-[#C5963A] hover:border-[#C5963A] transition-all duration-300 hover:shadow-xl hover:shadow-[#C5963A]/20"
                     >
                       {/* Package Name & Age Group */}
                       <div className="mb-6">

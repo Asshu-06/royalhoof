@@ -6,6 +6,7 @@ import { useAuthStore } from "../store/authStore"
 import { useCartStore } from "../store/cartStore"
 import { useWishlistStore } from "../store/wishlistStore"
 import toast from "react-hot-toast"
+import { isValidEmail } from "../utils/validation"
 
 function GoogleIcon() {
   return (
@@ -46,7 +47,7 @@ export default function LoginPage() {
 
   const validate = () => {
     const errs = {}
-    if (!form.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) errs.email = "Invalid email address"
+    if (!isValidEmail(form.email)) errs.email = "Please enter a valid email address"
     if (mode !== "forgot" && form.password.length < 8) errs.password = "Password must be at least 8 characters"
     if (mode === "signup" && !form.name.trim()) errs.name = "Name is required"
     setErrors(errs)

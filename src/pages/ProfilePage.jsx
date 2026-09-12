@@ -6,6 +6,7 @@ import { useAuthStore } from '../store/authStore'
 import { fetchAddresses, saveAddress, updateAddress, deleteAddress, setDefaultAddress } from '../services/addressService'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import { isValidPhone } from '../utils/validation'
 
 const EMPTY_ADDR = { label: 'Home', full_name: '', phone: '', address1: '', address2: '', city: '', state: '', pincode: '', is_default: false }
 
@@ -20,6 +21,7 @@ function AddressForm({ initial, onSave, onCancel, saving }) {
     e.preventDefault()
     if (!form.full_name.trim()) { toast.error('Full name required'); return }
     if (!form.phone.trim()) { toast.error('Phone required'); return }
+    if (!isValidPhone(form.phone)) { toast.error('Please enter a valid 10-digit mobile number'); return }
     if (!form.address1.trim()) { toast.error('Address required'); return }
     if (!form.city.trim()) { toast.error('City required'); return }
     if (!form.state.trim()) { toast.error('State required'); return }

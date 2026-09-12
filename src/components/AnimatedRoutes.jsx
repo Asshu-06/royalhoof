@@ -24,6 +24,8 @@ const PackagesPage = lazy(() => import('../pages/PackagesPage'))
 const GalleryPage = lazy(() => import('../pages/GalleryPage'))
 const TestimonialsPage = lazy(() => import('../pages/TestimonialsPage'))
 const FAQPage = lazy(() => import('../pages/FAQPage'))
+const AboutPage = lazy(() => import('../pages/AboutPage'))
+const CSRPage = lazy(() => import('../pages/CSRPage'))
 
 const PageLoader = () => (
   <div className="min-h-[60vh] flex items-center justify-center bg-royal-cream">
@@ -42,6 +44,42 @@ export default function AnimatedRoutes() {
             <ErrorBoundary>
               <Suspense fallback={<PageLoader />}>
                 <HomePage />
+              </Suspense>
+            </ErrorBoundary>
+          </PageTransition>
+        } />
+        <Route path="/csr" element={
+          <PageTransition>
+            <ErrorBoundary>
+              <Suspense fallback={<PageLoader />}>
+                <CSRPage />
+              </Suspense>
+            </ErrorBoundary>
+          </PageTransition>
+        } />
+        <Route path="/about" element={
+          <PageTransition>
+            <ErrorBoundary>
+              <Suspense fallback={<PageLoader />}>
+                <AboutPage />
+              </Suspense>
+            </ErrorBoundary>
+          </PageTransition>
+        } />
+        <Route path="/vision" element={
+          <PageTransition>
+            <ErrorBoundary>
+              <Suspense fallback={<PageLoader />}>
+                <AboutPage />
+              </Suspense>
+            </ErrorBoundary>
+          </PageTransition>
+        } />
+        <Route path="/mission" element={
+          <PageTransition>
+            <ErrorBoundary>
+              <Suspense fallback={<PageLoader />}>
+                <AboutPage />
               </Suspense>
             </ErrorBoundary>
           </PageTransition>

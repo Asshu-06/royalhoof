@@ -9,6 +9,7 @@ import { fetchAddresses, saveAddress } from "../services/addressService"
 import { fetchActiveCodes, fetchUsedCodeIds, validatePromoCode, recordPromoUse, calcItemDiscount, checkEligibility } from "../services/promoService"
 import { supabase } from "../lib/supabase"
 import { formatINR } from "../utils/format"
+import { isValidPhone } from "../utils/validation"
 import toast from "react-hot-toast"
 
 const UPI_ID = "royalhoof@upi"
@@ -34,7 +35,7 @@ function NewAddressForm({ onSave, onCancel, saving }) {
   const validate = () => {
     const e = {}
     if (!form.full_name.trim()) e.full_name = "Required"
-    if (!form.phone.match(/^\d{10}$/)) e.phone = "10-digit number"
+    if (!isValidPhone(form.phone)) e.phone = "Valid 10-digit mobile number starting with 6-9"
     if (!form.address1.trim()) e.address1 = "Required"
     if (!form.city.trim()) e.city = "Required"
     if (!form.state.trim()) e.state = "Required"

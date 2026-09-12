@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 import { Link } from "react-router-dom"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { Helmet } from "react-helmet-async"
 import { ArrowRight, Shield, CheckCircle, Star, Award, Users, Calendar, MapPin, ChevronLeft, ChevronRight, Mail, Phone, MessageSquare, Activity, Heart, Target, Sparkles, Trophy, Compass, Quote } from "lucide-react"
 import { CATEGORIES } from "../data/products"
@@ -13,7 +13,9 @@ import SkeletonCard from "../components/SkeletonCard"
 import ScrollReveal from "../components/ScrollReveal"
 import ReviewsSection from "../components/ReviewsSection"
 import hero1Img from "../assets/hero1.png"
+import { DEFAULT_BENEFITS } from "../data/defaultBenefits"
 import toast from 'react-hot-toast'
+import { isValidPhone, isValidEmail } from '../utils/validation'
 
 const LOCAL_HERO_FALLBACK = hero1Img
 const FALLBACK_CAT_IMG = "https://images.unsplash.com/photo-1614703012479-0fe5f6a89be0?w=600&q=80"
@@ -73,23 +75,25 @@ function HeroSlider() {
             textShadow: "0 2px 8px rgba(0,0,0,0.3)",
             color: "#D2AA55"
           }}>Horse Riding Academy & Club</p>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium tracking-[0.06em] mb-4 text-[#082B49]" 
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium tracking-[0.06em] mb-4 text-[#C5963A]" 
               style={{ 
                 fontFamily: "'Playfair Display', 'Cormorant Garamond', serif",
                 letterSpacing: '0.04em',
                 fontWeight: 500,
                 lineHeight: 1.1,
-                textShadow: "0 4px 12px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.3)"
+                color: "#C5963A",
+                textShadow: "0 4px 16px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.5)"
               }}>
             ROYAL HOOF
           </h1>
           <div className="ornamental-divider w-48 mx-auto mb-4" />
-          <p className="text-sm md:text-base tracking-[0.15em] uppercase text-[#5A4430]" 
+          <p className="text-sm md:text-base tracking-[0.15em] uppercase text-[#D2AA55]" 
              style={{ 
                fontFamily: "'Inter', sans-serif",
                letterSpacing: '0.15em',
                fontWeight: 500,
-               textShadow: "0 2px 8px rgba(0,0,0,0.3)"
+               color: "#D2AA55",
+               textShadow: "0 2px 8px rgba(0,0,0,0.5)"
              }}>
             Nallambakkam, Tamil Nadu · ESTD. 2026
           </p>
@@ -225,6 +229,168 @@ function AboutSection() {
               ))}
             </div>
           </div>
+        </div>
+      </ScrollReveal>
+    </section>
+  )
+}
+
+/* --- What We Offer Section --- */
+function WhatWeOfferSection() {
+  const OFFERS = [
+    {
+      icon: <Target size={26} />,
+      tag: "CORE PROGRAM",
+      title: "Beginner to Advanced Horse Riding Training",
+      desc: "Structured progressive riding curriculum tailored for novices through competitive equestrians with certified instructors."
+    },
+    {
+      icon: <Sparkles size={26} />,
+      tag: "KIDS & JUNIORS",
+      title: "Children's Riding Programs",
+      desc: "Fun, safe, and nurturing riding experiences designed to build confidence, posture, and lifelong equestrian passion."
+    },
+    {
+      icon: <Calendar size={26} />,
+      tag: "RECREATIONAL",
+      title: "Weekend & Recreational Riding Sessions",
+      desc: "Relaxing weekend riding slots and flexible sessions perfect for busy professionals, families, and leisure riders."
+    },
+    {
+      icon: <Heart size={26} />,
+      tag: "HANDS-ON CARE",
+      title: "Horse Grooming & Care Education",
+      desc: "Learn essential equine hygiene, feeding, stable management, and bonding directly with our gentle, healthy horses."
+    },
+    {
+      icon: <Users size={26} />,
+      tag: "ACADEMIC",
+      title: "School & College Partnership Programs",
+      desc: "Customized sports programs, educational field trips, and accredited equestrian training for schools and universities."
+    },
+    {
+      icon: <Shield size={26} />,
+      tag: "CORPORATE",
+      title: "Corporate Team-Building Activities",
+      desc: "Unique outdoor team bonding experiences focusing on leadership, trust, communication, and equine harmony."
+    },
+    {
+      icon: <Trophy size={26} />,
+      tag: "COMPETITIONS",
+      title: "Equestrian Events and Competitions",
+      desc: "Host and participate in intra-club showcases, dressage, showjumping, and regional equestrian tournaments."
+    },
+    {
+      icon: <Star size={26} />,
+      tag: "VIP CLUB",
+      title: "Club Membership & Exclusive Riding Benefits",
+      desc: "Priority booking, exclusive arena access, horse boarding privileges, and private club member discounts."
+    }
+  ]
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.12, delayChildren: 0.05 }
+    }
+  }
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 35, scale: 0.96 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+    }
+  }
+
+  return (
+    <section className={`w-full py-24 bg-gradient-to-b from-[#F4E9D2] via-[#FAF3E4] to-[#F4E9D2] ${PX} relative overflow-hidden`}>
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 pointer-events-none opacity-20" style={{
+        backgroundImage: "radial-gradient(#C5963A 1px, transparent 1px)",
+        backgroundSize: "32px 32px"
+      }} />
+
+      <ScrollReveal>
+        <div className="text-center max-w-3xl mx-auto mb-16 relative z-10">
+          <p className="eyebrow-label mb-3">OUR SERVICES & PROGRAMS</p>
+          <h2 className="heading-editorial font-medium tracking-[0.04em]"
+            style={{ fontSize: "clamp(2rem, 3.5vw, 2.75rem)" }}>
+            What We Offer
+          </h2>
+          <div className="equestrian-divider w-28 mx-auto mt-4 mb-5" />
+          <p className="text-base text-[#765334] font-medium max-w-xl mx-auto" style={{ fontFamily: "'Inter', sans-serif" }}>
+            Explore our comprehensive range of equestrian training, recreational riding, academic programs, and exclusive club privileges.
+          </p>
+        </div>
+      </ScrollReveal>
+
+      {/* Grid of 8 Offers */}
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.15 }}
+        className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10"
+      >
+        {OFFERS.map((item, index) => (
+          <motion.div
+            key={index}
+            variants={cardVariants}
+            whileHover={{ y: -8, scale: 1.02 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ duration: 0.3 }}
+            className="group relative p-7 rounded-lg bg-[#FAF3E4] border-2 border-[#C5963A]/25 shadow-md hover:shadow-[0_12px_36px_rgba(8,43,73,0.2)] hover:border-[#082B49] transition-all duration-300 flex flex-col justify-between"
+            style={{
+              background: "linear-gradient(145deg, #FAF3E4 0%, #F4E9D2 100%)",
+            }}
+          >
+            {/* Top blue line accent on hover */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#082B49] opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-lg" />
+
+            <div>
+              <div className="flex items-center justify-between mb-5">
+                <div className="w-12 h-12 rounded-full bg-[#082B49] text-[#C5963A] flex items-center justify-center shadow-md group-hover:bg-[#082B49] group-hover:text-[#C5963A] group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(8,43,73,0.3)] transition-all duration-300 transform group-hover:rotate-6">
+                  {item.icon}
+                </div>
+                <span className="text-[0.6875rem] font-bold tracking-[0.15em] uppercase text-[#C5963A] bg-[#C5963A]/10 px-2.5 py-1 rounded border border-[#C5963A]/20 group-hover:bg-[#082B49] group-hover:text-[#C5963A] group-hover:border-[#082B49] transition-all duration-300" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  {item.tag}
+                </span>
+              </div>
+
+              <h3 className="text-xl font-bold text-[#082B49] mb-3 group-hover:text-[#082B49] transition-colors leading-snug" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                {item.title}
+              </h3>
+
+              <p className="text-xs sm:text-sm text-[#5A4430] leading-relaxed group-hover:text-[#292725] transition-colors" style={{ fontFamily: "'Inter', sans-serif" }}>
+                {item.desc}
+              </p>
+            </div>
+
+            <div className="pt-6 mt-6 border-t border-[#C5963A]/15 group-hover:border-[#082B49]/30 flex items-center justify-between text-xs font-semibold text-[#082B49] transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
+              <span className="text-[#765334] group-hover:text-[#082B49] font-bold transition-colors">Explore Program</span>
+              <ArrowRight size={14} className="text-[#C5963A] group-hover:text-[#082B49] group-hover:translate-x-1.5 transition-all duration-300" />
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
+
+      {/* Bottom CTA bar */}
+      <ScrollReveal delay={0.4}>
+        <div className="mt-16 text-center">
+          <Link
+            to="/enquiry"
+            className="btn-primary-equestrian inline-flex items-center gap-3 px-9 py-4 text-sm tracking-wider uppercase"
+            style={{
+              boxShadow: "0 6px 20px rgba(197, 150, 58, 0.35)"
+            }}
+          >
+            <Calendar size={18} />
+            Book a Session or Enquire Today
+          </Link>
         </div>
       </ScrollReveal>
     </section>
@@ -444,13 +610,21 @@ function SectionHeader({ label, title, link }) {
 
 /* --- Quick Contact Section --- */
 function QuickContactSection() {
-  const [formData, setFormData] = useState({ name: '', phone: '', message: '' })
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' })
   const [submitting, setSubmitting] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!formData.name.trim() || !formData.phone.trim() || !formData.message.trim()) {
       toast.error('Please fill all required fields')
+      return
+    }
+    if (!isValidPhone(formData.phone)) {
+      toast.error('Please enter a valid 10-digit mobile number')
+      return
+    }
+    if (formData.email.trim() && !isValidEmail(formData.email)) {
+      toast.error('Please enter a valid email address')
       return
     }
 
@@ -461,6 +635,7 @@ function QuickContactSection() {
         .insert([
           {
             name: formData.name.trim(),
+            email: formData.email.trim() || null,
             phone: formData.phone.trim(),
             message: formData.message.trim(),
             enquiry_type: 'general',
@@ -471,7 +646,7 @@ function QuickContactSection() {
       if (error) throw error
 
       toast.success('Your message has been sent! We will contact you soon.')
-      setFormData({ name: '', phone: '', message: '' })
+      setFormData({ name: '', email: '', phone: '', message: '' })
       
     } catch (error) {
       console.error('Error submitting contact form:', error)
@@ -556,14 +731,28 @@ function QuickContactSection() {
 
                 <div>
                   <label className="block text-[#C5963A] text-sm font-medium mb-2">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => handleChange('email', e.target.value)}
+                    className="w-full bg-[#F4E9D2] border border-[rgba(8,43,73,0.15)] rounded-lg px-4 py-3 text-[#292725] placeholder-[#B9AFA3]/50 focus:outline-none focus:border-[#C5963A] transition-colors"
+                    placeholder="Your email address"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[#C5963A] text-sm font-medium mb-2">
                     Phone *
                   </label>
                   <input
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => handleChange('phone', e.target.value)}
+                    maxLength={13}
                     className="w-full bg-[#F4E9D2] border border-[rgba(8,43,73,0.15)] rounded-lg px-4 py-3 text-[#292725] placeholder-[#B9AFA3]/50 focus:outline-none focus:border-[#C5963A] transition-colors"
-                    placeholder="Your phone number"
+                    placeholder="Your 10-digit phone number"
                     required
                   />
                 </div>
@@ -647,19 +836,50 @@ function EnquiryCTASection() {
   )
 }
 
-/* --- Why Choose Us Section with Horse --- */
-function WhyChooseUs({ displayFeatures }) {
+/* --- Why Choose Us Section --- */
+const DEFAULT_WHY_CHOOSE = {
+  eyebrow: "PREMIUM EQUESTRIAN EXPERIENCE",
+  title: "Why Choose Royal Hoof?",
+  subtitle: "Experience excellence, safety, and equestrian passion at Tamil Nadu's premier riding academy.",
+  features: [
+    { title: "Professional and certified trainers", desc: "Expert instructors dedicated to progressive learning.", icon: "Award" },
+    { title: "Well-maintained and rider-friendly horses", desc: "Healthy, gentle, and temperament-tested horses.", icon: "Heart" },
+    { title: "Safe and structured learning environment", desc: "Safety-first protocols and well-equipped arena.", icon: "Shield" },
+    { title: "Personalized training programs", desc: "Tailored lessons for beginner to advanced equestrians.", icon: "Target" },
+    { title: "Focus on rider confidence and skill development", desc: "Building poise, balance, and lifelong horsemanship.", icon: "Sparkles" },
+    { title: "Family-friendly club atmosphere", desc: "Welcoming community for riders of all ages.", icon: "Users" },
+  ]
+}
+
+function getIconByName(iconName, size = 22) {
+  switch (iconName) {
+    case "Award": return <Award size={size} />
+    case "Shield": return <Shield size={size} />
+    case "CheckCircle": return <CheckCircle size={size} />
+    case "Users": return <Users size={size} />
+    case "Heart": return <Heart size={size} />
+    case "Star": return <Star size={size} />
+    case "Target": return <Target size={size} />
+    case "Trophy": return <Trophy size={size} />
+    case "Compass": return <Compass size={size} />
+    case "Sparkles": return <Sparkles size={size} />
+    case "Clock": return <Clock size={size} />
+    case "MapPin": return <MapPin size={size} />
+    default: return <CheckCircle size={size} />
+  }
+}
+
+function WhyChooseUs({ customData }) {
   const canvasRef = useRef(null)
+  const d = customData || DEFAULT_WHY_CHOOSE
+  const featuresList = d.features && d.features.length ? d.features : DEFAULT_WHY_CHOOSE.features
 
   useEffect(() => {
     let dotLottie = null
-
     const loadDotLottie = async () => {
       if (canvasRef.current) {
         try {
-          // Use dynamic import for DotLottie
           const { DotLottie } = await import('@lottiefiles/dotlottie-web')
-          
           dotLottie = new DotLottie({
             canvas: canvasRef.current,
             src: '/Horse Run.lottie',
@@ -671,98 +891,73 @@ function WhyChooseUs({ displayFeatures }) {
         }
       }
     }
-
     loadDotLottie()
-
-    return () => {
-      if (dotLottie) {
-        dotLottie.destroy()
-      }
-    }
+    return () => { if (dotLottie) dotLottie.destroy() }
   }, [])
 
   return (
-    <section className={`w-full py-16 ${PX}`} style={{ background: "#F4E9D2", borderTop: "1px solid rgba(182, 165, 143, 0.05)", borderBottom: "1px solid rgba(182, 165, 143, 0.05)" }}>
-      <SectionTitle eyebrow="Premium Service" title="Why Choose Us" />
-      
-      <div className="max-w-6xl mx-auto relative">
-        {/* Central Horse Animation */}
-        <div className="flex items-center justify-center mb-8 md:mb-0">
-          <canvas 
-            ref={canvasRef}
-            width={280}
-            height={280}
-            style={{ 
-              width: '280px', 
-              height: '280px',
-              maxWidth: '90vw',
-              maxHeight: '90vw',
-              filter: 'brightness(0) saturate(100%) invert(15%) sepia(30%) saturate(2000%) hue-rotate(170deg) brightness(0.35)'
-            }}
-          />
+    <section className={`w-full py-20 ${PX}`} style={{ background: "#F4E9D2", borderTop: "1px solid rgba(197, 150, 58, 0.15)", borderBottom: "1px solid rgba(197, 150, 58, 0.15)" }}>
+      <div className="text-center max-w-3xl mx-auto mb-14">
+        <p className="eyebrow-label mb-2">{d.eyebrow || "PREMIUM EQUESTRIAN EXPERIENCE"}</p>
+        <h2 className="heading-editorial font-medium tracking-[0.04em]" style={{ fontSize: "clamp(2rem, 3.5vw, 2.75rem)" }}>
+          {d.title || "Why Choose Royal Hoof?"}
+        </h2>
+        <div className="equestrian-divider w-28 mx-auto mt-4 mb-4" />
+        {d.subtitle && (
+          <p className="text-sm md:text-base text-[#765334] font-medium" style={{ fontFamily: "'Inter', sans-serif" }}>
+            {d.subtitle}
+          </p>
+        )}
+      </div>
+
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
+        {/* Central Lottie Horse Banner */}
+        <div className="w-full lg:w-1/3 flex flex-col items-center justify-center relative">
+          <div className="relative p-6 rounded-full bg-[#FAF3E4] border border-[#C5963A]/30 shadow-xl flex items-center justify-center">
+            <canvas 
+              ref={canvasRef}
+              width={260}
+              height={260}
+              style={{ 
+                width: '260px', 
+                height: '260px',
+                maxWidth: '80vw',
+                maxHeight: '80vw',
+                filter: 'brightness(0) saturate(100%) invert(15%) sepia(30%) saturate(2000%) hue-rotate(170deg) brightness(0.35)'
+              }}
+            />
+          </div>
+          <div className="mt-4 text-center">
+            <span className="text-xs font-bold tracking-[0.2em] uppercase text-[#C5963A]" style={{ fontFamily: "'Inter', sans-serif" }}>
+              ROYAL HOOF ACADEMY
+            </span>
+          </div>
         </div>
 
-        {/* Features positioned around horse */}
-        <div className="grid grid-cols-2 gap-6 md:absolute md:inset-0 md:grid-cols-1 md:pointer-events-none">
-          {/* Top Left */}
-          <div className="flex flex-col items-center text-center gap-3 md:absolute md:top-1/4 md:left-0 lg:left-8 md:transform md:-translate-y-1/2 md:pointer-events-auto">
-            <div className="w-16 h-16 rounded-full border border-[#C5963A]/30 flex items-center justify-center text-[#C5963A]"
-              style={{ background: "rgba(154, 118, 80, 0.05)" }}>
-              {displayFeatures[0].icon}
-            </div>
-            <div>
-              <p className="text-[#292725] text-xs font-semibold tracking-wider uppercase mb-1" 
-                style={{ fontFamily: "'Inter', sans-serif" }}>
-                {displayFeatures[0].title}
-              </p>
-              {displayFeatures[0].sub && <p className="text-[#765334] text-xs">{displayFeatures[0].sub}</p>}
-            </div>
-          </div>
-
-          {/* Top Right */}
-          <div className="flex flex-col items-center text-center gap-3 md:absolute md:top-1/4 md:right-0 lg:right-8 md:transform md:-translate-y-1/2 md:pointer-events-auto">
-            <div className="w-16 h-16 rounded-full border border-[#C5963A]/30 flex items-center justify-center text-[#C5963A]"
-              style={{ background: "rgba(154, 118, 80, 0.05)" }}>
-              {displayFeatures[1].icon}
-            </div>
-            <div>
-              <p className="text-[#292725] text-xs font-semibold tracking-wider uppercase mb-1" 
-                style={{ fontFamily: "'Inter', sans-serif" }}>
-                {displayFeatures[1].title}
-              </p>
-              {displayFeatures[1].sub && <p className="text-[#765334] text-xs">{displayFeatures[1].sub}</p>}
-            </div>
-          </div>
-
-          {/* Bottom Left */}
-          <div className="flex flex-col items-center text-center gap-3 md:absolute md:bottom-1/4 md:left-0 lg:left-8 md:transform md:translate-y-1/2 md:pointer-events-auto">
-            <div className="w-16 h-16 rounded-full border border-[#C5963A]/30 flex items-center justify-center text-[#C5963A]"
-              style={{ background: "rgba(154, 118, 80, 0.05)" }}>
-              {displayFeatures[2].icon}
-            </div>
-            <div>
-              <p className="text-[#292725] text-xs font-semibold tracking-wider uppercase mb-1" 
-                style={{ fontFamily: "'Inter', sans-serif" }}>
-                {displayFeatures[2].title}
-              </p>
-              {displayFeatures[2].sub && <p className="text-[#765334] text-xs">{displayFeatures[2].sub}</p>}
-            </div>
-          </div>
-
-          {/* Bottom Right */}
-          <div className="flex flex-col items-center text-center gap-3 md:absolute md:bottom-1/4 md:right-0 lg:right-8 md:transform md:translate-y-1/2 md:pointer-events-auto">
-            <div className="w-16 h-16 rounded-full border border-[#C5963A]/30 flex items-center justify-center text-[#C5963A]"
-              style={{ background: "rgba(154, 118, 80, 0.05)" }}>
-              {displayFeatures[3].icon}
-            </div>
-            <div>
-              <p className="text-[#292725] text-xs font-semibold tracking-wider uppercase mb-1" 
-                style={{ fontFamily: "'Inter', sans-serif" }}>
-                {displayFeatures[3].title}
-              </p>
-              {displayFeatures[3].sub && <p className="text-[#765334] text-xs">{displayFeatures[3].sub}</p>}
-            </div>
-          </div>
+        {/* 6 Feature Cards Grid */}
+        <div className="w-full lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-5">
+          {featuresList.map((item, idx) => (
+            <motion.div
+              key={idx}
+              whileHover={{ y: -4, borderColor: "#C5963A" }}
+              transition={{ duration: 0.3 }}
+              className="p-5 rounded-md bg-[#FAF3E4] border border-[#C5963A]/30 shadow-sm hover:shadow-md transition-all flex items-start gap-4"
+            >
+              <div className="w-11 h-11 rounded-full bg-[#082B49] text-[#C5963A] flex items-center justify-center shrink-0 shadow">
+                {getIconByName(item.icon, 20)}
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-[#082B49] flex items-center gap-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  <span className="text-[#C5963A]">✔</span> {item.title}
+                </h3>
+                {item.desc && (
+                  <p className="text-xs text-[#5A4430] leading-relaxed mt-1" style={{ fontFamily: "'Inter', sans-serif" }}>
+                    {item.desc}
+                  </p>
+                )}
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
@@ -804,10 +999,10 @@ function GalleryItemCard({ item }) {
 function PackageCard({ pkg }) {
   return (
     <Link to="/packages" className="group block">
-      <div className="rounded-lg p-5 h-full group-hover:scale-105 transition-all duration-300"
+      <div className="rounded-lg p-5 h-full group-hover:scale-105 group-hover:shadow-[0_4px_20px_rgba(197,150,58,0.25)] transition-all duration-300"
         style={{
           background: "#FAF3E4",
-          border: "2px solid rgba(8,43,73,0.12)",
+          border: "1px solid #C5963A",
           boxShadow: "0 2px 8px rgba(0,0,0,0.06)"
         }}>
         <h3 className="text-lg font-bold text-[#292725] mb-2" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -837,148 +1032,225 @@ function PackageCard({ pkg }) {
   )
 }
 
-/* --- Benefits Poster Section (Inspired directly by Royal Hoof Poster) --- */
-function BenefitsPosterSection() {
-  const leftBenefits = [
-    {
-      title: "PHYSICAL FITNESS",
-      desc: "Improves posture, balance, strength, and coordination.",
-      icon: <Activity size={22} />
-    },
-    {
-      title: "MENTAL WELLNESS",
-      desc: "Reduces stress, boosts confidence and enhances focus & discipline.",
-      icon: <CheckCircle size={22} />
-    },
-    {
-      title: "EMOTIONAL GROWTH",
-      desc: "Builds empathy, patience and a deep bond with these magnificent beings.",
-      icon: <Heart size={22} />
-    },
-    {
-      title: "DISCIPLINE & FOCUS",
-      desc: "Teaches responsibility, self-control, and the value of consistency.",
-      icon: <Target size={22} />
-    },
-    {
-      title: "SOCIAL CONNECTION",
-      desc: "Join a community that shares your passion and creates lifelong friendships.",
-      icon: <Users size={22} />
-    }
-  ]
+function getCategoryIcon(iconName) {
+  switch (iconName) {
+    case 'Heart': return <Heart size={20} />
+    case 'Target': return <Target size={20} />
+    case 'Users': return <Users size={20} />
+    case 'Sparkles': return <Sparkles size={20} />
+    case 'Activity':
+    default: return <Activity size={20} />
+  }
+}
 
-  const rightBenefits = [
-    {
-      title: "BUILD CONFIDENCE",
-      desc: "Every small achievement in the saddle builds a stronger you.",
-      icon: <Shield size={22} />
-    },
-    {
-      title: "RESILIENCE",
-      desc: "Overcome challenges, build courage and never give up.",
-      icon: <Award size={22} />
-    },
-    {
-      title: "MINDFUL LIVING",
-      desc: "Stay present, connect with nature and enjoy the moment.",
-      icon: <Sparkles size={22} />
-    },
-    {
-      title: "ACHIEVEMENT",
-      desc: "From first ride to competitions, every milestone matters.",
-      icon: <Trophy size={22} />
-    },
-    {
-      title: "NATURE CONNECTION",
-      desc: "Ride outdoors. Breathe fresh. Feel free. Reconnect with nature.",
-      icon: <Compass size={22} />
-    }
-  ]
+/* --- Benefits Poster Section (Riding for a Better Tomorrow) --- */
+function BenefitsPosterSection() {
+  const [activeTab, setActiveTab] = useState('physical')
+  const [benefitsData, setBenefitsData] = useState(DEFAULT_BENEFITS)
+
+  useEffect(() => {
+    getSetting("benefits_content")
+      .then(val => {
+        if (val) {
+          try {
+            const parsed = JSON.parse(val)
+            if (parsed && Array.isArray(parsed.categories) && parsed.categories.length > 0) {
+              setBenefitsData(parsed)
+            }
+          } catch (e) {}
+        }
+      })
+      .catch(() => {})
+  }, [])
+
+  const categories = benefitsData.categories || DEFAULT_BENEFITS.categories
+  const currentCategory = categories.find(c => c.id === activeTab) || categories[0]
 
   const historicalQuotes = [
     {
       quote: "There is something about the outside of a horse that is good for the inside of a man.",
-      author: "ALEXANDER THE GREAT"
-    },
-    {
-      quote: "No hour of life is wasted that is spent in the saddle.",
       author: "WINSTON CHURCHILL"
     },
     {
-      quote: "The best thing for the inside of a man is the outside of a horse.",
-      author: "THEODORE ROOSEVELT"
+      quote: "The horse is the projection of peoples' dreams about themselves – strong, powerful, beautiful.",
+      author: "PAM BROWN"
     },
     {
-      quote: "A good horse is worth more than riches.",
-      author: "NAPOLEON BONAPARTE"
+      quote: "A good horse is worth more than riches, for it carries your soul forward.",
+      author: "EQUESTRIAN WISDOM"
+    },
+    {
+      quote: "No hour of life is wasted that is spent in the saddle.",
+      author: "LORD RONALD GOWER"
     }
   ]
 
   return (
-    <section className={`w-full py-20 bg-[#F4E9D2] relative overflow-hidden ${PX}`}>
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-14">
-          <p className="eyebrow-label mb-2 tracking-[0.3em]">BENEFITS OF</p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-[#082B49] mb-3" style={{ fontFamily: "'Playfair Display', 'Cormorant Garamond', serif" }}>
-            HORSE RIDING
-          </h2>
-          <p className="text-lg md:text-xl italic font-serif text-[#C5963A]">
-            Beyond the Ride, Stronger in Life.
+    <section className={`w-full py-12 sm:py-16 bg-gradient-to-b from-[#F4E9D2] via-[#FAF3E4] to-[#F4E9D2] relative overflow-hidden ${PX}`}>
+      {/* Decorative background embellishment */}
+      <div className="absolute inset-0 pointer-events-none opacity-15" style={{
+        backgroundImage: "radial-gradient(#C5963A 1px, transparent 1px)",
+        backgroundSize: "40px 40px"
+      }} />
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        
+        {/* Top Header Banner */}
+        <div className="text-center max-w-3xl mx-auto mb-8">
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 bg-[#082B49] text-[#C5963A] text-xs font-bold uppercase tracking-[0.2em] px-4 py-1.5 rounded-full border border-[#C5963A]/40 mb-3 shadow-sm"
+          >
+            <span>✦</span>
+            <span>{benefitsData.badge || "RIDING FOR A BETTER TOMORROW"}</span>
+          </motion.div>
+
+          <motion.h2 
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#082B49] mb-3" 
+            style={{ fontFamily: "'Playfair Display', 'Cormorant Garamond', serif" }}
+          >
+            {benefitsData.title || "Benefits of Horse Riding"}
+          </motion.h2>
+
+          <div className="equestrian-divider w-24 mx-auto mb-4" />
+
+          <p className="text-sm sm:text-base text-[#5A4430] leading-relaxed font-medium" style={{ fontFamily: "'Inter', sans-serif" }}>
+            {benefitsData.introText || "At Royal Hoof Horse Riding Academy & Club, every ride promotes physical, mental, and emotional well-being—building stronger communities, supporting animal welfare, and riding towards a compassionate future."}
           </p>
-          <div className="ornamental-divider w-48 mx-auto mt-4" />
         </div>
 
-        {/* Top Quote Callout (Pam Brown) */}
-        <div className="max-w-3xl mx-auto mb-16 p-6 md:p-8 rounded-lg poster-parchment-card text-center border-l-4 border-l-[#C5963A]">
-          <Quote className="w-8 h-8 mx-auto text-[#C5963A]/60 mb-3" />
-          <p className="text-base md:text-lg italic text-[#292725] leading-relaxed font-serif mb-4">
-            “The horse is the projection of peoples' dreams about themselves – strong, powerful, beautiful – and it has the capability of giving us escape from our mundane existence.”
-          </p>
-          <p className="text-xs uppercase tracking-[0.25em] font-semibold text-[#765334]">
-            — PAM BROWN
-          </p>
+        {/* Interactive Category Selector Tabs */}
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10">
+          {categories.map((cat, idx) => {
+            const catId = cat.id || `cat_${idx}`
+            const isActive = activeTab === catId || (idx === 0 && !categories.some(c => c.id === activeTab))
+            return (
+              <button
+                key={catId}
+                onClick={() => setActiveTab(catId)}
+                className={`flex items-center gap-2.5 px-6 py-3.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 shadow-sm ${
+                  isActive
+                    ? 'bg-[#082B49] text-[#C5963A] border-2 border-[#C5963A] shadow-md scale-105'
+                    : 'bg-[#FAF3E4] text-[#5A4430] border border-[#C5963A]/30 hover:bg-[#F4E9D2] hover:border-[#C5963A]/60'
+                }`}
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                <span className={isActive ? 'text-[#C5963A]' : 'text-[#765334]'}>
+                  {getCategoryIcon(cat.iconName)}
+                </span>
+                <span>{cat.label}</span>
+              </button>
+            )
+          })}
         </div>
 
-        {/* Benefits Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14 mb-16 items-start">
-          {/* Left Column */}
-          <div className="space-y-6">
-            {leftBenefits.map((item, index) => (
-              <div key={index} className="flex items-start gap-4 p-4 rounded-md hover:bg-[#F5EBD8] transition-colors border border-transparent hover:border-[#C5963A]/30">
-                <div className="poster-navy-badge shrink-0 mt-1">
-                  {item.icon}
-                </div>
-                <div>
-                  <h4 className="text-sm md:text-base font-bold text-[#082B49] tracking-wider uppercase mb-1" style={{ fontFamily: "'Inter', sans-serif" }}>
-                    {item.title}
-                  </h4>
-                  <p className="text-xs md:text-sm text-[#765334] leading-relaxed">
-                    {item.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+        {/* Tab Content Display */}
+        <div className="min-h-[420px]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentCategory.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+              className="bg-[#FAF3E4] rounded-xl border-2 border-[#C5963A]/30 p-6 sm:p-8 md:p-10 shadow-xl relative overflow-hidden"
+            >
+              {/* Relevant Horse Background Image (Highly Visible) */}
+              {currentCategory.bgImage && (
+                <>
+                  <div 
+                    className="absolute inset-0 pointer-events-none z-0 transition-all duration-700"
+                    style={{
+                      backgroundImage: `url(${currentCategory.bgImage})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      opacity: 0.75,
+                      mixBlendMode: 'multiply'
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-[#FAF3E4]/20 via-[#FAF3E4]/40 to-[#FAF3E4]/60 pointer-events-none z-0" />
+                </>
+              )}
 
-          {/* Right Column */}
-          <div className="space-y-6">
-            {rightBenefits.map((item, index) => (
-              <div key={index} className="flex items-start gap-4 p-4 rounded-md hover:bg-[#F5EBD8] transition-colors border border-transparent hover:border-[#C5963A]/30">
-                <div className="poster-navy-badge shrink-0 mt-1">
-                  {item.icon}
+              {/* Category Header Bar */}
+              <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-8 border-b border-[#C5963A]/25">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 rounded-xl bg-[#082B49] text-[#C5963A] flex items-center justify-center shadow-lg shrink-0 border border-[#C5963A]/40">
+                    {getCategoryIcon(currentCategory.iconName || currentCategory.icon)}
+                  </div>
+                  <div>
+                    <span className="text-[0.7rem] font-bold tracking-[0.2em] uppercase text-[#C5963A] bg-[#C5963A]/10 px-2.5 py-0.5 rounded border border-[#C5963A]/20">
+                      {currentCategory.badge}
+                    </span>
+                    <h3 className="text-2xl sm:text-3xl font-bold text-[#082B49] mt-1" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                      {currentCategory.label}
+                    </h3>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-sm md:text-base font-bold text-[#082B49] tracking-wider uppercase mb-1" style={{ fontFamily: "'Inter', sans-serif" }}>
-                    {item.title}
-                  </h4>
-                  <p className="text-xs md:text-sm text-[#765334] leading-relaxed">
-                    {item.desc}
-                  </p>
-                </div>
+
+                <p className="text-xs sm:text-sm text-[#5A4430] max-w-md italic leading-relaxed sm:text-right" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  "{currentCategory.summary}"
+                </p>
               </div>
-            ))}
-          </div>
+
+              {/* Category Bullet Items Grid */}
+              <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {currentCategory.items.map((item, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: idx * 0.08 }}
+                    whileHover={{ y: -6 }}
+                    className="group rounded-xl bg-[#FAF3E4] border border-[#C5963A]/35 hover:border-[#C5963A] transition-all duration-300 shadow-md hover:shadow-xl overflow-hidden flex flex-col justify-between"
+                  >
+                    <div>
+                      {/* Card Image Banner & Topic Tag */}
+                      <div className="relative w-full h-36 overflow-hidden bg-[#082B49]">
+                        <img 
+                          src={item.image} 
+                          alt={item.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-90"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#082B49] via-black/20 to-transparent opacity-80" />
+                        
+                        {/* Number & Topic Badge */}
+                        <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
+                          <span className="w-7 h-7 rounded-full bg-[#C5963A] text-[#082B49] font-bold text-xs flex items-center justify-center shadow">
+                            {item.num}
+                          </span>
+                          <span className="text-[0.625rem] font-bold tracking-[0.15em] uppercase bg-[#082B49]/90 text-[#C5963A] px-2.5 py-1 rounded border border-[#C5963A]/40 backdrop-blur-sm">
+                            {item.topicTag}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Card Content Body */}
+                      <div className="p-5">
+                        <h4 className="text-lg font-bold text-[#082B49] leading-snug mb-2 group-hover:text-[#C5963A] transition-colors" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                          {item.title}
+                        </h4>
+                        <p className="text-xs sm:text-sm text-[#5A4430] leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+                          {item.desc}
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="px-5 pb-5 pt-2 border-t border-[#C5963A]/15 flex items-center gap-1.5 text-[0.75rem] font-semibold text-[#C5963A]">
+                      <CheckCircle size={14} /> Verified Equestrian Benefit
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
 
         {/* Signature Callout Ribbon Banner */}
@@ -993,7 +1265,7 @@ function BenefitsPosterSection() {
         </div>
 
         {/* "LEGENDS HAVE SPOKEN" Quotes Strip */}
-        <div className="mt-16">
+        <div className="mt-12">
           <div className="text-center mb-8">
             <span className="inline-block bg-[#082B49] text-[#C5963A] text-xs font-bold uppercase tracking-[0.25em] px-6 py-2 rounded-full border border-[#C5963A]">
               LEGENDS HAVE SPOKEN
@@ -1002,7 +1274,7 @@ function BenefitsPosterSection() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {historicalQuotes.map((item, i) => (
-              <div key={i} className="poster-parchment-card p-6 rounded-lg flex flex-col justify-between h-full border-t-2 border-t-[#C5963A]">
+              <div key={i} className="poster-parchment-card p-6 rounded-lg flex flex-col justify-between h-full border-t-2 border-t-[#C5963A] shadow-sm hover:shadow-md transition-shadow">
                 <div>
                   <span className="text-3xl text-[#C5963A] font-serif leading-none block mb-2">“</span>
                   <p className="text-xs md:text-sm italic text-[#292725] leading-relaxed mb-4">
@@ -1035,6 +1307,7 @@ export default function HomePage() {
   const [features, setFeatures] = useState(null)
   const [upcomingEvents, setUpcomingEvents] = useState([])
   const [loadingEvents, setLoadingEvents] = useState(true)
+  const [whyChooseData, setWhyChooseData] = useState(null)
   
   // Gallery and Packages state
   const [galleryItems, setGalleryItems] = useState([])
@@ -1070,6 +1343,10 @@ export default function HomePage() {
     
     getSetting("features_bar").then(val => {
       if (val) { try { const p = JSON.parse(val); if (Array.isArray(p) && p.length) setFeatures(p) } catch {} }
+    }).catch(() => {})
+
+    getSetting("why_choose_us_en").then(val => {
+      if (val) { try { setWhyChooseData(JSON.parse(val)) } catch {} }
     }).catch(() => {})
 
     // Load events from database
@@ -1176,6 +1453,9 @@ export default function HomePage() {
       {/* ABOUT - Darker */}
       <AboutSection />
 
+      {/* WHAT WE OFFER */}
+      <WhatWeOfferSection />
+
       {/* EVENTS - Lighter */}
       <section id="events" className={`w-full py-20 section-navy ${PX}`}>
         <ScrollReveal>
@@ -1192,7 +1472,7 @@ export default function HomePage() {
 
       {/* WHY CHOOSE - Darker */}
       <ScrollReveal>
-        <WhyChooseUs displayFeatures={displayFeatures} />
+        <WhyChooseUs customData={whyChooseData} />
       </ScrollReveal>
 
       {/* BENEFITS OF HORSE RIDING - Inspired by Reference Poster */}
@@ -1208,7 +1488,7 @@ export default function HomePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {loadingPackages ? Array(6).fill(0).map((_, i) => (
             <div key={i} className="animate-pulse">
-              <div className="bg-[#FAF3E4] rounded-lg h-48"></div>
+              <div className="bg-[#FAF3E4] rounded-lg h-48 border border-[#C5963A]/40"></div>
             </div>
           )) : packages.length > 0 ? packages.map((pkg, i) => (
             <ScrollReveal key={pkg.id} delay={i * 0.1}>

@@ -390,7 +390,7 @@ export default function AdminPackages() {
                   Includes
                 </p>
                 <ul style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                  {item.features.slice(0, 4).map((f, i) => (
+                  {item.features.map((f, i) => (
                     <li key={i} style={{ 
                       color: TEXT_PRIMARY, 
                       fontSize: "0.875rem", 
@@ -411,16 +411,6 @@ export default function AdminPackages() {
                       {f}
                     </li>
                   ))}
-                  {item.features.length > 4 && (
-                    <li style={{ 
-                      color: TEXT_MUTED, 
-                      fontSize: "0.8125rem",
-                      fontStyle: "italic",
-                      marginLeft: 26
-                    }}>
-                      +{item.features.length - 4} more features
-                    </li>
-                  )}
                 </ul>
               </div>
             )}
