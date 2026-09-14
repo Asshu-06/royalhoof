@@ -287,27 +287,27 @@
     background: linear-gradient(to left, transparent, rgba(197, 150, 58, 0.5));
   }
 
-  /* Primary Button — Deep Navy */
+  /* Primary Button — Obsidian Black */
   .btn-primary-equestrian {
-    background: var(--royal-navy);
+    background: #0B0C10;
     color: var(--royal-cream-light);
     font-weight: 600;
     font-size: 0.8125rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     padding: 0.875rem 2rem;
-    border: 1.5px solid transparent;
+    border: 1.5px solid rgba(197, 150, 58, 0.3);
     border-radius: 4px;
     transition: all 0.35s ease;
     font-family: 'Inter', sans-serif;
-    box-shadow: var(--shadow-soft);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
   }
   .btn-primary-equestrian:hover {
-    background: var(--royal-navy-mid);
+    background: #181A22;
     border-color: var(--royal-gold);
     color: var(--royal-cream-light);
     transform: translateY(-2px);
-    box-shadow: var(--shadow-gold);
+    box-shadow: 0 6px 20px rgba(197, 150, 58, 0.35);
   }
 
   /* Secondary Button — Transparent Navy Border */
@@ -376,6 +376,17 @@
     outline: none;
     border-color: var(--royal-gold);
     box-shadow: 0 0 0 3px rgba(197, 150, 58, 0.12);
+  }
+
+  select.input-premium, select {
+    background-color: var(--royal-cream-input);
+    color: var(--royal-navy);
+    border: 1px solid var(--border-gold);
+  }
+  select.input-premium option, select option {
+    background-color: #FAF3E4;
+    color: #082B49;
+    padding: 8px 12px;
   }
 
   .eyebrow-label {

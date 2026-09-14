@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useParams, Link, useNavigate } from "react-router-dom"
+import { useParams, Link, useNavigate, useLocation } from "react-router-dom"
 import { Helmet } from "react-helmet-async"
 import { motion } from "framer-motion"
 import { 
@@ -11,6 +11,7 @@ import { getSetting } from "../services/settingsService"
 import { DEFAULT_OFFERINGS } from "../data/defaultOfferings"
 import { supabase } from "../lib/supabase"
 import toast from "react-hot-toast"
+import { isValidPhone, sanitizePhone } from "../utils/validation"
 
 const ICON_MAP = {
   Target: <Target size={24} />,
@@ -26,8 +27,19 @@ const ICON_MAP = {
 export default function ProgramDetailPage() {
   const { slug } = useParams()
   const navigate = useNavigate()
+  const location = useLocation()
   const [offerings, setOfferings] = useState(DEFAULT_OFFERINGS)
   const [loading, setLoading] = useState(true)
+
+  const handleBack = () => {
+    if (location.state?.fromSection) {
+      navigate(`/#${location.state.fromSection}`)
+    } else if (window.history.state?.idx > 0) {
+      navigate(-1)
+    } else {
+      navigate('/#what-we-offer')
+    }
+  }
   
   // Enquiry form state
   const [formData, setFormData] = useState({
@@ -79,6 +91,10 @@ export default function ProgramDetailPage() {
     e.preventDefault()
     if (!formData.name || !formData.phone) {
       toast.error('Please enter your name and phone number')
+      return
+    }
+    if (!isValidPhone(formData.phone)) {
+      toast.error('Please enter a valid 10-digit mobile number')
       return
     }
 
@@ -143,9 +159,16 @@ export default function ProgramDetailPage() {
       <div className="bg-[#082B49] text-[#F5EBD8] py-12 px-4 sm:px-6 lg:px-8 border-b border-[#C5963A]/20">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-2 text-xs sm:text-sm text-[#D2AA55] mb-6">
+            <button 
+              onClick={handleBack} 
+              className="inline-flex items-center gap-1 hover:text-[#F5EBD8] transition-colors cursor-pointer bg-transparent border-0 text-[#D2AA55] font-medium mr-1"
+            >
+              <ArrowLeft size={14} /> Back
+            </button>
+            <span>/</span>
             <Link to="/" className="hover:text-[#F5EBD8] transition-colors">Home</Link>
             <span>/</span>
-            <Link to="/" className="hover:text-[#F5EBD8] transition-colors">What We Offer</Link>
+            <Link to="/#what-we-offer" className="hover:text-[#F5EBD8] transition-colors">What We Offer</Link>
             <span>/</span>
             <span className="text-[#F5EBD8] font-medium truncate">{program.title}</span>
           </div>
@@ -391,8 +414,21 @@ export default function ProgramDetailPage() {
                     type="tel"
                     required
                     value={formData.phone}
-                    onChange={e => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder="+91 98765 43210"
+                    onChange={e => setFormData({ ...formData, phone: e.target.value.replace(/\D/g, '').slice(0, 10) })}
+                    onKeyDown={(e) => {
+                      if (!/[0-9]/.test(e.key) && !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter'].includes(e.key) && !e.ctrlKey && !e.metaKey) {
+                        e.preventDefault()
+                      }
+                    }}
+                    onPaste={(e) => {
+                      e.preventDefault()
+                      const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 10)
+                      setFormData(prev => ({ ...prev, phone: pasted }))
+                    }}
+                    maxLength={10}
+                    inputMode="numeric"
+                    pattern="[0-9]{10}"
+                    placeholder="10-digit mobile number"
                     className="w-full px-4 py-2.5 rounded-lg border border-[#C5963A]/30 bg-white text-[#292725] text-sm focus:outline-none focus:border-[#082B49]"
                   />
                 </div>

@@ -2,8 +2,43 @@ import { useState, useEffect } from "react"
 import { useLocation } from "react-router-dom"
 import { Helmet } from "react-helmet-async"
 import { motion } from "framer-motion"
-import { Eye, Compass, Award, Shield, Heart, Users, MapPin, Sparkles, CheckCircle2, Trophy, Star } from "lucide-react"
+import { Eye, Compass, Award, Shield, Heart, Users, MapPin, Sparkles, CheckCircle2, Trophy, Star, Mail } from "lucide-react"
 import { getSetting } from "../services/settingsService"
+
+const TEAM_MEMBERS = [
+  {
+    name: "Capt. Vikramaditya Singh",
+    role: "Founder & Chief Equestrian Instructor",
+    experience: "18+ Yrs Exp.",
+    specialty: "Dressage & Show Jumping",
+    bio: "Former National Medalist and Master Trainer with over 18 years of military & civil equestrian experience. Passionate about building elite riding technique with strict safety standards.",
+    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    name: "Elena Rostova",
+    role: "Senior Equine Coach & Youth Specialist",
+    experience: "12+ Yrs Exp.",
+    specialty: "Junior Rider Development",
+    bio: "Specializes in youth riding foundation, rider balance, and confidence building. Has trained over 400+ junior riders from beginners to regional competition level.",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    name: "Dr. Rajesh K. Varma",
+    role: "Chief Veterinary & Care Director",
+    experience: "15+ Yrs Exp.",
+    specialty: "Equine Health & Welfare",
+    bio: "Oversees horse nutrition, health care, temperament testing, and stable hygiene. Ensures all Royal Hoof horses remain in peak athletic condition and gentle spirit.",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    name: "Ananya Sundaram",
+    role: "Head of Operations & Academy Experience",
+    experience: "8+ Yrs Exp.",
+    specialty: "Member Experience & Events",
+    bio: "Manages student onboarding, custom scheduling, safety orientation, and club event organization for an extraordinary academy journey at Giri Farms.",
+    image: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=800&q=80"
+  }
+]
 
 const DEFAULT_ABOUT = {
   title: "Royal Hoof Horse Riding Academy",
@@ -55,13 +90,15 @@ const scaleIn = {
 export default function AboutPage() {
   const [data, setData] = useState(DEFAULT_ABOUT)
   const [imageUrl, setImageUrl] = useState("")
+  const [teamMembers, setTeamMembers] = useState(TEAM_MEMBERS)
   const location = useLocation()
 
   useEffect(() => {
     Promise.all([
       getSetting("about_section_en").catch(() => null),
       getSetting("about_image_url").catch(() => null),
-    ]).then(([content, img]) => {
+      getSetting("about_team").catch(() => null),
+    ]).then(([content, img, team]) => {
       if (content) {
         try {
           const parsed = typeof content === 'string' ? JSON.parse(content) : content
@@ -73,15 +110,26 @@ export default function AboutPage() {
         }
       }
       if (img && typeof img === 'string') setImageUrl(img)
+      if (team) {
+        try {
+          const parsedTeam = typeof team === 'string' ? JSON.parse(team) : team
+          if (Array.isArray(parsedTeam) && parsedTeam.length > 0) {
+            setTeamMembers(parsedTeam)
+          }
+        } catch (e) {
+          console.warn("Error parsing about_team:", e)
+        }
+      }
     })
   }, [])
 
-  // Handle auto-scroll to hash section (#about, #vision, #mission) or path section
+  // Handle auto-scroll to hash section (#about, #vision, #mission, #our-team) or path section
   useEffect(() => {
     let hash = location.hash.replace("#", "")
     if (!hash) {
       if (location.pathname.includes("vision")) hash = "vision"
       else if (location.pathname.includes("mission")) hash = "mission"
+      else if (location.pathname.includes("team")) hash = "our-team"
       else if (location.pathname.includes("about")) hash = "about"
     }
 
@@ -101,7 +149,7 @@ export default function AboutPage() {
     <div className="min-h-screen bg-royal-cream text-[#292725] overflow-x-hidden">
       <Helmet>
         <title>About Us | Royal Hoof Horse Riding Academy</title>
-        <meta name="description" content="Discover Royal Hoof Horse Riding Academy, our mission, and our vision in Nallambakkam, Tamil Nadu." />
+        <meta name="description" content="Discover Royal Hoof Horse Riding Academy, our mission, vision, and expert team in Nallambakkam, Tamil Nadu." />
       </Helmet>
 
       {/* HERO BANNER */}
@@ -145,6 +193,9 @@ export default function AboutPage() {
             </a>
             <a href="#mission" className="px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-[#C5963A]/20 hover:bg-[#C5963A] text-[#F5EBD8] hover:text-[#082B49] border border-[#C5963A]/40 transition-all duration-300 transform hover:-translate-y-0.5">
               Our Mission
+            </a>
+            <a href="#our-team" className="px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-[#C5963A]/20 hover:bg-[#C5963A] text-[#F5EBD8] hover:text-[#082B49] border border-[#C5963A]/40 transition-all duration-300 transform hover:-translate-y-0.5">
+              Our Team
             </a>
           </motion.div>
         </div>
@@ -470,6 +521,148 @@ export default function AboutPage() {
             </div>
           </motion.div>
         </motion.div>
+      </section>
+
+      {/* SECTION 4: OUR TEAM */}
+      <section id="our-team" className="py-20 md:py-28 bg-[#082B49] text-[#F5EBD8] border-t border-[#C5963A]/30 relative scroll-mt-24 overflow-hidden">
+        {/* Decorative background grid and ambient lighting */}
+        <div className="absolute inset-0 pointer-events-none opacity-10" style={{
+          backgroundImage: "radial-gradient(#C5963A 1px, transparent 1px)",
+          backgroundSize: "32px 32px"
+        }} />
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-[#C5963A]/10 blur-3xl pointer-events-none" />
+        <div className="absolute top-1/3 -right-40 w-96 h-96 rounded-full bg-[#C5963A]/10 blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 xl:px-20 relative">
+          {/* Section Title Header */}
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+            variants={fadeInUp}
+            className="text-center max-w-3xl mx-auto mb-16"
+          >
+            <motion.div 
+              whileHover={{ scale: 1.1, rotate: 10 }}
+              transition={{ duration: 0.5 }}
+              className="w-16 h-16 rounded-full bg-[#C5963A]/20 border border-[#C5963A] flex items-center justify-center mx-auto mb-5 text-[#D2AA55] shadow-lg cursor-pointer"
+            >
+              <Users size={30} />
+            </motion.div>
+
+            <span className="text-xs font-semibold tracking-[0.25em] uppercase text-[#D2AA55]" style={{ fontFamily: "'Inter', sans-serif" }}>
+              EXPERT INSTRUCTORS & LEADERSHIP
+            </span>
+
+            <h2 className="text-4xl md:text-5xl font-bold mt-2 text-[#F5EBD8]" style={{ fontFamily: "'Playfair Display', 'Cormorant Garamond', serif" }}>
+              Meet Our Team
+            </h2>
+            <div className="w-24 h-0.5 bg-[#C5963A] mx-auto mt-4 mb-6" />
+            
+            <p className="text-sm md:text-base text-[#D8C5A0] leading-relaxed font-light" style={{ fontFamily: "'Inter', sans-serif" }}>
+              Our passionate team of certified equestrian coaches, veterinary specialists, and stable managers are dedicated to nurturing safety, confidence, and riding excellence for every student.
+            </p>
+          </motion.div>
+
+          {/* Team Cards Grid with Stagger & Hover Animations */}
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          >
+            {teamMembers.map((member, idx) => (
+              <motion.div
+                key={idx}
+                variants={fadeInUp}
+                whileHover={{ y: -10, transition: { duration: 0.3 } }}
+                className="group relative rounded-xl bg-gradient-to-b from-[#0B304D] to-[#06243F] border border-[#C5963A]/30 overflow-hidden shadow-xl hover:shadow-2xl hover:border-[#C5963A] transition-all duration-300 flex flex-col justify-between"
+              >
+                {/* Top Image Container with Smooth Zoom Animation */}
+                <div className="relative h-72 w-full overflow-hidden bg-[#082B49]">
+                  <img 
+                    src={member.image} 
+                    alt={member.name} 
+                    className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-110"
+                    onError={(e) => {
+                      e.target.src = "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800&q=80"
+                    }}
+                  />
+                  {/* Dark Overlay Gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B304D] via-transparent to-transparent opacity-90 group-hover:opacity-75 transition-opacity" />
+                  
+                  {/* Experience Badge */}
+                  <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-[#082B49]/85 backdrop-blur border border-[#C5963A]/50 text-[10px] font-bold uppercase tracking-wider text-[#D2AA55] shadow-md">
+                    {member.experience}
+                  </div>
+
+                  {/* Specialty Tag */}
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center gap-1.5 text-xs text-[#FAF3E4] font-medium bg-[#082B49]/90 backdrop-blur px-3 py-1.5 rounded border border-[#C5963A]/30">
+                    <Award size={14} className="text-[#C5963A] shrink-0" />
+                    <span className="truncate">{member.specialty}</span>
+                  </div>
+                </div>
+
+                {/* Content Box */}
+                <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+                  <div>
+                    <h3 className="text-xl font-bold text-[#F5EBD8] group-hover:text-[#C5963A] transition-colors" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                      {member.name}
+                    </h3>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-[#D2AA55] mt-1" style={{ fontFamily: "'Inter', sans-serif" }}>
+                      {member.role}
+                    </p>
+                    <p className="text-xs text-[#D8C5A0] leading-relaxed mt-3 font-light" style={{ fontFamily: "'Inter', sans-serif" }}>
+                      {member.bio}
+                    </p>
+                  </div>
+
+                  {/* Bottom Gold Line & Contact Action */}
+                  <div className="pt-4 border-t border-[#C5963A]/20 flex items-center justify-between">
+                    <span className="text-[10px] uppercase font-bold tracking-widest text-[#C5963A]/80">
+                      Royal Hoof Staff
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <a 
+                        href={`mailto:info@royalhoof.com?subject=Enquiry%20for%20${encodeURIComponent(member.name)}`}
+                        className="w-8 h-8 rounded-full bg-[#C5963A]/10 hover:bg-[#C5963A] text-[#D2AA55] hover:text-[#082B49] border border-[#C5963A]/40 flex items-center justify-center transition-all duration-300 transform hover:scale-110"
+                        title={`Contact ${member.name}`}
+                      >
+                        <Mail size={14} />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Bottom CTA Banner */}
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-40px" }}
+            variants={fadeInUp}
+            className="mt-16 p-8 rounded-2xl bg-gradient-to-r from-[#C5963A]/20 via-[#0B304D] to-[#C5963A]/20 border border-[#C5963A]/40 text-center flex flex-col md:flex-row items-center justify-between gap-6"
+          >
+            <div className="text-left max-w-2xl">
+              <h4 className="text-2xl font-bold text-[#F5EBD8]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                Ready to Train with South India's Top Instructors?
+              </h4>
+              <p className="text-xs sm:text-sm text-[#D8C5A0] mt-1" style={{ fontFamily: "'Inter', sans-serif" }}>
+                Book a free trial demo session or speak directly with our senior coaches at Giri Farms, Nallambakkam.
+              </p>
+            </div>
+
+            <a 
+              href="/enquiry"
+              className="px-7 py-3 rounded-full bg-[#C5963A] text-[#082B49] hover:bg-[#D2AA55] font-bold text-xs uppercase tracking-wider transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg flex-shrink-0"
+            >
+              Book Demo Session
+            </a>
+          </motion.div>
+        </div>
       </section>
     </div>
   )

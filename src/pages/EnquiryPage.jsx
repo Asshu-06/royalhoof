@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import toast from 'react-hot-toast'
-import { Calendar, User, Mail, Phone, MessageSquare } from 'lucide-react'
+import { Calendar, User, Mail, Phone, MessageSquare, Users } from 'lucide-react'
 import { supabase } from '../lib/supabase'
-import { isValidPhone, isValidEmail } from '../utils/validation'
+import { isValidPhone, isValidEmail, sanitizePhone } from '../utils/validation'
 
 const WHATSAPP_NUMBER = "919043700776"
 
@@ -23,6 +23,7 @@ export default function EnquiryPage() {
     name: '',
     email: '',
     phone: '',
+    category: 'child',
     date: '',
     time: '',
     notes: ''
@@ -81,43 +82,47 @@ export default function EnquiryPage() {
     if (!demoForm.phone.trim()) { toast.error('Phone required'); return }
     if (!isValidPhone(demoForm.phone)) { toast.error('Please enter a valid 10-digit mobile number'); return }
     if (demoForm.email.trim() && !isValidEmail(demoForm.email)) { toast.error('Please enter a valid email address'); return }
+    if (!demoForm.category) { toast.error('Category required'); return }
     if (!demoForm.date) { toast.error('Preferred date required'); return }
     
     setSubmittingDemo(true)
+    const categoryLabel = demoForm.category === 'child' ? 'Child' : 'Adult'
     try {
-      // Save to database
-      const { error } = await supabase
-        .from('enquiries')
-        .insert([
-          {
-            name: demoForm.name.trim(),
-            email: demoForm.email.trim() || null,
-            phone: demoForm.phone.trim(),
-            message: demoForm.notes.trim() || 'Free demo session request',
-            enquiry_type: 'demo',
-            status: 'new',
-            preferred_date: demoForm.date,
-            preferred_time: demoForm.time || null
-          }
-        ])
+      const enquiryPayload = {
+        name: demoForm.name.trim(),
+        email: demoForm.email.trim() || null,
+        phone: demoForm.phone.trim(),
+        message: `[Category: ${categoryLabel}] ${demoForm.notes.trim()}`.trim(),
+        enquiry_type: 'demo',
+        status: 'new',
+        preferred_date: demoForm.date,
+        preferred_time: demoForm.time || null,
+        category: demoForm.category
+      }
 
-      if (error) throw error
+      let { error } = await supabase.from('enquiries').insert([enquiryPayload])
+      if (error && (error.message?.includes('category') || error.code === '42703')) {
+        delete enquiryPayload.category
+        const fallbackRes = await supabase.from('enquiries').insert([enquiryPayload])
+        if (fallbackRes.error) throw fallbackRes.error
+      } else if (error) {
+        throw error
+      }
 
       toast.success('Your demo request has been submitted successfully! We will contact you soon.')
       
       // Also open WhatsApp for immediate contact
-      const text = `*Free Demo Session Request*\n\nName: ${demoForm.name}\nEmail: ${demoForm.email}\nPhone: ${demoForm.phone}\nPreferred Date: ${demoForm.date}\nPreferred Time: ${demoForm.time || 'Flexible'}\n\nNotes:\n${demoForm.notes || 'N/A'}`
+      const text = `*Free Demo Session Request*\n\nCategory: ${categoryLabel}\nName: ${demoForm.name}\nEmail: ${demoForm.email}\nPhone: ${demoForm.phone}\nPreferred Date: ${demoForm.date}\nPreferred Time: ${demoForm.time || 'Flexible'}\n\nNotes:\n${demoForm.notes || 'N/A'}`
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank")
       
       // Reset form
-      setDemoForm({ name: '', email: '', phone: '', date: '', time: '', notes: '' })
+      setDemoForm({ name: '', email: '', phone: '', category: 'child', date: '', time: '', notes: '' })
       
     } catch (error) {
       console.error('Error submitting demo request:', error)
       toast.error('Failed to submit demo request. Please try again or contact us directly via WhatsApp.')
       
-      // Fallback to WhatsApp only
-      const text = `*Free Demo Session Request*\n\nName: ${demoForm.name}\nEmail: ${demoForm.email}\nPhone: ${demoForm.phone}\nPreferred Date: ${demoForm.date}\nPreferred Time: ${demoForm.time || 'Flexible'}\n\nNotes:\n${demoForm.notes || 'N/A'}`
+      const text = `*Free Demo Session Request*\n\nCategory: ${categoryLabel}\nName: ${demoForm.name}\nEmail: ${demoForm.email}\nPhone: ${demoForm.phone}\nPreferred Date: ${demoForm.date}\nPreferred Time: ${demoForm.time || 'Flexible'}\n\nNotes:\n${demoForm.notes || 'N/A'}`
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank")
     } finally {
       setSubmittingDemo(false)
@@ -215,7 +220,20 @@ export default function EnquiryPage() {
                     <input
                       type="tel"
                       value={enquiryForm.phone}
-                      onChange={e => setEnquiryForm({ ...enquiryForm, phone: e.target.value })}
+                      onChange={e => setEnquiryForm({ ...enquiryForm, phone: e.target.value.replace(/\D/g, '').slice(0, 10) })}
+                      onKeyDown={(e) => {
+                        if (!/[0-9]/.test(e.key) && !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter'].includes(e.key) && !e.ctrlKey && !e.metaKey) {
+                          e.preventDefault()
+                        }
+                      }}
+                      onPaste={(e) => {
+                        e.preventDefault()
+                        const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 10)
+                        setEnquiryForm(prev => ({ ...prev, phone: pasted }))
+                      }}
+                      maxLength={10}
+                      inputMode="numeric"
+                      pattern="[0-9]{10}"
                       placeholder="10-digit mobile number"
                       className={inputClass}
                     />
@@ -308,14 +326,60 @@ export default function EnquiryPage() {
                     <input
                       type="tel"
                       value={demoForm.phone}
-                      onChange={e => setDemoForm({ ...demoForm, phone: e.target.value })}
+                      onChange={e => setDemoForm({ ...demoForm, phone: e.target.value.replace(/\D/g, '').slice(0, 10) })}
+                      onKeyDown={(e) => {
+                        if (!/[0-9]/.test(e.key) && !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter'].includes(e.key) && !e.ctrlKey && !e.metaKey) {
+                          e.preventDefault()
+                        }
+                      }}
+                      onPaste={(e) => {
+                        e.preventDefault()
+                        const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 10)
+                        setDemoForm(prev => ({ ...prev, phone: pasted }))
+                      }}
+                      maxLength={10}
+                      inputMode="numeric"
+                      pattern="[0-9]{10}"
                       placeholder="10-digit mobile number"
                       className={inputClass}
                     />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div>
+                    <label className={labelClass}>
+                      <Users size={16} className="inline-block mr-2 mb-1" />
+                      Category *
+                    </label>
+                    <div className="grid grid-cols-2 gap-2 h-[48px]">
+                      <button
+                        type="button"
+                        onClick={() => setDemoForm({ ...demoForm, category: 'child' })}
+                        className={`w-full h-full rounded-sm text-sm font-medium transition-all border flex items-center justify-center gap-2 ${
+                          demoForm.category === 'child'
+                            ? 'bg-[#082B49] text-[#C5963A] border-[#C5963A] shadow-md font-semibold ring-1 ring-[#C5963A]'
+                            : 'bg-[#FAF3E4] text-[#082B49] border-[rgba(197,150,58,0.4)] hover:border-[#C5963A] hover:bg-[#F2E5CE]'
+                        }`}
+                      >
+                        <span className={`w-2.5 h-2.5 rounded-full transition-all ${demoForm.category === 'child' ? 'bg-[#C5963A] scale-110' : 'bg-transparent border border-[#765334]'}`} />
+                        Child
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setDemoForm({ ...demoForm, category: 'adult' })}
+                        className={`w-full h-full rounded-sm text-sm font-medium transition-all border flex items-center justify-center gap-2 ${
+                          demoForm.category === 'adult'
+                            ? 'bg-[#082B49] text-[#C5963A] border-[#C5963A] shadow-md font-semibold ring-1 ring-[#C5963A]'
+                            : 'bg-[#FAF3E4] text-[#082B49] border-[rgba(197,150,58,0.4)] hover:border-[#C5963A] hover:bg-[#F2E5CE]'
+                        }`}
+                      >
+                        <span className={`w-2.5 h-2.5 rounded-full transition-all ${demoForm.category === 'adult' ? 'bg-[#C5963A] scale-110' : 'bg-transparent border border-[#765334]'}`} />
+                        Adult
+                      </button>
+                    </div>
+                  </div>
+
                   <div>
                     <label className={labelClass}>
                       <Calendar size={16} className="inline-block mr-2 mb-1" />

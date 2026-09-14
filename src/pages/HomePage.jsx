@@ -16,7 +16,7 @@ import ReviewsSection from "../components/ReviewsSection"
 import hero1Img from "../assets/hero1.png"
 import { DEFAULT_BENEFITS } from "../data/defaultBenefits"
 import { DEFAULT_OFFERINGS, DEFAULT_OFFERINGS_HEADER } from "../data/defaultOfferings"
-import { isValidPhone, isValidEmail } from '../utils/validation'
+import { isValidPhone, isValidEmail, sanitizePhone } from '../utils/validation'
 
 const LOCAL_HERO_FALLBACK = hero1Img
 const FALLBACK_CAT_IMG = "https://images.unsplash.com/photo-1614703012479-0fe5f6a89be0?w=600&q=80"
@@ -27,6 +27,18 @@ const CAT_DESC = {
   "Rare Collectibles": "Exclusive collection",
 }
 const PX = "px-6 lg:px-12 xl:px-20"
+
+export const prepareSectionReturn = (sectionId) => {
+  if (sectionId && typeof window !== 'undefined' && window.history?.replaceState) {
+    try {
+      window.history.replaceState(
+        { ...window.history.state, fromSection: sectionId },
+        '',
+        window.location.pathname + window.location.search + '#' + sectionId
+      )
+    } catch (e) {}
+  }
+}
 
 /* --- Hero Section --- */
 function HeroSlider() {
@@ -106,7 +118,7 @@ function HeroSlider() {
             to="/enquiry"
             className="btn-primary-equestrian inline-flex items-center gap-3 px-8 py-4 text-base"
             style={{
-              boxShadow: "0 4px 16px rgba(197, 150, 58, 0.4)"
+              boxShadow: "0 4px 20px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(197, 150, 58, 0.35)"
             }}
           >
             <Calendar size={20} />
@@ -173,7 +185,7 @@ function AboutSection() {
   const displayImage = imageUrl || "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800&q=80"
 
   return (
-    <section className={`w-full py-20 bg-[#F4E9D2] ${PX}`}>
+    <section id="about-us" className={`w-full py-20 bg-[#F4E9D2] ${PX}`}>
       <ScrollReveal>
         <div className="max-w-6xl mx-auto">
           {/* Eyebrow */}
@@ -294,7 +306,7 @@ function WhatWeOfferSection() {
   }
 
   return (
-    <section className={`w-full py-24 bg-gradient-to-b from-[#F4E9D2] via-[#FAF3E4] to-[#F4E9D2] ${PX} relative overflow-hidden`}>
+    <section id="what-we-offer" className={`w-full py-24 bg-gradient-to-b from-[#F4E9D2] via-[#FAF3E4] to-[#F4E9D2] ${PX} relative overflow-hidden`}>
       {/* Subtle background pattern */}
       <div className="absolute inset-0 pointer-events-none opacity-20" style={{
         backgroundImage: "radial-gradient(#C5963A 1px, transparent 1px)",
@@ -337,6 +349,8 @@ function WhatWeOfferSection() {
             >
               <Link
                 to={linkPath}
+                state={{ fromSection: 'what-we-offer' }}
+                onClick={() => prepareSectionReturn('what-we-offer')}
                 className="group relative rounded-xl bg-[#FAF3E4] border-2 border-[#C5963A]/25 shadow-md hover:shadow-[0_12px_36px_rgba(8,43,73,0.2)] hover:border-[#082B49] transition-all duration-300 flex flex-col justify-between h-full block cursor-pointer overflow-hidden"
               >
                 {/* Program Card Header Banner Image */}
@@ -472,7 +486,12 @@ function EventsSlider({ events }) {
         >
           {events.map((event) => (
             <div key={event.id} className="min-w-full">
-              <Link to="/events" className="group block">
+              <Link 
+                to="/events" 
+                state={{ fromSection: 'events' }}
+                onClick={() => prepareSectionReturn('events')}
+                className="group block"
+              >
                 <div className="relative">
                   {/* Event Image */}
                   <div className="relative w-full overflow-hidden" style={{ aspectRatio: "16/9" }}>
@@ -597,7 +616,7 @@ function EventsSlider({ events }) {
     </div>
   )
 }
-function SectionHeader({ label, title, link }) {
+function SectionHeader({ label, title, link, sectionId }) {
   return (
     <div className="flex items-center justify-between mb-10">
       <div>
@@ -605,8 +624,13 @@ function SectionHeader({ label, title, link }) {
         <h2 className="heading-editorial text-2xl sm:text-3xl">{title}</h2>
       </div>
       {link && (
-        <Link to={link} className="flex items-center gap-2 text-sm font-medium transition-colors shrink-0 hover:gap-3 duration-300"
-          style={{ color: "#C5963A", fontFamily: "'Inter', sans-serif" }}>
+        <Link 
+          to={link} 
+          state={sectionId ? { fromSection: sectionId } : undefined}
+          onClick={() => sectionId && prepareSectionReturn(sectionId)}
+          className="flex items-center gap-2 text-sm font-medium transition-colors shrink-0 hover:gap-3 duration-300"
+          style={{ color: "#C5963A", fontFamily: "'Inter', sans-serif" }}
+        >
           View All <ArrowRight size={16} />
         </Link>
       )}
@@ -755,10 +779,22 @@ function QuickContactSection() {
                   <input
                     type="tel"
                     value={formData.phone}
-                    onChange={(e) => handleChange('phone', e.target.value)}
-                    maxLength={13}
+                    onChange={(e) => handleChange('phone', e.target.value.replace(/\D/g, '').slice(0, 10))}
+                    onKeyDown={(e) => {
+                      if (!/[0-9]/.test(e.key) && !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter'].includes(e.key) && !e.ctrlKey && !e.metaKey) {
+                        e.preventDefault()
+                      }
+                    }}
+                    onPaste={(e) => {
+                      e.preventDefault()
+                      const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 10)
+                      handleChange('phone', pasted)
+                    }}
+                    maxLength={10}
+                    inputMode="numeric"
+                    pattern="[0-9]{10}"
                     className="w-full bg-[#F4E9D2] border border-[rgba(8,43,73,0.15)] rounded-lg px-4 py-3 text-[#292725] placeholder-[#B9AFA3]/50 focus:outline-none focus:border-[#C5963A] transition-colors"
-                    placeholder="Your 10-digit phone number"
+                    placeholder="10-digit mobile number"
                     required
                   />
                 </div>
@@ -965,7 +1001,12 @@ function WhyChooseUs({ customData }) {
 /* --- Gallery Item Component --- */
 function GalleryItemCard({ item }) {
   return (
-    <Link to="/gallery" className="group block">
+    <Link 
+      to="/gallery" 
+      state={{ fromSection: 'gallery' }}
+      onClick={() => prepareSectionReturn('gallery')}
+      className="group block"
+    >
       <div className="relative overflow-hidden rounded-sm aspect-square">
         <img 
           src={item.media_url || 'https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=400&q=80'} 
@@ -1051,13 +1092,15 @@ function PackageCard({ pkg, isActive, onToggleActive }) {
       <div className="mt-auto pt-4 border-t border-[#C5963A]/20">
         <Link 
           to="/packages" 
+          state={{ fromSection: 'packages' }}
+          onClick={() => prepareSectionReturn('packages')}
           className={`inline-flex items-center gap-2 text-sm font-semibold transition-all duration-300 ${
             isCardActive 
               ? 'text-[#D2AA55] translate-x-1' 
               : 'text-[#C5963A] group-hover:text-[#D2AA55] group-hover:translate-x-1'
           }`}
         >
-          <span>View Details</span>
+          <span>Book Now</span>
           <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
         </Link>
       </div>
@@ -1493,7 +1536,7 @@ export default function HomePage() {
       {/* EVENTS - Lighter */}
       <section id="events" className={`w-full py-20 section-navy ${PX}`}>
         <ScrollReveal>
-          <SectionHeader label="Upcoming" title="Events" link="/events" />
+          <SectionHeader label="Upcoming" title="Events" link="/events" sectionId="events" />
         </ScrollReveal>
         {loadingEvents ? (
           <div className="flex justify-center items-center py-12">
@@ -1515,9 +1558,9 @@ export default function HomePage() {
       </ScrollReveal>
 
       {/* OUR PACKAGES - Lighter */}
-      <section className={`w-full py-12 ${PX}`} style={{ background: "#FAF3E4" }}>
+      <section id="packages" className={`w-full py-12 ${PX}`} style={{ background: "#FAF3E4" }}>
         <ScrollReveal>
-          <SectionHeader label="Premium Offers" title="Our Packages" link="/packages" />
+          <SectionHeader label="Premium Offers" title="Our Packages" link="/packages" sectionId="packages" />
         </ScrollReveal>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {loadingPackages ? Array(6).fill(0).map((_, i) => (
@@ -1542,9 +1585,9 @@ export default function HomePage() {
       </section>
 
       {/* GALLERY - Darker */}
-      <section className={`w-full py-20 bg-[#F4E9D2] ${PX}`}>
+      <section id="gallery" className={`w-full py-20 bg-[#F4E9D2] ${PX}`}>
         <ScrollReveal>
-          <SectionHeader label="Visual Showcase" title="Gallery" link="/gallery" />
+          <SectionHeader label="Visual Showcase" title="Gallery" link="/gallery" sectionId="gallery" />
         </ScrollReveal>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {loadingGallery ? Array(6).fill(0).map((_, i) => (

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useParams, useNavigate, useLocation, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
 import { Heart, ShoppingCart, ArrowRight, ArrowLeft, Share2, Star } from 'lucide-react'
@@ -16,7 +16,18 @@ const isVideoUrl = (url) => url && /\.(mp4|mov|webm|ogg)(\?|$)/i.test(url)
 export default function ProductDetailPage() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const location = useLocation()
   const { user } = useAuthStore()
+
+  const handleBack = () => {
+    if (location.state?.fromSection) {
+      navigate(`/#${location.state.fromSection}`)
+    } else if (window.history.state?.idx > 0) {
+      navigate(-1)
+    } else {
+      navigate('/products')
+    }
+  }
   const { addToCart, items } = useCartStore()
   const { toggleWishlist, isWishlisted } = useWishlistStore()
   const { add: addRecentlyViewed } = useRecentlyViewedStore()
@@ -149,6 +160,13 @@ export default function ProductDetailPage() {
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-xs text-[#DDB87A]/60 mb-6">
+          <button 
+            onClick={handleBack} 
+            className="inline-flex items-center gap-1 hover:text-[#C5963A] transition-colors cursor-pointer bg-transparent border-0 text-[#DDB87A]/80 font-medium mr-1"
+          >
+            <ArrowLeft size={14} /> Back
+          </button>
+          <span>/</span>
           <Link to="/" className="hover:text-[#C5963A] transition-colors">Home</Link>
           <span>/</span>
           <Link to="/products" className="hover:text-[#C5963A] transition-colors">All Horse Riding</Link>

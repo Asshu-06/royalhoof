@@ -3,9 +3,23 @@ import { Mail, Phone, Clock, MapPin } from 'lucide-react'
 import { Helmet } from 'react-helmet-async'
 import toast from 'react-hot-toast'
 import { supabase } from '../lib/supabase'
-import { isValidPhone, isValidEmail } from '../utils/validation'
+import { isValidPhone, isValidEmail, sanitizePhone } from '../utils/validation'
 
 const WHATSAPP_NUMBER = "919043700776"
+
+const FacebookIcon = ({ size = 18, className = "" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+  </svg>
+)
+
+const InstagramIcon = ({ size = 18, className = "" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+  </svg>
+)
 
 export default function ContactPage() {
   const [name, setName] = useState("")
@@ -242,6 +256,48 @@ export default function ContactPage() {
                   Chat on WhatsApp
                 </a>
               </div>
+
+              {/* Social Media Links */}
+              <div style={{ marginTop: "32px", paddingTop: "24px", borderTop: "1px solid rgba(8,43,73,0.15)" }}>
+                <h3 style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: "1.25rem",
+                  fontWeight: 600,
+                  color: "#292725",
+                  marginBottom: "8px",
+                  letterSpacing: "0.02em",
+                }}>
+                  Follow Us On Social Media
+                </h3>
+                <p style={{
+                  fontSize: "0.8125rem",
+                  color: "#765334",
+                  marginBottom: "16px",
+                  fontFamily: "'Inter', sans-serif"
+                }}>
+                  Stay connected with Royal Hoof for updates, events, and riding highlights.
+                </p>
+                <div className="flex flex-wrap items-center gap-3">
+                  <a
+                    href="https://facebook.com/royalhoofhorseriddingacademy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#082B49] text-[#C5963A] hover:bg-[#C5963A] hover:text-[#082B49] transition-all duration-300 font-medium text-xs tracking-wider uppercase border border-[#C5963A]/40 shadow-sm"
+                  >
+                    <FacebookIcon size={18} />
+                    <span>Facebook</span>
+                  </a>
+                  <a
+                    href="https://www.instagram.com/royal_hoof_horse_ridding?stkn=eWwydWVidzcxMjRq"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#082B49] text-[#C5963A] hover:bg-[#C5963A] hover:text-[#082B49] transition-all duration-300 font-medium text-xs tracking-wider uppercase border border-[#C5963A]/40 shadow-sm"
+                  >
+                    <InstagramIcon size={18} />
+                    <span>Instagram</span>
+                  </a>
+                </div>
+              </div>
             </div>
 
             {/* RIGHT — Contact form */}
@@ -299,8 +355,21 @@ export default function ContactPage() {
                   <input
                     type="tel"
                     value={phone}
-                    onChange={e => setPhone(e.target.value)}
-                    placeholder="+91 XXXXX XXXXX"
+                    onChange={e => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                    onKeyDown={(e) => {
+                      if (!/[0-9]/.test(e.key) && !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter'].includes(e.key) && !e.ctrlKey && !e.metaKey) {
+                        e.preventDefault()
+                      }
+                    }}
+                    onPaste={(e) => {
+                      e.preventDefault()
+                      const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 10)
+                      setPhone(pasted)
+                    }}
+                    maxLength={10}
+                    inputMode="numeric"
+                    pattern="[0-9]{10}"
+                    placeholder="10-digit mobile number"
                     className={inputClass}
                     style={inputStyle}
                     onFocus={e => Object.assign(e.target.style, inputFocusStyle)}

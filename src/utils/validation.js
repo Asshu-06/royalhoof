@@ -4,16 +4,25 @@
 
 /**
  * Validates a mobile phone number.
- * Accepts a 10-digit Indian mobile number starting with 6, 7, 8, or 9
- * (optionally prefixed with +91 or 91).
+ * Must be exactly 10 digits, containing only numbers (0-9) and starting with 6, 7, 8, or 9.
  * 
  * @param {string} phone 
  * @returns {boolean}
  */
 export function isValidPhone(phone) {
   if (!phone || typeof phone !== 'string') return false
-  const cleanPhone = phone.replace(/[\s\-\(\)]/g, '')
-  return /^(?:\+91|91)?[6-9]\d{9}$/.test(cleanPhone)
+  const cleanPhone = phone.trim()
+  return /^[6-9]\d{9}$/.test(cleanPhone)
+}
+
+/**
+ * Sanitizes phone input by stripping all non-digit characters and limiting length to 10.
+ * @param {string} value 
+ * @returns {string}
+ */
+export function sanitizePhone(value) {
+  if (!value) return ''
+  return String(value).replace(/\D/g, '').slice(0, 10)
 }
 
 /**

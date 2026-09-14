@@ -28,11 +28,20 @@ const inputStyle = {
   transition: "border-color 0.2s, box-shadow 0.2s"
 }
 
+const getItemCategory = (item) => {
+  if (item.category) return item.category.toLowerCase()
+  const text = `${item.message || ''} ${item.notes || ''} ${item.package_name || ''}`.toLowerCase()
+  if (text.includes('category: adult') || text.includes('[category: adult]')) return 'adult'
+  if (text.includes('category: child') || text.includes('[category: child]')) return 'child'
+  return null
+}
+
 export default function AdminEnquiries() {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [selectedType, setSelectedType] = useState('all')
   const [selectedStatus, setSelectedStatus] = useState('all')
+  const [selectedCategory, setSelectedCategory] = useState('all')
   const [editingNotes, setEditingNotes] = useState(null)
   const [notes, setNotes] = useState('')
   
@@ -261,11 +270,14 @@ export default function AdminEnquiries() {
 
   const types = ['all', 'general', 'demo', 'package', 'event']
   const statuses = ['all', 'new', 'contacted', 'converted', 'closed']
+  const categories = ['all', 'child', 'adult']
 
   const filteredItems = items.filter(item => {
     const typeMatch = selectedType === 'all' || item.enquiry_type === selectedType
     const statusMatch = selectedStatus === 'all' || item.status === selectedStatus
-    return typeMatch && statusMatch
+    const itemCat = getItemCategory(item)
+    const categoryMatch = selectedCategory === 'all' || itemCat === selectedCategory
+    return typeMatch && statusMatch && categoryMatch
   })
 
   const statusColor = (s) => ({
@@ -327,7 +339,7 @@ export default function AdminEnquiries() {
       </div>
 
       {/* Stat cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
         {statuses.filter(s => s !== 'all').map(status => {
           const c = statusColor(status)
           const count = items.filter(i => i.status === status).length
@@ -338,12 +350,20 @@ export default function AdminEnquiries() {
             </div>
           )
         })}
+        <div style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderRadius: 8, padding: "16px 20px", borderLeft: `3px solid #3b82f6` }}>
+          <p style={{ fontSize: "1.5rem", fontWeight: 700, color: TEXT_PRIMARY, fontFamily: "'Inter', sans-serif" }}>{items.filter(i => getItemCategory(i) === 'child').length}</p>
+          <p style={{ fontSize: "0.8125rem", color: TEXT_MUTED, marginTop: 2, fontFamily: "'Inter', sans-serif" }}>Child Category</p>
+        </div>
+        <div style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderRadius: 8, padding: "16px 20px", borderLeft: `3px solid #c084fc` }}>
+          <p style={{ fontSize: "1.5rem", fontWeight: 700, color: TEXT_PRIMARY, fontFamily: "'Inter', sans-serif" }}>{items.filter(i => getItemCategory(i) === 'adult').length}</p>
+          <p style={{ fontSize: "0.8125rem", color: TEXT_MUTED, marginTop: 2, fontFamily: "'Inter', sans-serif" }}>Adult Category</p>
+        </div>
       </div>
 
       {/* Filters with Select All */}
       <div style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderRadius: 8, padding: "16px 20px", display: "flex", flexDirection: "column", gap: 16 }}>
         {/* Select All Checkbox */}
-        <div style={{ display: "flex", alignItems: "center", gap: 10, paddingBottom: 12, borderBottom: `1px solid ${CARD_BORDER}` }}>
+        <div style={{ display: "flex", items: "center", gap: 10, paddingBottom: 12, borderBottom: `1px solid ${CARD_BORDER}` }}>
           <input
             type="checkbox"
             checked={selectedContacts.length === filteredItems.length && filteredItems.length > 0}
@@ -376,7 +396,7 @@ export default function AdminEnquiries() {
           )}
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <p style={{ color: TEXT_MUTED, fontSize: "0.6875rem", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8, fontFamily: "'Inter', sans-serif" }}>Type</p>
             <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
@@ -395,6 +415,26 @@ export default function AdminEnquiries() {
               ))}
             </div>
           </div>
+
+          <div>
+            <p style={{ color: TEXT_MUTED, fontSize: "0.6875rem", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8, fontFamily: "'Inter', sans-serif" }}>Category</p>
+            <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+              {categories.map(cat => (
+                <button key={cat} onClick={() => setSelectedCategory(cat)} style={{
+                  padding: "5px 12px", borderRadius: 4, fontSize: "0.8125rem", cursor: "pointer",
+                  fontFamily: "'Inter', sans-serif", border: "1px solid",
+                  background: selectedCategory === cat ? ACCENT : "transparent",
+                  color: selectedCategory === cat ? "#082B49" : TEXT_MUTED,
+                  borderColor: selectedCategory === cat ? ACCENT : CARD_BORDER,
+                  textTransform: "capitalize",
+                }}>
+                  {cat === 'all' ? 'All Categories' : cat}
+                  {cat !== 'all' && <span style={{ marginLeft: 4, opacity: 0.7 }}>({items.filter(i => getItemCategory(i) === cat).length})</span>}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div>
             <p style={{ color: TEXT_MUTED, fontSize: "0.6875rem", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8, fontFamily: "'Inter', sans-serif" }}>Status</p>
             <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
@@ -421,6 +461,7 @@ export default function AdminEnquiries() {
         {filteredItems.map(item => {
           const sc = statusColor(item.status)
           const tc = typeColor(item.enquiry_type)
+          const itemCat = getItemCategory(item)
           const isSelected = selectedContacts.includes(item.id)
           return (
             <div key={item.id} style={{ 
@@ -450,6 +491,20 @@ export default function AdminEnquiries() {
                   <div style={{ flex: 1 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 4 }}>
                       <h3 style={{ color: TEXT_PRIMARY, fontSize: "1rem", fontWeight: 600, fontFamily: "'Inter', sans-serif" }}>{item.name}</h3>
+                      {itemCat && (
+                        <span style={{ 
+                          fontSize: "0.6875rem", 
+                          fontWeight: 700,
+                          padding: "2px 8px", 
+                          borderRadius: 9999, 
+                          background: itemCat === 'child' ? "rgba(59, 130, 246, 0.15)" : "rgba(168, 85, 247, 0.15)", 
+                          color: itemCat === 'child' ? "#60a5fa" : "#c084fc", 
+                          border: `1px solid ${itemCat === 'child' ? 'rgba(59, 130, 246, 0.3)' : 'rgba(168, 85, 247, 0.3)'}`,
+                          textTransform: "capitalize" 
+                        }}>
+                          {itemCat === 'child' ? '👶 Child' : '🧑 Adult'}
+                        </span>
+                      )}
                       <span style={{ fontSize: "0.6875rem", padding: "2px 8px", borderRadius: 9999, background: tc.bg, color: tc.color, textTransform: "capitalize" }}>
                         {item.enquiry_type}
                       </span>

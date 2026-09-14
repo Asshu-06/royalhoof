@@ -1,10 +1,50 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Phone, MapPin, Globe } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import logoImg from '../assets/logo.png'
+import { DEFAULT_OFFERINGS } from '../data/defaultOfferings'
+import { getSetting } from '../services/settingsService'
+
+const FacebookIcon = ({ size = 18, className = "" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+  </svg>
+)
+
+const InstagramIcon = ({ size = 18, className = "" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+  </svg>
+)
 
 export default function Footer() {
   const { t } = useLanguage()
+  const [offerings, setOfferings] = useState(DEFAULT_OFFERINGS)
+
+  useEffect(() => {
+    async function loadOfferings() {
+      try {
+        const customOffers = await getSetting('site_offerings')
+        if (customOffers && Array.isArray(customOffers) && customOffers.length > 0) {
+          setOfferings(customOffers)
+        }
+      } catch (err) {
+        console.error("Error loading footer offerings:", err)
+      }
+    }
+    loadOfferings()
+
+    const handleUpdate = (e) => {
+      if (e.detail && e.detail.key === 'site_offerings' && Array.isArray(e.detail.value)) {
+        setOfferings(e.detail.value)
+      }
+    }
+    window.addEventListener('site_settings_updated', handleUpdate)
+    return () => window.removeEventListener('site_settings_updated', handleUpdate)
+  }, [])
   return (
     <footer style={{
       background: "linear-gradient(180deg, #061D33 0%, #082B49 60%, #041424 100%)",
@@ -55,25 +95,51 @@ export default function Footer() {
                 <span className="font-medium text-[#F5EBD8]">www.royalhoof.com</span>
               </div>
             </div>
+
+            {/* Social Media Links */}
+            <div className="mt-6 pt-4 border-t border-[#C5963A]/20">
+              <p className="text-xs uppercase tracking-widest text-[#C5963A] font-semibold mb-3" style={{ fontFamily: "'Inter', sans-serif" }}>
+                Follow Us
+              </p>
+              <div className="flex items-center gap-3">
+                <a
+                  href="https://facebook.com/royalhoofhorseriddingacademy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-full bg-[#082B49] border border-[#C5963A]/40 text-[#C5963A] hover:text-[#082B49] hover:bg-[#C5963A] hover:border-[#C5963A] transition-all duration-300 flex items-center justify-center shadow-md hover:scale-110"
+                  title="Facebook"
+                  aria-label="Royal Hoof Facebook"
+                >
+                  <FacebookIcon size={18} />
+                </a>
+                <a
+                  href="https://www.instagram.com/royal_hoof_horse_ridding?stkn=eWwydWVidzcxMjRq"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-full bg-[#082B49] border border-[#C5963A]/40 text-[#C5963A] hover:text-[#082B49] hover:bg-[#C5963A] hover:border-[#C5963A] transition-all duration-300 flex items-center justify-center shadow-md hover:scale-110"
+                  title="Instagram"
+                  aria-label="Royal Hoof Instagram"
+                >
+                  <InstagramIcon size={18} />
+                </a>
+              </div>
+            </div>
           </div>
 
           {/* Services & Quick Links side-by-side */}
           <div className="col-span-1 md:col-span-2 grid grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
             <div>
               <h4 className="eyebrow-label mb-5 text-[#C5963A]">Our Services</h4>
-              <ul className="space-y-3">
-                {[
-                  "Horse Riding Lessons",
-                  "Certified Training",
-                  "Boarding Facilities",
-                  "Trail Rides & Adventures",
-                  "Equestrian Events",
-                  "Premium Care"
-                ].map(service => (
-                  <li key={service}>
-                    <span className="text-sm text-[#D8C5A0] hover:text-[#C5963A] transition-colors" style={{ fontFamily: "'Inter', sans-serif" }}>
-                      {service}
-                    </span>
+              <ul className="space-y-2.5">
+                {offerings.map(item => (
+                  <li key={item.id || item.slug}>
+                    <Link
+                      to={`/programs/${item.slug || item.id}`}
+                      className="text-xs sm:text-sm text-[#D8C5A0] hover:text-[#C5963A] transition-colors duration-200 block py-0.5"
+                      style={{ fontFamily: "'Inter', sans-serif" }}
+                    >
+                      {item.title}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -118,8 +184,28 @@ export default function Footer() {
             <span className="flex items-center gap-1.5"><Phone size={13} className="text-[#C5963A]" /> 9043700776</span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <span className="text-[#C5963A] font-semibold tracking-widest text-[0.7rem]">ESTD. 2026</span>
+            <div className="flex items-center gap-2">
+              <a
+                href="https://facebook.com/royalhoofhorseriddingacademy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#D8C5A0] hover:text-[#C5963A] transition-colors"
+                aria-label="Facebook"
+              >
+                <FacebookIcon size={16} />
+              </a>
+              <a
+                href="https://www.instagram.com/royal_hoof_horse_ridding?stkn=eWwydWVidzcxMjRq"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#D8C5A0] hover:text-[#C5963A] transition-colors"
+                aria-label="Instagram"
+              >
+                <InstagramIcon size={16} />
+              </a>
+            </div>
           </div>
         </div>
       </div>

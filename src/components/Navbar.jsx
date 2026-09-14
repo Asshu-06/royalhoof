@@ -10,11 +10,12 @@ import logoImg from "../assets/logo.png"
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [suggestions, setSuggestions] = useState([])
   const [scrolled, setScrolled] = useState(false)
-  const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false)
-  const [mobileAboutOpen, setMobileAboutOpen] = useState(false)
+  const [activeDropdownKey, setActiveDropdownKey] = useState(null)
+  const [openMobileDropdownKey, setOpenMobileDropdownKey] = useState(null)
   const [dbPackages, setDbPackages] = useState([])
   const [dbEvents, setDbEvents] = useState([])
   const { user } = useAuthStore()
@@ -23,7 +24,7 @@ export default function Navbar() {
   const { pathname } = useLocation()
   const userRef = useRef(null)
   const searchRef = useRef(null)
-  const aboutRef = useRef(null)
+  const dropdownRef = useRef(null)
   const isAdmin = checkIsAdmin(user)
   const isOnAdminPanel = pathname.startsWith("/admin")
 
@@ -71,16 +72,38 @@ export default function Navbar() {
       if (userRef.current && !userRef.current.contains(e.target)) {
         // Handle user menu if needed
       }
-      if (searchRef.current && !searchRef.current.contains(e.target)) setSuggestions([])
-      if (aboutRef.current && !aboutRef.current.contains(e.target)) setAboutDropdownOpen(false)
+      if (searchRef.current && !searchRef.current.contains(e.target)) {
+        setSuggestions([])
+        setSearchOpen(false)
+      }
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) setActiveDropdownKey(null)
+    }
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setSearchOpen(false)
+        setSuggestions([])
+        setActiveDropdownKey(null)
+      }
     }
     document.addEventListener("mousedown", handler)
     document.addEventListener("touchstart", handler)
-    return () => { document.removeEventListener("mousedown", handler); document.removeEventListener("touchstart", handler) }
+    document.addEventListener("keydown", handleKeyDown)
+    return () => {
+      document.removeEventListener("mousedown", handler)
+      document.removeEventListener("touchstart", handler)
+      document.removeEventListener("keydown", handleKeyDown)
+    }
   }, [])
 
   const getSearchIndex = () => {
     const staticItems = [
+      {
+        title: "Our Services & Offers",
+        type: "Services",
+        path: "/#what-we-offer",
+        icon: "🐎",
+        keywords: ["services", "offers", "programs", "riding", "lessons", "what we offer"]
+      },
       {
         title: "Upcoming Events & Competitions",
         type: "Events",
@@ -136,6 +159,13 @@ export default function Navbar() {
         path: "/about#mission",
         icon: "🎯",
         keywords: ["mission", "values", "training", "standards"]
+      },
+      {
+        title: "Our Expert Team & Coaches",
+        type: "About",
+        path: "/about#our-team",
+        icon: "🏇",
+        keywords: ["team", "our team", "instructors", "coaches", "trainers", "staff", "management", "founders"]
       },
       {
         title: "Visual Gallery Showcase",
@@ -233,7 +263,23 @@ export default function Navbar() {
 
   const closeAll = () => { 
     setMenuOpen(false)
-    setAboutDropdownOpen(false)
+    setActiveDropdownKey(null)
+    setSearchOpen(false)
+  }
+
+  const handleNavLinkClick = (to) => {
+    closeAll()
+    if (to.includes('#')) {
+      const [path, hashId] = to.split('#')
+      if (pathname === path || (pathname === '/' && (path === '' || path === '/'))) {
+        setTimeout(() => {
+          const element = document.getElementById(hashId)
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }
+        }, 50)
+      }
+    }
   }
 
   const isAboutActive = pathname.startsWith("/about") || pathname.startsWith("/vision") || pathname.startsWith("/mission")
@@ -245,14 +291,15 @@ export default function Navbar() {
   }
 
   const navStyle = {
-    background: "#082B49",
+    background: "#0B0C10",
     borderBottom: "1px solid rgba(197, 150, 58, 0.35)",
-    boxShadow: scrolled ? "0 4px 24px rgba(8, 43, 73, 0.3)" : "0 2px 12px rgba(8, 43, 73, 0.15)",
+    boxShadow: scrolled ? "0 4px 24px rgba(0, 0, 0, 0.6)" : "0 2px 12px rgba(0, 0, 0, 0.3)",
     transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
   }
 
-  const navLinks = [
+  const desktopNavLinks = [
     { to: "/", label: "Home" },
+    { to: "/#what-we-offer", label: "Our Services" },
     {
       to: "/about",
       label: "About Us",
@@ -261,6 +308,8 @@ export default function Navbar() {
         { to: "/about#about", label: "About" },
         { to: "/about#vision", label: "Our Vision" },
         { to: "/about#mission", label: "Our Mission" },
+        { to: "/about#our-team", label: "Our Team" },
+        { to: "/contact", label: "Contact Us" },
       ],
     },
     { to: "/events", label: "Events" },
@@ -270,6 +319,21 @@ export default function Navbar() {
     { to: "/csr", label: "CSR" },
     { to: "/faq", label: "FAQ" },
     { to: "/enquiry", label: "Enquiry" },
+  ]
+
+  const navLinks = [
+    ...desktopNavLinks.filter(item => item.to !== "/about"),
+    {
+      to: "/about",
+      label: "About Us",
+      hasDropdown: true,
+      items: [
+        { to: "/about#about", label: "About" },
+        { to: "/about#vision", label: "Our Vision" },
+        { to: "/about#mission", label: "Our Mission" },
+        { to: "/about#our-team", label: "Our Team" },
+      ],
+    },
     { to: "/contact", label: "Contact" },
   ]
 
@@ -289,9 +353,9 @@ export default function Navbar() {
           right: 0,
           height: "100%",
           width: "280px",
-          background: "linear-gradient(180deg, #0B304D 0%, #082B49 100%)",
+          background: "linear-gradient(180deg, #121318 0%, #0B0C10 100%)",
           borderLeft: "1px solid rgba(197,150,58,0.35)",
-          boxShadow: "-12px 0 40px rgba(8,43,73,0.35)",
+          boxShadow: "-12px 0 40px rgba(0,0,0,0.6)",
           display: "flex",
           flexDirection: "column",
           zIndex: 100000,
@@ -306,10 +370,10 @@ export default function Navbar() {
           borderBottom: "1px solid rgba(197,150,58,0.25)",
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <img src={logoImg} alt="Logo" style={{ width: 34, height: 34, objectFit: "contain" }} onError={(e) => { e.target.src = "/logo.png" }} />
+            <img src={logoImg} alt="Logo" style={{ width: 35, height: 35, objectFit: "contain" }} onError={(e) => { e.target.src = "/logo.png" }} />
             <span style={{
               fontFamily: "'Cinzel', 'Cormorant Garamond', serif",
-              fontSize: "1.125rem",
+              fontSize: "1.1875rem",
               fontWeight: 600,
               color: '#C5963A',
               letterSpacing: "0.06em",
@@ -331,8 +395,9 @@ export default function Navbar() {
         <nav style={{ flex: 1, overflowY: "auto", padding: "12px 0" }}>
           {navLinks.map(item => {
             if (item.hasDropdown) {
+              const isOpen = openMobileDropdownKey === item.label
               return (
-                <div key={item.to} style={{ borderBottom: "1px solid rgba(197,150,58,0.12)" }}>
+                <div key={item.label} style={{ borderBottom: "1px solid rgba(197,150,58,0.12)" }}>
                   <div
                     style={{
                       display: "flex",
@@ -341,18 +406,18 @@ export default function Navbar() {
                       padding: "13px 24px",
                       color: isActive(item.to) ? "#D2AA55" : "#F5EBD8",
                       fontFamily: "'Cormorant Garamond', serif",
-                      fontSize: "1.0625rem",
+                      fontSize: "1.1875rem",
                       fontWeight: 500,
                       letterSpacing: "0.04em",
                       borderLeft: isActive(item.to) ? "2px solid #C5963A" : "2px solid transparent",
                       cursor: "pointer",
                     }}
-                    onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
+                    onClick={() => setOpenMobileDropdownKey(isOpen ? null : item.label)}
                   >
                     <span>{item.label}</span>
-                    <ChevronDown size={16} style={{ transform: mobileAboutOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }} />
+                    <ChevronDown size={16} style={{ transform: isOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }} />
                   </div>
-                  {mobileAboutOpen && (
+                  {isOpen && (
                     <div style={{ background: "rgba(0,0,0,0.2)", padding: "4px 0" }}>
                       {item.items.map(sub => (
                         <Link
@@ -365,7 +430,7 @@ export default function Navbar() {
                             color: "#D8C5A0",
                             textDecoration: "none",
                             fontFamily: "'Inter', sans-serif",
-                            fontSize: "0.875rem",
+                            fontSize: "1rem",
                             transition: "color 0.2s",
                           }}
                           onMouseEnter={e => { e.currentTarget.style.color = "#D2AA55" }}
@@ -384,14 +449,14 @@ export default function Navbar() {
               <Link
                 key={item.to}
                 to={item.to}
-                onClick={() => setMenuOpen(false)}
+                onClick={() => handleNavLinkClick(item.to)}
                 style={{
                   display: "block",
                   padding: "13px 24px",
                   color: isActive(item.to) ? "#D2AA55" : "#F5EBD8",
                   textDecoration: "none",
                   fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: "1.0625rem",
+                  fontSize: "1.1875rem",
                   fontWeight: 500,
                   letterSpacing: "0.04em",
                   borderBottom: "1px solid rgba(197,150,58,0.12)",
@@ -447,28 +512,21 @@ export default function Navbar() {
     <>
       <nav className="sticky top-0 w-full" style={{ ...navStyle, zIndex: 50 }}>
         {/* MAIN ROW */}
-        <div className="w-full px-6 lg:px-12 xl:px-20 h-20 flex items-center gap-6">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 flex-shrink-0" onClick={closeAll}>
-            <img 
-              src={logoImg} 
-              alt="Royal Hoof Logo" 
-              className="h-12 w-12 object-contain flex-shrink-0"
-              onError={(e) => {
-                e.target.src = '/logo.png';
-              }}
-            />
-            <div className="block leading-tight">
-              <div className="font-medium tracking-[0.06em] text-[1.125rem] sm:hidden text-[#C5963A]" 
-                style={{ 
-                  fontFamily: "'Cinzel', 'Cormorant Garamond', serif",
-                  letterSpacing: '0.06em',
-                  color: '#C5963A'
-                }}>
-                ROYAL HOOF
-              </div>
-              <div className="hidden sm:block">
-                <div className="font-medium tracking-[0.06em] text-[1.125rem] text-[#C5963A]" 
+        <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+          {/* LEFT: Logo & Brand + Desktop Nav Links immediately beside it */}
+          <div className="flex items-center gap-5 lg:gap-6 xl:gap-8 flex-1 min-w-0">
+            {/* Logo and Brand Name */}
+            <Link to="/" className="flex items-center gap-3 flex-shrink-0" onClick={closeAll}>
+              <img 
+                src={logoImg} 
+                alt="Royal Hoof Logo" 
+                className="h-[49px] w-[49px] object-contain flex-shrink-0"
+                onError={(e) => {
+                  e.target.src = '/logo.png';
+                }}
+              />
+              <div className="block leading-tight flex-shrink-0">
+                <div className="font-medium tracking-[0.06em] text-[1.1875rem] text-[#C5963A]" 
                   style={{ 
                     fontFamily: "'Cinzel', 'Cormorant Garamond', serif",
                     letterSpacing: '0.06em',
@@ -476,7 +534,7 @@ export default function Navbar() {
                   }}>
                   ROYAL HOOF
                 </div>
-                <div className="text-[0.5rem] tracking-[0.10em] uppercase mt-0.5 text-[#D2AA55]" 
+                <div className="text-[0.5625rem] tracking-[0.10em] uppercase mt-0.5 text-[#D2AA55]" 
                   style={{ 
                     fontFamily: "'Cinzel', 'Cormorant Garamond', serif",
                     fontWeight: 400,
@@ -486,161 +544,195 @@ export default function Navbar() {
                   Horse Riding Academy
                 </div>
               </div>
-            </div>
-          </Link>
+            </Link>
 
-          {/* Desktop Navigation */}
-          {!isOnAdminPanel && (
-            <div className="hidden lg:flex items-center gap-1 flex-1 justify-center">
-              {navLinks.map(item => {
-                if (item.hasDropdown) {
-                  return (
-                    <div
-                      key={item.to}
-                      ref={aboutRef}
-                      className="relative"
-                      onMouseEnter={() => setAboutDropdownOpen(true)}
-                      onMouseLeave={() => setAboutDropdownOpen(false)}
-                    >
-                      <Link
-                        to={item.to}
-                        onClick={closeAll}
-                        className="relative px-3.5 h-10 flex items-center gap-1 text-[0.8125rem] font-medium tracking-[0.06em] transition-colors duration-300"
-                        style={{
-                          fontFamily: "'Cormorant Garamond', serif",
-                          color: isActive(item.to) ? "#D2AA55" : "rgba(245,235,216,0.8)",
-                        }}
-                        onMouseEnter={e => { if (!isActive(item.to)) e.currentTarget.style.color = "#F5EBD8" }}
-                        onMouseLeave={e => { if (!isActive(item.to)) e.currentTarget.style.color = "rgba(245,235,216,0.8)" }}
+            {/* Desktop Navigation Links in one evenly spaced horizontal row */}
+            {!isOnAdminPanel && (
+              <div className="hidden lg:flex items-center gap-2.5 lg:gap-3.5 xl:gap-5 flex-nowrap min-w-0">
+                {desktopNavLinks.map(item => {
+                  if (item.hasDropdown) {
+                    const isOpen = activeDropdownKey === item.label
+                    return (
+                      <div
+                        key={item.label}
+                        ref={dropdownRef}
+                        className="relative flex-shrink-0"
+                        onMouseEnter={() => setActiveDropdownKey(item.label)}
+                        onMouseLeave={() => setActiveDropdownKey(null)}
                       >
-                        {item.label}
-                        <ChevronDown size={14} className={`transition-transform duration-200 ${aboutDropdownOpen ? 'rotate-180 text-[#D2AA55]' : ''}`} />
-                        {isActive(item.to) && (
-                          <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-px bg-[#C5963A]" />
-                        )}
-                      </Link>
-
-                      {/* Dropdown Menu */}
-                      {aboutDropdownOpen && (
-                        <div
-                          className="absolute top-full left-0 mt-1 w-44 rounded-sm shadow-xl z-50 overflow-hidden py-1"
+                        <Link
+                          to={item.to}
+                          onClick={closeAll}
+                          className="relative py-2 px-1 flex items-center gap-1 text-[0.9375rem] font-medium tracking-[0.04em] transition-colors duration-300 whitespace-nowrap"
                           style={{
-                            background: "#0B304D",
-                            border: "1px solid rgba(197, 150, 58, 0.35)",
-                            boxShadow: "0 12px 32px rgba(8, 43, 73, 0.35)"
+                            fontFamily: "'Cormorant Garamond', serif",
+                            color: isActive(item.to) ? "#D2AA55" : "rgba(245,235,216,0.85)",
                           }}
+                          onMouseEnter={e => { if (!isActive(item.to)) e.currentTarget.style.color = "#F5EBD8" }}
+                          onMouseLeave={e => { if (!isActive(item.to)) e.currentTarget.style.color = "rgba(245,235,216,0.85)" }}
                         >
-                          {item.items.map(subItem => (
-                            <Link
-                              key={subItem.to}
-                              to={subItem.to}
-                              onClick={() => {
-                                setAboutDropdownOpen(false)
-                                closeAll()
-                              }}
-                              className="block px-4 py-2.5 text-xs tracking-wider transition-colors duration-200"
-                              style={{
-                                fontFamily: "'Inter', sans-serif",
-                                color: "#F5EBD8",
-                                borderBottom: "1px solid rgba(197,150,58,0.08)"
-                              }}
-                              onMouseEnter={e => {
-                                e.currentTarget.style.background = "rgba(197, 150, 58, 0.15)"
-                                e.currentTarget.style.color = "#D2AA55"
-                              }}
-                              onMouseLeave={e => {
-                                e.currentTarget.style.background = "transparent"
-                                e.currentTarget.style.color = "#F5EBD8"
-                              }}
-                            >
-                              {subItem.label}
-                            </Link>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  )
-                }
+                          {item.label}
+                          <ChevronDown size={14} className={`transition-transform duration-200 ${isOpen ? 'rotate-180 text-[#D2AA55]' : ''}`} />
+                          {isActive(item.to) && (
+                            <span className="absolute bottom-0.5 left-0 right-0 h-[2px] bg-[#C5963A]" />
+                          )}
+                        </Link>
 
-                return (
-                  <Link key={item.to} to={item.to} onClick={closeAll}
-                    className="relative px-3.5 h-10 flex items-center text-[0.8125rem] font-medium tracking-[0.06em] transition-colors duration-300"
-                    style={{
-                      fontFamily: "'Cormorant Garamond', serif",
-                      color: isActive(item.to) ? "#D2AA55" : "rgba(245,235,216,0.8)",
-                    }}
-                    onMouseEnter={e => { if (!isActive(item.to)) e.currentTarget.style.color = "#F5EBD8" }}
-                    onMouseLeave={e => { if (!isActive(item.to)) e.currentTarget.style.color = "rgba(245,235,216,0.8)" }}
-                  >
-                    {item.label}
-                    {isActive(item.to) && (
-                      <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-px bg-[#C5963A]" />
-                    )}
-                  </Link>
-                )
-              })}
-            </div>
-          )}
-
-          {/* Desktop Search */}
-          <div ref={searchRef} className="hidden lg:block relative w-72 ml-auto">
-            <form onSubmit={handleSearch} className="relative">
-              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#765334] pointer-events-none" />
-              <input
-                type="text" value={searchQuery} onChange={handleSearchChange}
-                placeholder="Search..."
-                className="input-premium w-full rounded-sm pl-11 pr-4 py-2.5 text-sm text-[#082B49] placeholder-[#765334]/50"
-              />
-            </form>
-            {suggestions.length > 0 && (
-              <div 
-                className="absolute top-full right-0 mt-2 w-[360px] sm:w-[400px] max-w-[90vw] rounded-lg z-50 overflow-hidden border border-[#C5963A]/40 shadow-2xl"
-                style={{ 
-                  background: "#FAF3E4", 
-                  boxShadow: "0 16px 40px rgba(8, 43, 73, 0.3)" 
-                }}>
-                <div className="px-4 py-2.5 bg-[#082B49] border-b border-[#C5963A]/30 flex items-center justify-between">
-                  <span className="text-[0.75rem] font-bold uppercase tracking-widest text-[#C5963A]">
-                    Search Suggestions
-                  </span>
-                  <span className="text-[0.6875rem] text-[#D8C5A0] font-medium">
-                    {suggestions.length} found
-                  </span>
-                </div>
-
-                <div className="max-h-[360px] overflow-y-auto divide-y divide-[#C5963A]/15">
-                  {suggestions.map((item, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => handleSuggestionClick(item)}
-                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-[#C5963A]/15 transition-all text-left group"
-                    >
-                      <span className="text-xl flex-shrink-0 w-8 h-8 rounded-full bg-[#082B49]/5 flex items-center justify-center">
-                        {item.icon}
-                      </span>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[#082B49] text-xs sm:text-sm font-semibold truncate group-hover:text-[#C5963A] transition-colors" style={{ fontFamily: "'Inter', sans-serif" }}>
-                          {item.title}
-                        </p>
-                        <p className="text-[#765334] text-[0.6875rem] font-medium tracking-wider uppercase mt-0.5">
-                          {item.type}
-                        </p>
+                        {/* Dropdown Menu */}
+                        {isOpen && (
+                          <div
+                            className="absolute top-full left-0 mt-2 w-48 rounded-sm shadow-xl z-50 overflow-hidden py-1"
+                            style={{
+                              background: "#0F1015",
+                              border: "1px solid rgba(197, 150, 58, 0.35)",
+                              boxShadow: "0 12px 32px rgba(0, 0, 0, 0.8)"
+                            }}
+                          >
+                            {item.items.map(subItem => (
+                              <Link
+                                key={subItem.to}
+                                to={subItem.to}
+                                onClick={() => {
+                                  setActiveDropdownKey(null)
+                                  closeAll()
+                                }}
+                                className="block px-4 py-2.5 text-sm tracking-wider transition-colors duration-200"
+                                style={{
+                                  fontFamily: "'Inter', sans-serif",
+                                  color: "#F5EBD8",
+                                  borderBottom: "1px solid rgba(197,150,58,0.08)"
+                                }}
+                                onMouseEnter={e => {
+                                  e.currentTarget.style.background = "rgba(197, 150, 58, 0.15)"
+                                  e.currentTarget.style.color = "#D2AA55"
+                                }}
+                                onMouseLeave={e => {
+                                  e.currentTarget.style.background = "transparent"
+                                  e.currentTarget.style.color = "#F5EBD8"
+                                }}
+                              >
+                                {subItem.label}
+                              </Link>
+                            ))}
+                          </div>
+                        )}
                       </div>
-                      <span className="text-[#C5963A] text-xs font-bold whitespace-nowrap flex-shrink-0 opacity-80 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all">
-                        View →
-                      </span>
-                    </button>
-                  ))}
-                </div>
+                    )
+                  }
+
+                  return (
+                    <Link
+                      key={item.to}
+                      to={item.to}
+                      onClick={() => handleNavLinkClick(item.to)}
+                      className="relative py-2 px-1 flex items-center text-[0.9375rem] font-medium tracking-[0.04em] transition-colors duration-300 whitespace-nowrap flex-shrink-0"
+                      style={{
+                        fontFamily: "'Cormorant Garamond', serif",
+                        color: isActive(item.to) ? "#D2AA55" : "rgba(245,235,216,0.85)",
+                      }}
+                      onMouseEnter={e => { if (!isActive(item.to)) e.currentTarget.style.color = "#F5EBD8" }}
+                      onMouseLeave={e => { if (!isActive(item.to)) e.currentTarget.style.color = "rgba(245,235,216,0.85)" }}
+                    >
+                      {item.label}
+                      {isActive(item.to) && (
+                        <span className="absolute bottom-0.5 left-0 right-0 h-[2px] bg-[#C5963A]" />
+                      )}
+                    </Link>
+                  )
+                })}
               </div>
             )}
           </div>
 
-          {/* Right Icons */}
-          <div className="flex items-center gap-1 flex-shrink-0 ml-auto lg:ml-0">
+          {/* RIGHT: Search Icon on far right + Admin Button + Mobile Hamburger */}
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0 ml-auto pl-3">
+            {/* Search Icon & Popover */}
+            <div ref={searchRef} className="relative flex items-center">
+              <button
+                type="button"
+                onClick={() => setSearchOpen(!searchOpen)}
+                className="p-2 text-[#C5963A] hover:text-[#D2AA55] transition-colors rounded-full hover:bg-[rgba(197,150,58,0.1)] flex items-center justify-center cursor-pointer"
+                aria-label="Search"
+                title="Search"
+              >
+                <Search size={20} />
+              </button>
+
+              {searchOpen && (
+                <div
+                  className="absolute top-full right-0 mt-3 w-80 sm:w-96 rounded-md z-50 overflow-hidden shadow-2xl border border-[#C5963A]/40"
+                  style={{
+                    background: "#0F1015",
+                    boxShadow: "0 16px 40px rgba(0, 0, 0, 0.8)",
+                  }}
+                >
+                  <form onSubmit={handleSearch} className="relative p-3 bg-[#14151B] border-b border-[#C5963A]/25 flex items-center gap-2">
+                    <Search size={16} className="text-[#C5963A] flex-shrink-0" />
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={handleSearchChange}
+                      placeholder="Search courses, packages, events..."
+                      autoFocus
+                      className="w-full bg-transparent text-sm text-[#F5EBD8] placeholder-[#F5EBD8]/40 outline-none border-none px-2 py-0.5"
+                      style={{ fontFamily: "'Inter', sans-serif" }}
+                    />
+                    {searchQuery ? (
+                      <button
+                        type="button"
+                        onClick={() => { setSearchQuery(""); setSuggestions([]) }}
+                        className="text-[#F5EBD8]/50 hover:text-[#F5EBD8] p-1 text-xs"
+                      >
+                        ✕
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => setSearchOpen(false)}
+                        className="text-[#F5EBD8]/40 hover:text-[#F5EBD8] p-1 text-xs"
+                      >
+                        ✕
+                      </button>
+                    )}
+                  </form>
+
+                  {suggestions.length > 0 && (
+                    <div className="max-h-72 overflow-y-auto divide-y divide-[#C5963A]/15 bg-[#0F1015]">
+                      {suggestions.map((item, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => {
+                            handleSuggestionClick(item)
+                            setSearchOpen(false)
+                          }}
+                          className="w-full flex items-center gap-3 px-4 py-3 hover:bg-[#C5963A]/15 transition-all text-left group"
+                        >
+                          <span className="text-lg flex-shrink-0 w-8 h-8 rounded-full bg-[#C5963A]/10 flex items-center justify-center text-[#C5963A]">
+                            {item.icon}
+                          </span>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-[#F5EBD8] text-xs sm:text-sm font-medium truncate group-hover:text-[#D2AA55] transition-colors" style={{ fontFamily: "'Inter', sans-serif" }}>
+                              {item.title}
+                            </p>
+                            <p className="text-[#C5963A]/80 text-[0.6875rem] font-medium tracking-wider uppercase mt-0.5">
+                              {item.type}
+                            </p>
+                          </div>
+                          <span className="text-[#C5963A] text-xs font-bold whitespace-nowrap flex-shrink-0 opacity-80 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all">
+                            View →
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Admin Button */}
             {isAdmin && (
               <Link to={isOnAdminPanel ? "/" : "/admin"}
-                className="hidden sm:flex items-center gap-1.5 px-4 py-2 text-[0.6875rem] font-semibold rounded-sm transition-all mr-2 tracking-wide uppercase"
+                className="hidden sm:flex items-center gap-1.5 px-4 py-2 text-[0.6875rem] font-semibold rounded-sm transition-all tracking-wide uppercase"
                 style={{ 
                   background: "#C5963A", 
                   color: "#082B49",
@@ -650,7 +742,7 @@ export default function Navbar() {
               </Link>
             )}
 
-            {/* Hamburger button */}
+            {/* Mobile Hamburger Button */}
             <button 
               className="lg:hidden p-2 transition-colors"
               style={{ color: "#F5EBD8", background: "none", border: "none", cursor: "pointer" }}

@@ -1,17 +1,30 @@
 import { useState, useEffect } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
-import { Calendar, MapPin, Clock, Users } from 'lucide-react'
+import { Calendar, MapPin, Clock, Users, ArrowLeft } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { supabase } from '../lib/supabase'
 
 const WHATSAPP_NUMBER = "919043700776"
 
 export default function EventsPage() {
+  const navigate = useNavigate()
+  const location = useLocation()
   const [activeTab, setActiveTab] = useState('upcoming')
   const [selectedEvent, setSelectedEvent] = useState(null)
   const [upcomingEvents, setUpcomingEvents] = useState([])
   const [pastEvents, setPastEvents] = useState([])
   const [loading, setLoading] = useState(true)
+
+  const handleBack = () => {
+    if (location.state?.fromSection) {
+      navigate(`/#${location.state.fromSection}`)
+    } else if (window.history.state?.idx > 0) {
+      navigate(-1)
+    } else {
+      navigate('/#events')
+    }
+  }
 
   useEffect(() => {
     loadEvents()
@@ -96,7 +109,22 @@ export default function EventsPage() {
       </Helmet>
 
       <div className="min-h-screen py-20 px-6 lg:px-12 xl:px-20" style={{ background: '#F4E9D2' }}>
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-6xl mx-auto">
+          {/* Top navigation bar */}
+          <div className="flex items-center justify-between mb-8">
+            <button
+              onClick={handleBack}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#082B49] text-[#C5963A] hover:bg-[#C5963A] hover:text-[#082B49] transition-all text-xs font-semibold uppercase tracking-wider border border-[#C5963A]/40 shadow-sm cursor-pointer"
+            >
+              <ArrowLeft size={14} /> Back
+            </button>
+            <div className="text-xs text-[#765334] font-medium flex items-center gap-1.5 font-sans">
+              <Link to="/" className="hover:text-[#C5963A] transition-colors">Home</Link>
+              <span>/</span>
+              <Link to="/#events" className="hover:text-[#C5963A] transition-colors">Events</Link>
+            </div>
+          </div>
+
           {/* Header */}
           <div className="text-center mb-12">
             <p className="eyebrow-label mb-3">Discover</p>

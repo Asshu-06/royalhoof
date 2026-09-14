@@ -6,7 +6,7 @@ import { useAuthStore } from '../store/authStore'
 import { fetchAddresses, saveAddress, updateAddress, deleteAddress, setDefaultAddress } from '../services/addressService'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
-import { isValidPhone } from '../utils/validation'
+import { isValidPhone, sanitizePhone } from '../utils/validation'
 
 const EMPTY_ADDR = { label: 'Home', full_name: '', phone: '', address1: '', address2: '', city: '', state: '', pincode: '', is_default: false }
 
@@ -52,7 +52,7 @@ function AddressForm({ initial, onSave, onCancel, saving }) {
         </div>
         <div>
           <label className={lbl}>Phone *</label>
-          <input value={form.phone} onChange={e => set('phone', e.target.value)} placeholder="10-digit mobile" className={inp} />
+          <input value={form.phone} onChange={e => set('phone', e.target.value.replace(/\D/g, '').slice(0, 10))} onKeyDown={e=>{if(!/[0-9]/.test(e.key)&&!['Backspace','Delete','ArrowLeft','ArrowRight','Tab','Enter'].includes(e.key)&&!e.ctrlKey&&!e.metaKey){e.preventDefault()}}} maxLength={10} inputMode="numeric" pattern="[0-9]{10}" type="tel" placeholder="10-digit mobile" className={inp} />
         </div>
       </div>
       <div>

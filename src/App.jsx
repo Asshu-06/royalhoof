@@ -54,7 +54,7 @@ const PageLoader = () => (
 )
 
 function ScrollToTop() {
-  const { pathname, search, hash } = useLocation()
+  const { pathname, search, hash, state } = useLocation()
 
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
@@ -63,21 +63,36 @@ function ScrollToTop() {
   }, [])
 
   useEffect(() => { 
-    // If navigating with an explicit anchor hash, allow smooth scroll to that element
-    if (hash) {
-      const element = document.getElementById(hash.replace('#', ''))
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' })
-        return
+    // If navigating with an explicit anchor hash, or returning to homepage with state.fromSection, scroll to that section element
+    const targetId = hash ? hash.replace('#', '') : (pathname === '/' ? state?.fromSection : null)
+    if (targetId) {
+      const scrollToElement = () => {
+        const element = document.getElementById(targetId)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          return true
+        }
+        return false
       }
+
+      if (!scrollToElement()) {
+        const timer1 = setTimeout(scrollToElement, 100)
+        const timer2 = setTimeout(scrollToElement, 350)
+        const timer3 = setTimeout(scrollToElement, 700)
+        return () => {
+          clearTimeout(timer1)
+          clearTimeout(timer2)
+          clearTimeout(timer3)
+        }
+      }
+      return
     }
 
-    // Instant scroll to top on route change
+    // Instant scroll to top on route change ONLY when no section hash or fromSection is specified
     window.scrollTo(0, 0)
     document.documentElement.scrollTop = 0
     document.body.scrollTop = 0
 
-    // Backup scroll reset to catch lazy-loaded route renders & layout expansion
     const timer = setTimeout(() => {
       window.scrollTo(0, 0)
       document.documentElement.scrollTop = 0
@@ -85,7 +100,7 @@ function ScrollToTop() {
     }, 100)
 
     return () => clearTimeout(timer)
-  }, [pathname, search])
+  }, [pathname, search, hash, state])
 
   return null
 }
