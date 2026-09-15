@@ -5,7 +5,7 @@ import { supabase } from "../../lib/supabase"
 import toast from "react-hot-toast"
 
 const CARD_BG = "#FAF3E4"
-const CARD_BORDER = "rgba(8,43,73,0.12)"
+const CARD_BORDER = "rgba(12, 13, 17,0.12)"
 const TEXT_PRIMARY = "#292725"
 const TEXT_SECONDARY = "#765334"
 const TEXT_MUTED = "#9A8870"
@@ -83,7 +83,7 @@ const DEFAULT_CSR = {
 const inputStyle = {
   width: "100%",
   background: "#FFFFFF",
-  border: "1px solid rgba(8,43,73,0.15)",
+  border: "1px solid rgba(12, 13, 17,0.15)",
   borderRadius: 6,
   padding: "10px 14px",
   color: TEXT_PRIMARY,
@@ -218,7 +218,7 @@ export default function AdminCSR() {
           <button onClick={handleSave} disabled={saving}
             style={{ 
               display: "flex", alignItems: "center", gap: 8, 
-              background: saving ? "rgba(197,150,58,0.5)" : ACCENT, color: "#082B49", 
+              background: saving ? "rgba(197,150,58,0.5)" : ACCENT, color: "#0C0D11", 
               border: "none", borderRadius: 6, padding: "10px 24px", 
               cursor: saving ? "not-allowed" : "pointer", fontWeight: 600, 
               fontSize: "0.875rem", fontFamily: "'Inter', sans-serif" 
@@ -267,7 +267,7 @@ export default function AdminCSR() {
 
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
               {data.focusAreas.map((area, idx) => (
-                <div key={area.id || idx} style={{ background: "#FFFFFF", border: "1px solid rgba(8,43,73,0.15)", borderRadius: 8, padding: 16, display: "flex", flexDirection: "column", gap: 14 }}>
+                <div key={area.id || idx} style={{ background: "#FFFFFF", border: "1px solid rgba(12, 13, 17,0.15)", borderRadius: 8, padding: 16, display: "flex", flexDirection: "column", gap: 14 }}>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                     <span style={{ fontSize: "0.8125rem", fontWeight: 700, color: ACCENT, fontFamily: "'Inter', sans-serif" }}>
                       Pillar #{idx + 1}: {area.title}
@@ -299,7 +299,7 @@ export default function AdminCSR() {
                     ) : (
                       <div
                         onClick={() => fileInputRefs.current[idx]?.click()}
-                        style={{ border: `2px dashed rgba(8,43,73,0.2)`, borderRadius: 6, padding: "16px", textAlign: "center", cursor: "pointer", marginBottom: 8, background: "rgba(8,43,73,0.02)" }}
+                        style={{ border: `2px dashed rgba(12, 13, 17,0.2)`, borderRadius: 6, padding: "16px", textAlign: "center", cursor: "pointer", marginBottom: 8, background: "rgba(12, 13, 17,0.02)" }}
                       >
                         {uploadingIdx === idx ? (
                           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
@@ -364,7 +364,7 @@ export default function AdminCSR() {
             Live Preview
           </p>
 
-          <div style={{ background: "#041424", borderRadius: 8, padding: 16, border: "1px solid rgba(197,150,58,0.3)", color: "#F5EBD8", display: "flex", flexDirection: "column", gap: 16 }}>
+          <div style={{ background: "#0C0D11", borderRadius: 8, padding: 16, border: "1px solid rgba(197,150,58,0.3)", color: "#F5EBD8", display: "flex", flexDirection: "column", gap: 16 }}>
             <div style={{ textAlign: "center", borderBottom: "1px solid rgba(197,150,58,0.2)", paddingBottom: 12 }}>
               <span style={{ fontSize: "0.625rem", letterSpacing: "0.2em", color: ACCENT, textTransform: "uppercase" }}>CSR INITIATIVES</span>
               <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.25rem", color: "#F5EBD8", marginTop: 4 }}>
@@ -374,7 +374,7 @@ export default function AdminCSR() {
 
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               {data.focusAreas.map((fa, i) => (
-                <div key={i} style={{ background: "#061D33", borderRadius: 6, border: "1px solid rgba(197,150,58,0.25)", overflow: "hidden" }}>
+                <div key={i} style={{ background: "#0C0D11", borderRadius: 6, border: "1px solid rgba(197,150,58,0.25)", overflow: "hidden" }}>
                   {fa.img && (
                     <img src={fa.img} alt={fa.title} style={{ width: "100%", height: 120, objectFit: "cover" }} />
                   )}

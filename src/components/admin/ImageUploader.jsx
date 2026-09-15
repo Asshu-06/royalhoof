@@ -4,7 +4,7 @@ import { supabase } from '../../lib/supabase'
 import toast from 'react-hot-toast'
 
 const ACCENT = "#C5963A"
-const CARD_BORDER = "rgba(8,43,73,0.12)"
+const CARD_BORDER = "rgba(12, 13, 17,0.12)"
 const TEXT_SECONDARY = "#765334"
 const TEXT_MUTED = "#9A8870"
 const TEXT_PRIMARY = "#292725"
@@ -227,7 +227,7 @@ export default function ImageUploader({
             padding: 28, 
             textAlign: 'center', 
             cursor: uploading ? 'not-allowed' : 'pointer',
-            background: 'rgba(8,43,73,0.02)',
+            background: 'rgba(12, 13, 17,0.02)',
             transition: 'all 0.2s'
           }}
           onMouseEnter={e => {
@@ -238,7 +238,7 @@ export default function ImageUploader({
           }}
           onMouseLeave={e => {
             e.currentTarget.style.borderColor = CARD_BORDER
-            e.currentTarget.style.background = 'rgba(8,43,73,0.02)'
+            e.currentTarget.style.background = 'rgba(12, 13, 17,0.02)'
           }}
         >
           {uploading ? (

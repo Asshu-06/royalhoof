@@ -105,7 +105,7 @@ export default function CartPage() {
         <ShoppingBag size={64} className="text-[#C5963A] mx-auto mb-4" />
         <h2 className="text-2xl font-bold text-[#292725] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Your cart is empty</h2>
         <p className="text-[#765334] mb-6">Discover our sacred Horse Riding collection</p>
-        <Link to="/products" className="px-8 py-3 bg-[#082B49] text-white font-semibold rounded-lg hover:bg-[#0B304D] transition-all">
+        <Link to="/products" className="px-8 py-3 bg-[#0C0D11] text-white font-semibold rounded-lg hover:bg-[#0C0D11] transition-all">
           Shop Now
         </Link>
       </div>
@@ -123,7 +123,7 @@ export default function CartPage() {
           id="select-all"
           checked={allSelected}
           onChange={toggleAll}
-          className="w-4 h-4 accent-[#082B49] cursor-pointer"
+          className="w-4 h-4 accent-[#0C0D11] cursor-pointer"
         />
         <label htmlFor="select-all" className="text-sm text-[#765334] cursor-pointer select-none">
           {allSelected ? 'Deselect all' : `Select all (${items.length})`}
@@ -150,7 +150,7 @@ export default function CartPage() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
                   className={`flex gap-4 bg-[#FAF3E4] border rounded-xl p-4 shadow-sm transition-all ${
-                    isSelected ? 'border-[#082B49]' : 'border-[rgba(8,43,73,0.15)] opacity-60'
+                    isSelected ? 'border-[#0C0D11]' : 'border-[rgba(12, 13, 17,0.15)] opacity-60'
                   }`}
                 >
                   {/* Checkbox */}
@@ -159,7 +159,7 @@ export default function CartPage() {
                       type="checkbox"
                       checked={isSelected}
                       onChange={() => toggleItem(key)}
-                      className="w-4 h-4 accent-[#082B49] cursor-pointer"
+                      className="w-4 h-4 accent-[#0C0D11] cursor-pointer"
                     />
                   </div>
 
@@ -185,29 +185,29 @@ export default function CartPage() {
 
                   <div className="flex-1 min-w-0">
                     <Link to={`/products/${item.product_id}`}>
-                      <h3 className="text-[#292725] text-sm font-semibold hover:text-[#082B49] transition-colors line-clamp-2">{product.name}</h3>
+                      <h3 className="text-[#292725] text-sm font-semibold hover:text-[#0C0D11] transition-colors line-clamp-2">{product.name}</h3>
                     </Link>
                     <p className="text-[#C5963A] text-xs mt-1 font-medium">{product.category}</p>
                     {product.stock === 0 && <p className="text-red-500 text-xs mt-1">? Out of stock</p>}
                     <div className="flex items-center justify-between mt-3">
                       <div className="flex items-center gap-2">
-                        <button onClick={() => handleQty(item, -1)} className="w-7 h-7 flex items-center justify-center bg-[#FAF3E4] hover:bg-[rgba(8,43,73,0.15)] text-[#765334] rounded-lg transition-all">
+                        <button onClick={() => handleQty(item, -1)} className="w-7 h-7 flex items-center justify-center bg-[#FAF3E4] hover:bg-[rgba(12, 13, 17,0.15)] text-[#765334] rounded-lg transition-all">
                           <Minus size={12} />
                         </button>
                         <span className="text-[#292725] text-sm w-6 text-center font-medium">{item.quantity}</span>
-                        <button onClick={() => handleQty(item, 1)} className="w-7 h-7 flex items-center justify-center bg-[#FAF3E4] hover:bg-[rgba(8,43,73,0.15)] text-[#765334] rounded-lg transition-all">
+                        <button onClick={() => handleQty(item, 1)} className="w-7 h-7 flex items-center justify-center bg-[#FAF3E4] hover:bg-[rgba(12, 13, 17,0.15)] text-[#765334] rounded-lg transition-all">
                           <Plus size={12} />
                         </button>
                       </div>
                       <div className="flex items-center gap-3">
-                        <span className="text-[#082B49] font-bold text-sm">{formatINR((product.price || 0) * item.quantity)}</span>
+                        <span className="text-[#0C0D11] font-bold text-sm">{formatINR((product.price || 0) * item.quantity)}</span>
                         <button onClick={() => handleRemove(item)} title="Remove" className="text-[#765334] hover:text-red-500 transition-colors">
                           <Trash2 size={15} />
                         </button>
                       </div>
                     </div>
                     <button onClick={() => handleSaveLater(item)}
-                      className="mt-2 text-xs text-[#C5963A] hover:text-[#082B49] transition-colors flex items-center gap-1">
+                      className="mt-2 text-xs text-[#C5963A] hover:text-[#0C0D11] transition-colors flex items-center gap-1">
                       <Heart size={11} /> Save for later
                     </button>
                   </div>
@@ -218,7 +218,7 @@ export default function CartPage() {
         </div>
 
         {/* Summary */}
-        <div className="bg-[#FAF3E4] border border-[rgba(8,43,73,0.15)] rounded-xl p-6 h-fit sticky top-20 shadow-sm">
+        <div className="bg-[#FAF3E4] border border-[rgba(12, 13, 17,0.15)] rounded-xl p-6 h-fit sticky top-20 shadow-sm">
           <h2 className="text-[#292725] font-semibold mb-4">Order Summary</h2>
 
           {selectedItems.length === 0 ? (
@@ -234,10 +234,10 @@ export default function CartPage() {
             </div>
           )}
 
-          <div className="border-t border-[rgba(8,43,73,0.15)] pt-4 mb-6">
+          <div className="border-t border-[rgba(12, 13, 17,0.15)] pt-4 mb-6">
             <div className="flex justify-between">
               <span className="text-[#292725] font-semibold">Total</span>
-              <span className="text-[#082B49] font-bold text-lg">{formatINR(selectedTotal)}</span>
+              <span className="text-[#0C0D11] font-bold text-lg">{formatINR(selectedTotal)}</span>
             </div>
             {selectedItems.length > 0 && selectedItems.length < items.length && (
               <p className="text-[#765334] text-xs mt-1">{selectedItems.length} of {items.length} items selected</p>
@@ -247,7 +247,7 @@ export default function CartPage() {
           <button
             onClick={handleCheckout}
             disabled={hasOutOfStock || !user || selectedItems.length === 0}
-            className="w-full flex items-center justify-center gap-2 py-3 bg-[#082B49] text-white font-semibold rounded-lg hover:bg-[#0B304D] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full flex items-center justify-center gap-2 py-3 bg-[#0C0D11] text-white font-semibold rounded-lg hover:bg-[#0C0D11] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Proceed to Checkout <ArrowRight size={16} />
           </button>

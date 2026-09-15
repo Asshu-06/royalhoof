@@ -85,24 +85,24 @@ export default function AdminPromoCodes() {
   const totalPages = Math.ceil(codes.length / PAGE_SIZE)
   const pagedCodes = codes.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
 
-  const inp = "w-full bg-[#FAF3E4] border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-[#292725] focus:outline-none focus:border-[#082B49]"
+  const inp = "w-full bg-[#FAF3E4] border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-[#292725] focus:outline-none focus:border-[#0C0D11]"
   const lbl = "text-xs text-gray-400 mb-1 block"
 
   return (
     <div className="space-y-5">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-[#082B49]" style={{ fontFamily: "Georgia, serif" }}>Promo Codes</h1>
+          <h1 className="text-3xl font-bold text-[#0C0D11]" style={{ fontFamily: "Georgia, serif" }}>Promo Codes</h1>
           <p className="text-gray-500 text-sm mt-1">{codes.length} total codes</p>
         </div>
-        <button onClick={openAdd} className="flex items-center gap-2 px-4 py-2 bg-[#082B49] text-white font-semibold rounded-lg hover:bg-[#0B304D] transition-all text-sm">
+        <button onClick={openAdd} className="flex items-center gap-2 px-4 py-2 bg-[#0C0D11] text-white font-semibold rounded-lg hover:bg-[#0C0D11] transition-all text-sm">
           <Plus size={15} /> Add Code
         </button>
       </div>
 
       <div className="bg-[#FAF3E4] border border-gray-200 rounded-xl overflow-hidden">
         {loading ? (
-          <div className="flex items-center justify-center py-16"><Loader2 size={22} className="animate-spin text-[#082B49]" /></div>
+          <div className="flex items-center justify-center py-16"><Loader2 size={22} className="animate-spin text-[#0C0D11]" /></div>
         ) : codes.length === 0 ? (
           <div className="text-center py-16 text-gray-400 text-sm">No promo codes yet. Add one!</div>
         ) : (
@@ -124,12 +124,12 @@ export default function AdminPromoCodes() {
                     className="hover:bg-gray-50/60 transition-colors">
                     <td className="px-5 py-3">
                       <div className="flex flex-col gap-0.5">
-                        <span className="font-mono font-bold text-[#082B49] text-sm bg-[#082B49]/8 px-2 py-0.5 rounded w-fit">{c.code}</span>
+                        <span className="font-mono font-bold text-[#0C0D11] text-sm bg-[#0C0D11]/8 px-2 py-0.5 rounded w-fit">{c.code}</span>
                         {c.description && <p className="text-gray-400 text-xs">{c.description}</p>}
                         {c.is_one_time && <span className="text-xs text-[#C5963A] bg-[#C5963A]/10 px-2 py-0.5 rounded-full w-fit">One-time</span>}
                       </div>
                     </td>
-                    <td className="px-5 py-3 font-semibold text-[#082B49]">
+                    <td className="px-5 py-3 font-semibold text-[#0C0D11]">
                       {c.discount_type === 'percentage' ? `${c.discount_value}% off` : `₹${c.discount_value} off`}
                     </td>
                     <td className="px-5 py-3 text-gray-500 text-xs space-y-0.5">
@@ -170,15 +170,15 @@ export default function AdminPromoCodes() {
           </p>
           <div className="flex items-center gap-1">
             <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}
-              className="px-2 py-1 text-xs rounded border border-gray-200 text-gray-500 hover:border-[#082B49] disabled:opacity-40">‹</button>
+              className="px-2 py-1 text-xs rounded border border-gray-200 text-gray-500 hover:border-[#0C0D11] disabled:opacity-40">‹</button>
             {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
               <button key={p} onClick={() => setPage(p)}
-                className={`px-2.5 py-1 text-xs rounded border transition-all ${p === page ? "bg-[#082B49] text-white border-[#082B49]" : "border-gray-200 text-gray-500 hover:border-[#082B49]"}`}>
+                className={`px-2.5 py-1 text-xs rounded border transition-all ${p === page ? "bg-[#0C0D11] text-white border-[#0C0D11]" : "border-gray-200 text-gray-500 hover:border-[#0C0D11]"}`}>
                 {p}
               </button>
             ))}
             <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages}
-              className="px-2 py-1 text-xs rounded border border-gray-200 text-gray-500 hover:border-[#082B49] disabled:opacity-40">›</button>
+              className="px-2 py-1 text-xs rounded border border-gray-200 text-gray-500 hover:border-[#0C0D11] disabled:opacity-40">›</button>
           </div>
         </div>
       )}
@@ -192,7 +192,7 @@ export default function AdminPromoCodes() {
             <motion.div initial={{ scale: 0.95 }} animate={{ scale: 1 }} exit={{ scale: 0.95 }}
               className="bg-[#FAF3E4] rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-xl">
               <div className="flex items-center justify-between p-5 border-b border-gray-200">
-                <h2 className="text-[#082B49] font-semibold">{editCode ? "Edit Promo Code" : "Add Promo Code"}</h2>
+                <h2 className="text-[#0C0D11] font-semibold">{editCode ? "Edit Promo Code" : "Add Promo Code"}</h2>
                 <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-600"><X size={18} /></button>
               </div>
               <div className="p-5 space-y-4">
@@ -255,7 +255,7 @@ export default function AdminPromoCodes() {
                 <div className="flex gap-3 pt-2">
                   <button onClick={() => setShowModal(false)} className="flex-1 py-2.5 border border-gray-200 text-gray-400 rounded-lg text-sm hover:border-gray-300">Cancel</button>
                   <button onClick={handleSave} disabled={saving}
-                    className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-[#082B49] text-white font-semibold rounded-lg text-sm hover:bg-[#0B304D] disabled:opacity-50">
+                    className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-[#0C0D11] text-white font-semibold rounded-lg text-sm hover:bg-[#0C0D11] disabled:opacity-50">
                     {saving ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />}
                     {editCode ? "Update Code" : "Create Code"}
                   </button>
@@ -273,7 +273,7 @@ export default function AdminPromoCodes() {
             className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
             <motion.div initial={{ scale: 0.95 }} animate={{ scale: 1 }} className="bg-[#FAF3E4] rounded-xl p-6 max-w-sm w-full text-center">
               <Trash2 size={32} className="text-red-400 mx-auto mb-3" />
-              <h3 className="text-[#082B49] font-semibold mb-2">Delete this promo code?</h3>
+              <h3 className="text-[#0C0D11] font-semibold mb-2">Delete this promo code?</h3>
               <p className="text-gray-400 text-sm mb-5">This cannot be undone.</p>
               <div className="flex gap-3">
                 <button onClick={() => setDeleteConfirm(null)} className="flex-1 py-2 border border-gray-200 text-gray-400 rounded-lg text-sm">Cancel</button>

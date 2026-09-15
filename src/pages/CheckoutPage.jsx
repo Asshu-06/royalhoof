@@ -44,14 +44,14 @@ function NewAddressForm({ onSave, onCancel, saving }) {
     return Object.keys(e).length === 0
   }
   const handleSubmit = (e) => { e.preventDefault(); if (validate()) onSave(form) }
-  const inp = "w-full bg-[#FAF3E4] border border-[rgba(8,43,73,0.15)] rounded-lg px-3 py-2.5 text-sm text-[#292725] placeholder-[#765334] focus:outline-none focus:border-[#082B49]"
+  const inp = "w-full bg-[#FAF3E4] border border-[rgba(12, 13, 17,0.15)] rounded-lg px-3 py-2.5 text-sm text-[#292725] placeholder-[#765334] focus:outline-none focus:border-[#0C0D11]"
   const lbl = "text-xs text-[#765334] mb-1 block font-medium"
   return (
-    <form onSubmit={handleSubmit} className="border border-[rgba(8,43,73,0.15)] rounded-xl p-4 bg-[#F4E9D2] space-y-3">
+    <form onSubmit={handleSubmit} className="border border-[rgba(12, 13, 17,0.15)] rounded-xl p-4 bg-[#F4E9D2] space-y-3">
       <div className="flex gap-2 mb-1">
         {["Home","Work","Other"].map(l => (
           <button key={l} type="button" onClick={() => setForm(f => ({ ...f, label: l }))}
-            className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${form.label === l ? "bg-[#082B49] text-white" : "bg-[#FAF3E4] text-[#765334] border border-[rgba(8,43,73,0.15)]"}`}>{l}</button>
+            className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${form.label === l ? "bg-[#0C0D11] text-white" : "bg-[#FAF3E4] text-[#765334] border border-[rgba(12, 13, 17,0.15)]"}`}>{l}</button>
         ))}
       </div>
       <div className="grid grid-cols-2 gap-3">
@@ -75,8 +75,8 @@ function NewAddressForm({ onSave, onCancel, saving }) {
         Save as default address
       </label>
       <div className="flex gap-2">
-        <button type="button" onClick={onCancel} className="flex-1 py-2 border border-[rgba(8,43,73,0.15)] text-[#765334] rounded-lg text-sm">Cancel</button>
-        <button type="submit" disabled={saving} className="flex-1 py-2 bg-[#082B49] text-white font-semibold rounded-lg text-sm hover:bg-[#0B304D] disabled:opacity-60">Save & Use</button>
+        <button type="button" onClick={onCancel} className="flex-1 py-2 border border-[rgba(12, 13, 17,0.15)] text-[#765334] rounded-lg text-sm">Cancel</button>
+        <button type="submit" disabled={saving} className="flex-1 py-2 bg-[#0C0D11] text-white font-semibold rounded-lg text-sm hover:bg-[#0C0D11] disabled:opacity-60">Save & Use</button>
       </div>
     </form>
   )
@@ -302,8 +302,8 @@ export default function CheckoutPage() {
         <p className="text-[#765334] mb-2">Your order is pending payment verification.</p>
         <p className="text-[#765334] text-sm mb-8">We will confirm your order once payment is verified. You will be notified.</p>
         <div className="flex gap-4 justify-center">
-          <button onClick={() => navigate("/orders")} className="px-6 py-3 bg-[#082B49] text-white font-semibold rounded-lg hover:bg-[#0B304D] transition-all">View Orders</button>
-          <button onClick={() => navigate("/")} className="px-6 py-3 border border-[#082B49] text-[#082B49] rounded-lg hover:bg-[#082B49]/10 transition-all">Continue Shopping</button>
+          <button onClick={() => navigate("/orders")} className="px-6 py-3 bg-[#0C0D11] text-white font-semibold rounded-lg hover:bg-[#0C0D11] transition-all">View Orders</button>
+          <button onClick={() => navigate("/")} className="px-6 py-3 border border-[#0C0D11] text-[#0C0D11] rounded-lg hover:bg-[#0C0D11]/10 transition-all">Continue Shopping</button>
         </div>
       </div>
     )
@@ -315,7 +315,7 @@ export default function CheckoutPage() {
         {isBuyNow ? "Buy Now" : "Checkout"}
       </h1>
       {isBuyNow && (
-        <div className="mb-6 flex items-center gap-2 bg-[#082B49]/5 border border-[#082B49]/20 rounded-lg px-4 py-2.5 text-sm text-[#082B49]">
+        <div className="mb-6 flex items-center gap-2 bg-[#0C0D11]/5 border border-[#0C0D11]/20 rounded-lg px-4 py-2.5 text-sm text-[#0C0D11]">
           <Zap size={14} className="flex-shrink-0" />
           Buying <span className="font-semibold mx-1">{buyNowData.product.name}</span> directly - your cart is unchanged.
         </div>
@@ -325,11 +325,11 @@ export default function CheckoutPage() {
       <div className="flex items-center gap-3 mb-8">
         {["address","payment"].map((s, i) => (
           <div key={s} className="flex items-center gap-2">
-            <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${step === s || (s === "address" && step === "payment") ? "bg-[#082B49] text-white" : "bg-[rgba(8,43,73,0.15)] text-[#765334] border border-[rgba(8,43,73,0.15)]"}`}>
+            <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${step === s || (s === "address" && step === "payment") ? "bg-[#0C0D11] text-white" : "bg-[rgba(12, 13, 17,0.15)] text-[#765334] border border-[rgba(12, 13, 17,0.15)]"}`}>
               {i + 1}
             </div>
             <span className={`text-sm capitalize ${step === s ? "text-[#292725] font-medium" : "text-[#765334]"}`}>{s === "address" ? "Delivery Address" : "Payment"}</span>
-            {i === 0 && <div className="w-8 h-px bg-[rgba(8,43,73,0.15)] mx-1" />}
+            {i === 0 && <div className="w-8 h-px bg-[rgba(12, 13, 17,0.15)] mx-1" />}
           </div>
         ))}
       </div>
@@ -337,24 +337,24 @@ export default function CheckoutPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-4">
           {step === "address" && (
-            <div className="bg-[#FAF3E4] border border-[rgba(8,43,73,0.15)] rounded-xl p-5 shadow-sm">
+            <div className="bg-[#FAF3E4] border border-[rgba(12, 13, 17,0.15)] rounded-xl p-5 shadow-sm">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-[#292725] font-semibold flex items-center gap-2"><MapPin size={16} className="text-[#C5963A]" /> Delivery Address</h2>
-                {!showNewForm && <button onClick={() => setShowNewForm(true)} className="flex items-center gap-1 text-xs text-[#082B49] font-medium"><Plus size={13} /> Add New</button>}
+                {!showNewForm && <button onClick={() => setShowNewForm(true)} className="flex items-center gap-1 text-xs text-[#0C0D11] font-medium"><Plus size={13} /> Add New</button>}
               </div>
               {loading ? <div className="h-20 bg-[#FAF3E4] rounded-xl animate-pulse" /> : (
                 <div className="space-y-3">
                   {showNewForm && <NewAddressForm onSave={handleSaveNew} onCancel={() => addresses.length > 0 && setShowNewForm(false)} saving={savingAddr} />}
                   {addresses.map(addr => (
                     <div key={addr.id} onClick={() => { setSelectedId(addr.id); setShowNewForm(false) }}
-                      className={`border rounded-xl p-4 cursor-pointer transition-all ${selectedId === addr.id ? "border-[#082B49] bg-[#082B49]/5" : "border-[rgba(8,43,73,0.15)] bg-[#F4E9D2] hover:border-[#082B49]/30"}`}>
+                      className={`border rounded-xl p-4 cursor-pointer transition-all ${selectedId === addr.id ? "border-[#0C0D11] bg-[#0C0D11]/5" : "border-[rgba(12, 13, 17,0.15)] bg-[#F4E9D2] hover:border-[#0C0D11]/30"}`}>
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <span className="text-xs px-2 py-0.5 bg-[#082B49]/10 text-[#082B49] rounded-full font-medium">{addr.label}</span>
+                          <span className="text-xs px-2 py-0.5 bg-[#0C0D11]/10 text-[#0C0D11] rounded-full font-medium">{addr.label}</span>
                           <p className="text-[#292725] text-sm font-medium mt-1">{addr.full_name} &middot; {addr.phone}</p>
                           <p className="text-[#765334] text-xs">{addr.address1}, {addr.city}, {addr.state} &ndash; {addr.pincode}</p>
                         </div>
-                        {selectedId === addr.id && <div className="w-5 h-5 bg-[#082B49] rounded-full flex items-center justify-center ml-3"><Check size={12} className="text-white" /></div>}
+                        {selectedId === addr.id && <div className="w-5 h-5 bg-[#0C0D11] rounded-full flex items-center justify-center ml-3"><Check size={12} className="text-white" /></div>}
                       </div>
                     </div>
                   ))}
@@ -362,7 +362,7 @@ export default function CheckoutPage() {
               )}
               <button onClick={() => { if (!selectedId) { toast.error("Select an address"); return } setStep("payment") }}
                 disabled={!selectedId || loading}
-                className="w-full mt-4 py-3 bg-[#082B49] text-white font-semibold rounded-lg hover:bg-[#0B304D] transition-all disabled:opacity-50">
+                className="w-full mt-4 py-3 bg-[#0C0D11] text-white font-semibold rounded-lg hover:bg-[#0C0D11] transition-all disabled:opacity-50">
                 Continue to Payment &rarr;
               </button>
             </div>
@@ -378,7 +378,7 @@ export default function CheckoutPage() {
               <div className="space-y-4">
                 {/* Header card */}
                 <div className="rounded-2xl overflow-hidden shadow-sm">
-                  <div className="bg-[#082B49] px-6 py-5 text-center">
+                  <div className="bg-[#0C0D11] px-6 py-5 text-center">
                     <Smartphone size={28} className="text-[#C5963A] mx-auto mb-2" />
                     <h2 className="text-white font-bold text-xl">Pay via UPI</h2>
                     <p className="text-orange-200 text-sm">Scan QR or use UPI ID below</p>
@@ -388,21 +388,21 @@ export default function CheckoutPage() {
                     {/* Amount */}
                     <div className="text-center">
                       <p className="text-[#765334] text-sm font-medium mb-1">Amount to Pay</p>
-                      <p className="text-[#082B49] text-5xl font-bold" style={{ fontFamily: "Cinzel, serif" }}>
+                      <p className="text-[#0C0D11] text-5xl font-bold" style={{ fontFamily: "Cinzel, serif" }}>
                         ?{grandTotal.toLocaleString("en-IN")}
                       </p>
                     </div>
 
                     {/* QR Code */}
                     <div className="flex flex-col items-center gap-2">
-                      <div className="bg-[#FAF3E4] p-3 rounded-2xl border-2 border-[rgba(8,43,73,0.15)] shadow-sm inline-block">
+                      <div className="bg-[#FAF3E4] p-3 rounded-2xl border-2 border-[rgba(12, 13, 17,0.15)] shadow-sm inline-block">
                         <img src={getQRUrl(UPI_ID, grandTotal)} alt="UPI QR Code" className="w-48 h-48 object-contain" />
                       </div>
                       <p className="text-[#765334] text-sm font-medium">Scan with any UPI app</p>
                       {/* App logos */}
                       <div className="flex items-center gap-3 mt-1">
                         {["GPay","PhonePe","Paytm","BHIM"].map(app => (
-                          <span key={app} className="text-xs font-bold text-[#082B49] bg-[#EEF2FF] border border-[#C7D2FE] px-3 py-1.5 rounded-lg">{app}</span>
+                          <span key={app} className="text-xs font-bold text-[#0C0D11] bg-[#EEF2FF] border border-[#C7D2FE] px-3 py-1.5 rounded-lg">{app}</span>
                         ))}
                       </div>
                     </div>
@@ -416,10 +416,10 @@ export default function CheckoutPage() {
 
                     {/* UPI ID row */}
                     <div className="flex items-center gap-2 bg-[#EEF2FF] border border-[#C7D2FE] rounded-xl px-4 py-3">
-                      <p className="flex-1 text-[#082B49] font-mono text-sm font-bold">{UPI_ID}</p>
+                      <p className="flex-1 text-[#0C0D11] font-mono text-sm font-bold">{UPI_ID}</p>
                       <button
                         onClick={() => { navigator.clipboard.writeText(UPI_ID); toast.success("UPI ID copied!") }}
-                        className="flex items-center gap-1.5 px-4 py-2 bg-[#082B49] text-white text-xs font-bold rounded-lg hover:bg-[#0B304D] transition-all shadow-sm">
+                        className="flex items-center gap-1.5 px-4 py-2 bg-[#0C0D11] text-white text-xs font-bold rounded-lg hover:bg-[#0C0D11] transition-all shadow-sm">
                         <Copy size={12} /> Copy
                       </button>
                     </div>
@@ -448,7 +448,7 @@ export default function CheckoutPage() {
                 </div>
 
                 {/* Screenshot upload card */}
-                <div className="bg-[#FAF3E4] border border-[rgba(8,43,73,0.15)] rounded-2xl p-5 shadow-sm space-y-4">
+                <div className="bg-[#FAF3E4] border border-[rgba(12, 13, 17,0.15)] rounded-2xl p-5 shadow-sm space-y-4">
                   <h3 className="text-[#292725] font-semibold text-base flex items-center gap-2">
                     <Upload size={15} className="text-[#C5963A]" /> Upload Payment Screenshot <span className="text-red-500">*</span>
                   </h3>
@@ -481,15 +481,15 @@ export default function CheckoutPage() {
                   <div>
                     <label className="text-xs text-[#765334] mb-1 block font-medium">UPI Transaction Reference (optional)</label>
                     <input value={upiRef} onChange={e => setUpiRef(e.target.value)} placeholder="e.g. 123456789012"
-                      className="w-full bg-[#FAF3E4] border border-[rgba(8,43,73,0.15)] rounded-lg px-3 py-2.5 text-sm text-[#292725] placeholder-[#765334] focus:outline-none focus:border-[#082B49]" />
+                      className="w-full bg-[#FAF3E4] border border-[rgba(12, 13, 17,0.15)] rounded-lg px-3 py-2.5 text-sm text-[#292725] placeholder-[#765334] focus:outline-none focus:border-[#0C0D11]" />
                   </div>
 
                   {/* File upload area */}
-                  <label className="flex flex-col items-center justify-center gap-2 p-6 border-2 border-dashed border-[rgba(8,43,73,0.15)] hover:border-[#C5963A]/50 rounded-xl cursor-pointer transition-all bg-[#F4E9D2]">
+                  <label className="flex flex-col items-center justify-center gap-2 p-6 border-2 border-dashed border-[rgba(12, 13, 17,0.15)] hover:border-[#C5963A]/50 rounded-xl cursor-pointer transition-all bg-[#F4E9D2]">
                     <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleScreenshotChange} />
                     {screenshotPreview ? (
                       <div className="relative">
-                        <img src={screenshotPreview} alt="Screenshot preview" className="h-36 rounded-lg border border-[rgba(8,43,73,0.15)] object-cover" />
+                        <img src={screenshotPreview} alt="Screenshot preview" className="h-36 rounded-lg border border-[rgba(12, 13, 17,0.15)] object-cover" />
                         <button type="button" onClick={e => { e.preventDefault(); setScreenshot(null); setScreenshotPreview(null) }}
                           className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow">-</button>
                       </div>
@@ -508,7 +508,7 @@ export default function CheckoutPage() {
                 {/* CTA */}
                 <div className="space-y-2">
                   <button onClick={handleSubmitOrder} disabled={submitting || !screenshot}
-                    className="w-full py-4 bg-[#082B49] text-white font-bold rounded-xl hover:bg-[#0B304D] transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-base shadow-lg">
+                    className="w-full py-4 bg-[#0C0D11] text-white font-bold rounded-xl hover:bg-[#0C0D11] transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-base shadow-lg">
                     {submitting
                       ? <><Loader2 size={18} className="animate-spin" /> Placing Order...</>
                       : <><CheckCircle size={18} /> I've Paid - Confirm Order</>
@@ -517,7 +517,7 @@ export default function CheckoutPage() {
                   <p className="text-[#765334] text-xs text-center font-medium">Your order will be confirmed after admin verifies the payment</p>
                 </div>
 
-                <button onClick={() => setStep("address")} className="flex items-center gap-1 text-xs text-[#765334] hover:text-[#082B49] transition-colors">
+                <button onClick={() => setStep("address")} className="flex items-center gap-1 text-xs text-[#765334] hover:text-[#0C0D11] transition-colors">
                   &larr; Back to checkout
                 </button>
               </div>
@@ -526,7 +526,7 @@ export default function CheckoutPage() {
         </div>
 
         {/* Order Summary */}
-        <div className="bg-[#FAF3E4] border border-[rgba(8,43,73,0.15)] rounded-xl p-6 h-fit sticky top-20 shadow-sm">
+        <div className="bg-[#FAF3E4] border border-[rgba(12, 13, 17,0.15)] rounded-xl p-6 h-fit sticky top-20 shadow-sm">
           <h2 className="text-[#292725] font-semibold mb-4">Order Summary</h2>
           <div className="space-y-2 mb-4 max-h-48 overflow-y-auto">
             {items.map(item => {
@@ -558,7 +558,7 @@ export default function CheckoutPage() {
               )
             })}
           </div>
-          <div className="border-t border-[rgba(8,43,73,0.15)] pt-4 space-y-2 mb-5">
+          <div className="border-t border-[rgba(12, 13, 17,0.15)] pt-4 space-y-2 mb-5">
             {(() => {
               const selectedAddr = addresses.find(a => a.id === selectedId)
               const shipping = getShippingCost(selectedAddr)
@@ -594,9 +594,9 @@ export default function CheckoutPage() {
                         : "Other states rate"}
                     </p>
                   )}
-                  <div className="flex justify-between font-semibold pt-1 border-t border-[rgba(8,43,73,0.15)]">
+                  <div className="flex justify-between font-semibold pt-1 border-t border-[rgba(12, 13, 17,0.15)]">
                     <span className="text-[#292725]">Total</span>
-                    <span className="text-[#082B49] text-lg font-bold">{formatINR(grandTotal)}</span>
+                    <span className="text-[#0C0D11] text-lg font-bold">{formatINR(grandTotal)}</span>
                   </div>
                 </>
               )
@@ -625,9 +625,9 @@ export default function CheckoutPage() {
                 <input value={promoInput} onChange={e => setPromoInput(e.target.value.toUpperCase())}
                   onKeyDown={e => e.key === "Enter" && applyPromo()}
                   placeholder="Enter promo code"
-                  className="flex-1 bg-[#FAF3E4] border border-[rgba(8,43,73,0.15)] rounded-lg px-3 py-2 text-sm text-[#292725] placeholder-[#765334] focus:outline-none focus:border-[#C5963A]" />
+                  className="flex-1 bg-[#FAF3E4] border border-[rgba(12, 13, 17,0.15)] rounded-lg px-3 py-2 text-sm text-[#292725] placeholder-[#765334] focus:outline-none focus:border-[#C5963A]" />
                 <button onClick={() => applyPromo()} disabled={promoLoading || !promoInput.trim()}
-                  className="px-3 py-2 bg-[#082B49] text-white text-sm font-semibold rounded-lg hover:bg-[#0B304D] disabled:opacity-50 flex items-center gap-1">
+                  className="px-3 py-2 bg-[#0C0D11] text-white text-sm font-semibold rounded-lg hover:bg-[#0C0D11] disabled:opacity-50 flex items-center gap-1">
                   {promoLoading ? <Loader2 size={13} className="animate-spin" /> : "Apply"}
                 </button>
               </div>
@@ -677,7 +677,7 @@ export default function CheckoutPage() {
       applyPromo(code.code)
     }}
     disabled={promoLoading}
-    className="flex-shrink-0 px-4 py-2 bg-[#082B49] text-white text-sm font-semibold rounded-lg hover:bg-[#0B304D] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+    className="flex-shrink-0 px-4 py-2 bg-[#0C0D11] text-white text-sm font-semibold rounded-lg hover:bg-[#0C0D11] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
   >
     Apply
   </button>

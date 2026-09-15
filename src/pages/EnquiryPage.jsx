@@ -16,6 +16,7 @@ export default function EnquiryPage() {
     name: '',
     email: '',
     phone: '',
+    category: 'child',
     message: ''
   })
 
@@ -35,41 +36,46 @@ export default function EnquiryPage() {
     if (!enquiryForm.phone.trim()) { toast.error('Phone required'); return }
     if (!isValidPhone(enquiryForm.phone)) { toast.error('Please enter a valid 10-digit mobile number'); return }
     if (enquiryForm.email.trim() && !isValidEmail(enquiryForm.email)) { toast.error('Please enter a valid email address'); return }
+    if (!enquiryForm.category) { toast.error('Category required'); return }
     if (!enquiryForm.message.trim()) { toast.error('Message required'); return }
     
     setSubmittingEnquiry(true)
+    const categoryLabel = enquiryForm.category === 'child' ? 'Child' : 'Adult'
     try {
-      // Save to database
-      const { error } = await supabase
-        .from('enquiries')
-        .insert([
-          {
-            name: enquiryForm.name.trim(),
-            email: enquiryForm.email.trim() || null,
-            phone: enquiryForm.phone.trim(),
-            message: enquiryForm.message.trim(),
-            enquiry_type: 'general',
-            status: 'new'
-          }
-        ])
+      const enquiryPayload = {
+        name: enquiryForm.name.trim(),
+        email: enquiryForm.email.trim() || null,
+        phone: enquiryForm.phone.trim(),
+        message: `[Category: ${categoryLabel}] ${enquiryForm.message.trim()}`.trim(),
+        enquiry_type: 'general',
+        status: 'new',
+        category: enquiryForm.category
+      }
 
-      if (error) throw error
+      let { error } = await supabase.from('enquiries').insert([enquiryPayload])
+      if (error && (error.message?.includes('category') || error.code === '42703')) {
+        delete enquiryPayload.category
+        const fallbackRes = await supabase.from('enquiries').insert([enquiryPayload])
+        if (fallbackRes.error) throw fallbackRes.error
+      } else if (error) {
+        throw error
+      }
 
       toast.success('Your enquiry has been submitted successfully! We will contact you soon.')
       
       // Also open WhatsApp for immediate contact
-      const text = `*General Enquiry*\n\nName: ${enquiryForm.name}\nEmail: ${enquiryForm.email}\nPhone: ${enquiryForm.phone}\n\nMessage:\n${enquiryForm.message}`
+      const text = `*General Enquiry*\n\nCategory: ${categoryLabel}\nName: ${enquiryForm.name}\nEmail: ${enquiryForm.email}\nPhone: ${enquiryForm.phone}\n\nMessage:\n${enquiryForm.message}`
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank")
       
       // Reset form
-      setEnquiryForm({ name: '', email: '', phone: '', message: '' })
+      setEnquiryForm({ name: '', email: '', phone: '', category: 'child', message: '' })
       
     } catch (error) {
       console.error('Error submitting enquiry:', error)
       toast.error('Failed to submit enquiry. Please try again or contact us directly via WhatsApp.')
       
       // Fallback to WhatsApp only
-      const text = `*General Enquiry*\n\nName: ${enquiryForm.name}\nEmail: ${enquiryForm.email}\nPhone: ${enquiryForm.phone}\n\nMessage:\n${enquiryForm.message}`
+      const text = `*General Enquiry*\n\nCategory: ${categoryLabel}\nName: ${enquiryForm.name}\nEmail: ${enquiryForm.email}\nPhone: ${enquiryForm.phone}\n\nMessage:\n${enquiryForm.message}`
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank")
     } finally {
       setSubmittingEnquiry(false)
@@ -159,7 +165,7 @@ export default function EnquiryPage() {
               onClick={() => setActiveForm('enquiry')}
               className={`px-8 py-3 rounded-sm text-sm font-medium uppercase tracking-wider transition-all border ${
                 activeForm === 'enquiry'
-                  ? 'bg-[#C5963A] text-[#082B49] border-[#C5963A]'
+                  ? 'bg-[#C5963A] text-[#0C0D11] border-[#C5963A]'
                   : 'bg-transparent text-[#765334] border-[rgba(197, 150, 58,0.25)] hover:border-[rgba(197, 150, 58,0.45)] hover:text-[#D8C7A0]'
               }`}
             >
@@ -170,7 +176,7 @@ export default function EnquiryPage() {
               onClick={() => setActiveForm('demo')}
               className={`px-8 py-3 rounded-sm text-sm font-medium uppercase tracking-wider transition-all border ${
                 activeForm === 'demo'
-                  ? 'bg-[#C5963A] text-[#082B49] border-[#C5963A]'
+                  ? 'bg-[#C5963A] text-[#0C0D11] border-[#C5963A]'
                   : 'bg-transparent text-[#765334] border-[rgba(197, 150, 58,0.25)] hover:border-[rgba(197, 150, 58,0.45)] hover:text-[#D8C7A0]'
               }`}
             >
@@ -237,6 +243,39 @@ export default function EnquiryPage() {
                       placeholder="10-digit mobile number"
                       className={inputClass}
                     />
+                  </div>
+                </div>
+
+                <div>
+                  <label className={labelClass}>
+                    <Users size={16} className="inline-block mr-2 mb-1" />
+                    Category *
+                  </label>
+                  <div className="grid grid-cols-2 gap-2 h-[48px] max-w-sm">
+                    <button
+                      type="button"
+                      onClick={() => setEnquiryForm({ ...enquiryForm, category: 'child' })}
+                      className={`w-full h-full rounded-sm text-sm font-medium transition-all border flex items-center justify-center gap-2 ${
+                        enquiryForm.category === 'child'
+                          ? 'bg-[#0C0D11] text-[#C5963A] border-[#C5963A] shadow-md font-semibold ring-1 ring-[#C5963A]'
+                          : 'bg-[#FAF3E4] text-[#0C0D11] border-[rgba(197,150,58,0.4)] hover:border-[#C5963A] hover:bg-[#F2E5CE]'
+                      }`}
+                    >
+                      <span className={`w-2.5 h-2.5 rounded-full transition-all ${enquiryForm.category === 'child' ? 'bg-[#C5963A] scale-110' : 'bg-transparent border border-[#765334]'}`} />
+                      Child
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setEnquiryForm({ ...enquiryForm, category: 'adult' })}
+                      className={`w-full h-full rounded-sm text-sm font-medium transition-all border flex items-center justify-center gap-2 ${
+                        enquiryForm.category === 'adult'
+                          ? 'bg-[#0C0D11] text-[#C5963A] border-[#C5963A] shadow-md font-semibold ring-1 ring-[#C5963A]'
+                          : 'bg-[#FAF3E4] text-[#0C0D11] border-[rgba(197,150,58,0.4)] hover:border-[#C5963A] hover:bg-[#F2E5CE]'
+                      }`}
+                    >
+                      <span className={`w-2.5 h-2.5 rounded-full transition-all ${enquiryForm.category === 'adult' ? 'bg-[#C5963A] scale-110' : 'bg-transparent border border-[#765334]'}`} />
+                      Adult
+                    </button>
                   </div>
                 </div>
 
@@ -358,8 +397,8 @@ export default function EnquiryPage() {
                         onClick={() => setDemoForm({ ...demoForm, category: 'child' })}
                         className={`w-full h-full rounded-sm text-sm font-medium transition-all border flex items-center justify-center gap-2 ${
                           demoForm.category === 'child'
-                            ? 'bg-[#082B49] text-[#C5963A] border-[#C5963A] shadow-md font-semibold ring-1 ring-[#C5963A]'
-                            : 'bg-[#FAF3E4] text-[#082B49] border-[rgba(197,150,58,0.4)] hover:border-[#C5963A] hover:bg-[#F2E5CE]'
+                            ? 'bg-[#0C0D11] text-[#C5963A] border-[#C5963A] shadow-md font-semibold ring-1 ring-[#C5963A]'
+                            : 'bg-[#FAF3E4] text-[#0C0D11] border-[rgba(197,150,58,0.4)] hover:border-[#C5963A] hover:bg-[#F2E5CE]'
                         }`}
                       >
                         <span className={`w-2.5 h-2.5 rounded-full transition-all ${demoForm.category === 'child' ? 'bg-[#C5963A] scale-110' : 'bg-transparent border border-[#765334]'}`} />
@@ -370,8 +409,8 @@ export default function EnquiryPage() {
                         onClick={() => setDemoForm({ ...demoForm, category: 'adult' })}
                         className={`w-full h-full rounded-sm text-sm font-medium transition-all border flex items-center justify-center gap-2 ${
                           demoForm.category === 'adult'
-                            ? 'bg-[#082B49] text-[#C5963A] border-[#C5963A] shadow-md font-semibold ring-1 ring-[#C5963A]'
-                            : 'bg-[#FAF3E4] text-[#082B49] border-[rgba(197,150,58,0.4)] hover:border-[#C5963A] hover:bg-[#F2E5CE]'
+                            ? 'bg-[#0C0D11] text-[#C5963A] border-[#C5963A] shadow-md font-semibold ring-1 ring-[#C5963A]'
+                            : 'bg-[#FAF3E4] text-[#0C0D11] border-[rgba(197,150,58,0.4)] hover:border-[#C5963A] hover:bg-[#F2E5CE]'
                         }`}
                       >
                         <span className={`w-2.5 h-2.5 rounded-full transition-all ${demoForm.category === 'adult' ? 'bg-[#C5963A] scale-110' : 'bg-transparent border border-[#765334]'}`} />

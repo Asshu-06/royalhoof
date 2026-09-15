@@ -6,7 +6,7 @@ import ImageUploader from "../../components/admin/ImageUploader"
 import toast from "react-hot-toast"
 
 const CARD_BG = "#FAF3E4"
-const CARD_BORDER = "rgba(8,43,73,0.12)"
+const CARD_BORDER = "rgba(12, 13, 17,0.12)"
 const TEXT_PRIMARY = "#292725"
 const TEXT_SECONDARY = "#765334"
 const TEXT_MUTED = "#9A8870"
@@ -72,7 +72,7 @@ const DEFAULT_TEAM = [
 const inputStyle = {
   width: "100%",
   background: "#FFFFFF",
-  border: "1px solid rgba(8,43,73,0.15)",
+  border: "1px solid rgba(12, 13, 17,0.15)",
   borderRadius: 6,
   padding: "10px 14px",
   color: TEXT_PRIMARY,
@@ -276,7 +276,7 @@ export default function AdminAbout() {
               alignItems: "center", 
               gap: 8, 
               background: saving ? "rgba(197,150,58,0.5)" : ACCENT, 
-              color: "#082B49", 
+              color: "#0C0D11", 
               border: "none", 
               borderRadius: 6, 
               padding: "10px 24px", 
@@ -320,8 +320,8 @@ export default function AdminAbout() {
             fontSize: "0.875rem",
             fontFamily: "'Inter', sans-serif",
             cursor: "pointer",
-            background: activeTab === "content" ? ACCENT : "rgba(8,43,73,0.4)",
-            color: activeTab === "content" ? "#082B49" : "#F5EBD8",
+            background: activeTab === "content" ? ACCENT : "rgba(12, 13, 17,0.4)",
+            color: activeTab === "content" ? "#0C0D11" : "#F5EBD8",
             border: activeTab === "content" ? `1px solid ${ACCENT}` : "1px solid rgba(197,150,58,0.2)",
             display: "flex",
             alignItems: "center",
@@ -343,8 +343,8 @@ export default function AdminAbout() {
             fontSize: "0.875rem",
             fontFamily: "'Inter', sans-serif",
             cursor: "pointer",
-            background: activeTab === "team" ? ACCENT : "rgba(8,43,73,0.4)",
-            color: activeTab === "team" ? "#082B49" : "#F5EBD8",
+            background: activeTab === "team" ? ACCENT : "rgba(12, 13, 17,0.4)",
+            color: activeTab === "team" ? "#0C0D11" : "#F5EBD8",
             border: activeTab === "team" ? `1px solid ${ACCENT}` : "1px solid rgba(197,150,58,0.2)",
             display: "flex",
             alignItems: "center",
@@ -382,9 +382,9 @@ export default function AdminAbout() {
               ) : (
                 <div
                   onClick={() => fileRef.current?.click()}
-                  style={{ border: `2px dashed rgba(8,43,73,0.2)`, borderRadius: 6, padding: "24px", textAlign: "center", cursor: "pointer", marginBottom: 10 }}
+                  style={{ border: `2px dashed rgba(12, 13, 17,0.2)`, borderRadius: 6, padding: "24px", textAlign: "center", cursor: "pointer", marginBottom: 10 }}
                   onMouseEnter={e => e.currentTarget.style.borderColor = ACCENT}
-                  onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(8,43,73,0.2)"}
+                  onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(12, 13, 17,0.2)"}
                 >
                   {uploading ? (
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
@@ -456,7 +456,7 @@ export default function AdminAbout() {
                   display: "flex",
                   alignItems: "center",
                   gap: 6,
-                  background: "#082B49",
+                  background: "#0C0D11",
                   color: "#F5EBD8",
                   border: "none",
                   borderRadius: 6,
@@ -486,11 +486,11 @@ export default function AdminAbout() {
                     display: "flex",
                     flexDirection: "column",
                     gap: 12,
-                    boxShadow: "0 2px 8px rgba(8,43,73,0.06)"
+                    boxShadow: "0 2px 8px rgba(12, 13, 17,0.06)"
                   }}
                 >
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid rgba(8,43,73,0.08)", paddingBottom: 8 }}>
-                    <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#082B49", fontFamily: "'Inter', sans-serif" }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid rgba(12, 13, 17,0.08)", paddingBottom: 8 }}>
+                    <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0C0D11", fontFamily: "'Inter', sans-serif" }}>
                       Team Member #{idx + 1}
                     </span>
                     <button
@@ -619,7 +619,7 @@ export default function AdminAbout() {
 
               <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 16 }}>
                 {[data.p1, data.p2].map((p, i) => p ? (
-                  <p key={i} style={{ color: "rgba(8,43,73,0.85)", fontSize: "0.8125rem", lineHeight: 1.6, fontFamily: "'Inter', sans-serif" }}>
+                  <p key={i} style={{ color: "rgba(12, 13, 17,0.85)", fontSize: "0.8125rem", lineHeight: 1.6, fontFamily: "'Inter', sans-serif" }}>
                     {p}
                   </p>
                 ) : null)}
@@ -630,7 +630,7 @@ export default function AdminAbout() {
 
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
                 {stats.map(s => (
-                  <div key={s.v} style={{ textAlign: "center", background: "rgba(8,43,73,0.04)", border: `1px solid ${CARD_BORDER}`, borderRadius: 6, padding: "12px 8px" }}>
+                  <div key={s.v} style={{ textAlign: "center", background: "rgba(12, 13, 17,0.04)", border: `1px solid ${CARD_BORDER}`, borderRadius: 6, padding: "12px 8px" }}>
                     <p style={{ color: ACCENT, fontFamily: "'Cormorant Garamond', serif", fontSize: "1.1rem", fontWeight: 700 }}>{data[s.v] || "-"}</p>
                     <p style={{ color: TEXT_MUTED, fontSize: "0.625rem", marginTop: 2, fontFamily: "'Inter', sans-serif" }}>{data[s.l] || "Label"}</p>
                   </div>
@@ -644,14 +644,14 @@ export default function AdminAbout() {
                 <div
                   key={m.id || idx}
                   style={{
-                    background: "#082B49",
+                    background: "#0C0D11",
                     borderRadius: 10,
                     overflow: "hidden",
                     border: "1px solid rgba(197,150,58,0.3)",
                     color: "#F5EBD8"
                   }}
                 >
-                  <div style={{ position: "relative", height: 160, width: "100%", background: "#051D33" }}>
+                  <div style={{ position: "relative", height: 160, width: "100%", background: "#0C0D11" }}>
                     {m.image ? (
                       <img 
                         src={m.image} 
@@ -668,7 +668,7 @@ export default function AdminAbout() {
                       position: "absolute",
                       top: 8,
                       right: 8,
-                      background: "rgba(8,43,73,0.85)",
+                      background: "rgba(12, 13, 17,0.85)",
                       border: "1px solid rgba(197,150,58,0.5)",
                       borderRadius: 12,
                       padding: "2px 8px",

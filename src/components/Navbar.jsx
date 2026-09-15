@@ -291,7 +291,7 @@ export default function Navbar() {
   }
 
   const navStyle = {
-    background: "#0B0C10",
+    background: "#0C0D11",
     borderBottom: "1px solid rgba(197, 150, 58, 0.35)",
     boxShadow: scrolled ? "0 4px 24px rgba(0, 0, 0, 0.6)" : "0 2px 12px rgba(0, 0, 0, 0.3)",
     transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -309,7 +309,6 @@ export default function Navbar() {
         { to: "/about#vision", label: "Our Vision" },
         { to: "/about#mission", label: "Our Mission" },
         { to: "/about#our-team", label: "Our Team" },
-        { to: "/contact", label: "Contact Us" },
       ],
     },
     { to: "/events", label: "Events" },
@@ -322,18 +321,7 @@ export default function Navbar() {
   ]
 
   const navLinks = [
-    ...desktopNavLinks.filter(item => item.to !== "/about"),
-    {
-      to: "/about",
-      label: "About Us",
-      hasDropdown: true,
-      items: [
-        { to: "/about#about", label: "About" },
-        { to: "/about#vision", label: "Our Vision" },
-        { to: "/about#mission", label: "Our Mission" },
-        { to: "/about#our-team", label: "Our Team" },
-      ],
-    },
+    ...desktopNavLinks,
     { to: "/contact", label: "Contact" },
   ]
 
@@ -353,7 +341,7 @@ export default function Navbar() {
           right: 0,
           height: "100%",
           width: "280px",
-          background: "linear-gradient(180deg, #121318 0%, #0B0C10 100%)",
+          background: "linear-gradient(180deg, #121318 0%, #0C0D11 100%)",
           borderLeft: "1px solid rgba(197,150,58,0.35)",
           boxShadow: "-12px 0 40px rgba(0,0,0,0.6)",
           display: "flex",
@@ -486,7 +474,7 @@ export default function Navbar() {
                 style={{
                   display: "block",
                   background: "#C5963A",
-                  color: "#082B49",
+                  color: "#0C0D11",
                   padding: "10px 16px",
                   borderRadius: "4px",
                   fontFamily: "'Inter', sans-serif",
@@ -735,7 +723,7 @@ export default function Navbar() {
                 className="hidden sm:flex items-center gap-1.5 px-4 py-2 text-[0.6875rem] font-semibold rounded-sm transition-all tracking-wide uppercase"
                 style={{ 
                   background: "#C5963A", 
-                  color: "#082B49",
+                  color: "#0C0D11",
                   fontFamily: "'Inter', sans-serif" 
                 }}>
                 {isOnAdminPanel ? <><Store size={13} /> User</> : <><Settings size={13} /> Admin</>}

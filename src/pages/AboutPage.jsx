@@ -153,7 +153,7 @@ export default function AboutPage() {
       </Helmet>
 
       {/* HERO BANNER */}
-      <section className="relative bg-[#082B49] text-[#F5EBD8] py-24 px-6 lg:px-12 border-b border-[#C5963A]/40 overflow-hidden">
+      <section className="relative bg-[#0C0D11] text-[#F5EBD8] py-24 px-6 lg:px-12 border-b border-[#C5963A]/40 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none opacity-15" style={{
           backgroundImage: "radial-gradient(#C5963A 1px, transparent 1px)",
           backgroundSize: "28px 28px"
@@ -185,16 +185,16 @@ export default function AboutPage() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="flex flex-wrap items-center justify-center gap-3 mt-10"
           >
-            <a href="#about" className="px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-[#C5963A]/20 hover:bg-[#C5963A] text-[#F5EBD8] hover:text-[#082B49] border border-[#C5963A]/40 transition-all duration-300 transform hover:-translate-y-0.5">
+            <a href="#about" className="px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-[#C5963A]/20 hover:bg-[#C5963A] text-[#F5EBD8] hover:text-[#0C0D11] border border-[#C5963A]/40 transition-all duration-300 transform hover:-translate-y-0.5">
               About Us
             </a>
-            <a href="#vision" className="px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-[#C5963A]/20 hover:bg-[#C5963A] text-[#F5EBD8] hover:text-[#082B49] border border-[#C5963A]/40 transition-all duration-300 transform hover:-translate-y-0.5">
+            <a href="#vision" className="px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-[#C5963A]/20 hover:bg-[#C5963A] text-[#F5EBD8] hover:text-[#0C0D11] border border-[#C5963A]/40 transition-all duration-300 transform hover:-translate-y-0.5">
               Our Vision
             </a>
-            <a href="#mission" className="px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-[#C5963A]/20 hover:bg-[#C5963A] text-[#F5EBD8] hover:text-[#082B49] border border-[#C5963A]/40 transition-all duration-300 transform hover:-translate-y-0.5">
+            <a href="#mission" className="px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-[#C5963A]/20 hover:bg-[#C5963A] text-[#F5EBD8] hover:text-[#0C0D11] border border-[#C5963A]/40 transition-all duration-300 transform hover:-translate-y-0.5">
               Our Mission
             </a>
-            <a href="#our-team" className="px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-[#C5963A]/20 hover:bg-[#C5963A] text-[#F5EBD8] hover:text-[#082B49] border border-[#C5963A]/40 transition-all duration-300 transform hover:-translate-y-0.5">
+            <a href="#our-team" className="px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-[#C5963A]/20 hover:bg-[#C5963A] text-[#F5EBD8] hover:text-[#0C0D11] border border-[#C5963A]/40 transition-all duration-300 transform hover:-translate-y-0.5">
               Our Team
             </a>
           </motion.div>
@@ -213,7 +213,7 @@ export default function AboutPage() {
           <span className="text-xs font-bold tracking-[0.2em] uppercase text-[#C5963A]" style={{ fontFamily: "'Inter', sans-serif" }}>
             WELCOME TO OUR ACADEMY
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold mt-2 text-[#082B49]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+          <h2 className="text-3xl md:text-4xl font-bold mt-2 text-[#0C0D11]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
             {data.title || "Royal Hoof Horse Riding Academy"}
           </h2>
           <p className="text-sm text-[#765334] mt-1 font-medium" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -230,7 +230,7 @@ export default function AboutPage() {
             variants={scaleIn}
             className="lg:col-span-6 relative"
           >
-            <div className="relative rounded-lg overflow-hidden border border-[#C5963A]/30 shadow-xl bg-[#082B49]">
+            <div className="relative rounded-lg overflow-hidden border border-[#C5963A]/30 shadow-xl bg-[#0C0D11]">
               <img
                 src={imageUrl || "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800&q=80"}
                 alt="Royal Hoof Horse Riding Academy"
@@ -239,8 +239,8 @@ export default function AboutPage() {
                   e.target.src = "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800&q=80"
                 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#082B49]/70 via-transparent to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6 p-4 rounded bg-[#082B49]/90 backdrop-blur border border-[#C5963A]/40 text-[#F5EBD8]">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0C0D11]/70 via-transparent to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6 p-4 rounded bg-[#0C0D11]/90 backdrop-blur border border-[#C5963A]/40 text-[#F5EBD8]">
                 <div className="flex items-center gap-3">
                   <MapPin className="text-[#C5963A] shrink-0" size={20} />
                   <div>
@@ -294,7 +294,7 @@ export default function AboutPage() {
       </section>
 
       {/* SECTION 2: OUR VISION */}
-      <section id="vision" className="py-20 md:py-28 bg-[#082B49] text-[#F5EBD8] border-y border-[#C5963A]/30 relative scroll-mt-24 overflow-hidden">
+      <section id="vision" className="py-20 md:py-28 bg-[#0C0D11] text-[#F5EBD8] border-y border-[#C5963A]/30 relative scroll-mt-24 overflow-hidden">
         {/* Decorative background glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#C5963A]/5 rounded-full blur-3xl pointer-events-none" />
         
@@ -327,7 +327,7 @@ export default function AboutPage() {
             <motion.div 
               whileHover={{ y: -4 }}
               transition={{ duration: 0.3 }}
-              className="p-8 md:p-12 rounded-xl bg-gradient-to-b from-[#0B304D] to-[#06243F] border border-[#C5963A]/40 shadow-2xl relative"
+              className="p-8 md:p-12 rounded-xl bg-gradient-to-b from-[#0C0D11] to-[#0C0D11] border border-[#C5963A]/40 shadow-2xl relative"
             >
               <span className="absolute top-4 left-6 text-5xl text-[#C5963A]/20 font-serif leading-none">“</span>
               <p className="text-xl md:text-2xl font-serif text-[#F5EBD8] leading-relaxed italic relative z-10 px-4">
@@ -349,7 +349,7 @@ export default function AboutPage() {
               variants={fadeInUp}
               whileHover={{ y: -6, borderColor: "#C5963A" }}
               transition={{ duration: 0.3 }}
-              className="p-8 rounded-lg bg-[#0B304D] border border-[#C5963A]/30 shadow-lg"
+              className="p-8 rounded-lg bg-[#0C0D11] border border-[#C5963A]/30 shadow-lg"
             >
               <div className="w-12 h-12 rounded-full bg-[#C5963A]/20 text-[#D2AA55] flex items-center justify-center mb-6">
                 <Trophy size={24} />
@@ -366,7 +366,7 @@ export default function AboutPage() {
               variants={fadeInUp}
               whileHover={{ y: -6, borderColor: "#C5963A" }}
               transition={{ duration: 0.3 }}
-              className="p-8 rounded-lg bg-[#0B304D] border border-[#C5963A]/30 shadow-lg"
+              className="p-8 rounded-lg bg-[#0C0D11] border border-[#C5963A]/30 shadow-lg"
             >
               <div className="w-12 h-12 rounded-full bg-[#C5963A]/20 text-[#D2AA55] flex items-center justify-center mb-6">
                 <Shield size={24} />
@@ -383,7 +383,7 @@ export default function AboutPage() {
               variants={fadeInUp}
               whileHover={{ y: -6, borderColor: "#C5963A" }}
               transition={{ duration: 0.3 }}
-              className="p-8 rounded-lg bg-[#0B304D] border border-[#C5963A]/30 shadow-lg"
+              className="p-8 rounded-lg bg-[#0C0D11] border border-[#C5963A]/30 shadow-lg"
             >
               <div className="w-12 h-12 rounded-full bg-[#C5963A]/20 text-[#D2AA55] flex items-center justify-center mb-6">
                 <Users size={24} />
@@ -420,7 +420,7 @@ export default function AboutPage() {
             OUR PURPOSE & DRIVING FORCE
           </span>
 
-          <h2 className="text-4xl md:text-5xl font-bold mt-2 text-[#082B49]" style={{ fontFamily: "'Playfair Display', 'Cormorant Garamond', serif" }}>
+          <h2 className="text-4xl md:text-5xl font-bold mt-2 text-[#0C0D11]" style={{ fontFamily: "'Playfair Display', 'Cormorant Garamond', serif" }}>
             Our Mission
           </h2>
           <div className="w-24 h-0.5 bg-[#C5963A] mx-auto mt-4 mb-8" />
@@ -431,7 +431,7 @@ export default function AboutPage() {
             transition={{ duration: 0.3 }}
             className="p-8 md:p-10 rounded-xl bg-[#FAF3E4] border border-[#C5963A]/40 shadow-xl text-center relative"
           >
-            <p className="text-lg md:text-2xl font-serif text-[#082B49] leading-relaxed font-medium">
+            <p className="text-lg md:text-2xl font-serif text-[#0C0D11] leading-relaxed font-medium">
               "To develop confident riders, responsible horse lovers, and future equestrians through quality training, safety, and excellence in horsemanship."
             </p>
           </motion.div>
@@ -451,11 +451,11 @@ export default function AboutPage() {
             transition={{ duration: 0.3 }}
             className="p-8 rounded-xl bg-[#FAF3E4] border border-[#C5963A]/30 shadow-md flex gap-5 items-start"
           >
-            <div className="w-12 h-12 rounded-full bg-[#082B49] text-[#C5963A] flex items-center justify-center shrink-0 shadow">
+            <div className="w-12 h-12 rounded-full bg-[#0C0D11] text-[#C5963A] flex items-center justify-center shrink-0 shadow">
               <Award size={22} />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-[#082B49] mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              <h3 className="text-xl font-bold text-[#0C0D11] mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                 Quality Training & Pedigree
               </h3>
               <p className="text-sm text-[#5A4430] leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -470,11 +470,11 @@ export default function AboutPage() {
             transition={{ duration: 0.3 }}
             className="p-8 rounded-xl bg-[#FAF3E4] border border-[#C5963A]/30 shadow-md flex gap-5 items-start"
           >
-            <div className="w-12 h-12 rounded-full bg-[#082B49] text-[#C5963A] flex items-center justify-center shrink-0 shadow">
+            <div className="w-12 h-12 rounded-full bg-[#0C0D11] text-[#C5963A] flex items-center justify-center shrink-0 shadow">
               <Shield size={22} />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-[#082B49] mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              <h3 className="text-xl font-bold text-[#0C0D11] mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                 Safety & Peace of Mind
               </h3>
               <p className="text-sm text-[#5A4430] leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -489,11 +489,11 @@ export default function AboutPage() {
             transition={{ duration: 0.3 }}
             className="p-8 rounded-xl bg-[#FAF3E4] border border-[#C5963A]/30 shadow-md flex gap-5 items-start"
           >
-            <div className="w-12 h-12 rounded-full bg-[#082B49] text-[#C5963A] flex items-center justify-center shrink-0 shadow">
+            <div className="w-12 h-12 rounded-full bg-[#0C0D11] text-[#C5963A] flex items-center justify-center shrink-0 shadow">
               <Heart size={22} />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-[#082B49] mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              <h3 className="text-xl font-bold text-[#0C0D11] mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                 Responsible Horse Care
               </h3>
               <p className="text-sm text-[#5A4430] leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -508,11 +508,11 @@ export default function AboutPage() {
             transition={{ duration: 0.3 }}
             className="p-8 rounded-xl bg-[#FAF3E4] border border-[#C5963A]/30 shadow-md flex gap-5 items-start"
           >
-            <div className="w-12 h-12 rounded-full bg-[#082B49] text-[#C5963A] flex items-center justify-center shrink-0 shadow">
+            <div className="w-12 h-12 rounded-full bg-[#0C0D11] text-[#C5963A] flex items-center justify-center shrink-0 shadow">
               <Sparkles size={22} />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-[#082B49] mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              <h3 className="text-xl font-bold text-[#0C0D11] mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                 Excellence in Horsemanship
               </h3>
               <p className="text-sm text-[#5A4430] leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -524,7 +524,7 @@ export default function AboutPage() {
       </section>
 
       {/* SECTION 4: OUR TEAM */}
-      <section id="our-team" className="py-20 md:py-28 bg-[#082B49] text-[#F5EBD8] border-t border-[#C5963A]/30 relative scroll-mt-24 overflow-hidden">
+      <section id="our-team" className="py-20 md:py-28 bg-[#0C0D11] text-[#F5EBD8] border-t border-[#C5963A]/30 relative scroll-mt-24 overflow-hidden">
         {/* Decorative background grid and ambient lighting */}
         <div className="absolute inset-0 pointer-events-none opacity-10" style={{
           backgroundImage: "radial-gradient(#C5963A 1px, transparent 1px)",
@@ -577,10 +577,10 @@ export default function AboutPage() {
                 key={idx}
                 variants={fadeInUp}
                 whileHover={{ y: -10, transition: { duration: 0.3 } }}
-                className="group relative rounded-xl bg-gradient-to-b from-[#0B304D] to-[#06243F] border border-[#C5963A]/30 overflow-hidden shadow-xl hover:shadow-2xl hover:border-[#C5963A] transition-all duration-300 flex flex-col justify-between"
+                className="group relative rounded-xl bg-gradient-to-b from-[#0C0D11] to-[#0C0D11] border border-[#C5963A]/30 overflow-hidden shadow-xl hover:shadow-2xl hover:border-[#C5963A] transition-all duration-300 flex flex-col justify-between"
               >
                 {/* Top Image Container with Smooth Zoom Animation */}
-                <div className="relative h-72 w-full overflow-hidden bg-[#082B49]">
+                <div className="relative h-72 w-full overflow-hidden bg-[#0C0D11]">
                   <img 
                     src={member.image} 
                     alt={member.name} 
@@ -590,15 +590,15 @@ export default function AboutPage() {
                     }}
                   />
                   {/* Dark Overlay Gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B304D] via-transparent to-transparent opacity-90 group-hover:opacity-75 transition-opacity" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0C0D11] via-transparent to-transparent opacity-90 group-hover:opacity-75 transition-opacity" />
                   
                   {/* Experience Badge */}
-                  <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-[#082B49]/85 backdrop-blur border border-[#C5963A]/50 text-[10px] font-bold uppercase tracking-wider text-[#D2AA55] shadow-md">
+                  <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-[#0C0D11]/85 backdrop-blur border border-[#C5963A]/50 text-[10px] font-bold uppercase tracking-wider text-[#D2AA55] shadow-md">
                     {member.experience}
                   </div>
 
                   {/* Specialty Tag */}
-                  <div className="absolute bottom-3 left-3 right-3 flex items-center gap-1.5 text-xs text-[#FAF3E4] font-medium bg-[#082B49]/90 backdrop-blur px-3 py-1.5 rounded border border-[#C5963A]/30">
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center gap-1.5 text-xs text-[#FAF3E4] font-medium bg-[#0C0D11]/90 backdrop-blur px-3 py-1.5 rounded border border-[#C5963A]/30">
                     <Award size={14} className="text-[#C5963A] shrink-0" />
                     <span className="truncate">{member.specialty}</span>
                   </div>
@@ -626,7 +626,7 @@ export default function AboutPage() {
                     <div className="flex items-center gap-2">
                       <a 
                         href={`mailto:info@royalhoof.com?subject=Enquiry%20for%20${encodeURIComponent(member.name)}`}
-                        className="w-8 h-8 rounded-full bg-[#C5963A]/10 hover:bg-[#C5963A] text-[#D2AA55] hover:text-[#082B49] border border-[#C5963A]/40 flex items-center justify-center transition-all duration-300 transform hover:scale-110"
+                        className="w-8 h-8 rounded-full bg-[#C5963A]/10 hover:bg-[#C5963A] text-[#D2AA55] hover:text-[#0C0D11] border border-[#C5963A]/40 flex items-center justify-center transition-all duration-300 transform hover:scale-110"
                         title={`Contact ${member.name}`}
                       >
                         <Mail size={14} />
@@ -644,7 +644,7 @@ export default function AboutPage() {
             whileInView="visible"
             viewport={{ once: true, margin: "-40px" }}
             variants={fadeInUp}
-            className="mt-16 p-8 rounded-2xl bg-gradient-to-r from-[#C5963A]/20 via-[#0B304D] to-[#C5963A]/20 border border-[#C5963A]/40 text-center flex flex-col md:flex-row items-center justify-between gap-6"
+            className="mt-16 p-8 rounded-2xl bg-gradient-to-r from-[#C5963A]/20 via-[#0C0D11] to-[#C5963A]/20 border border-[#C5963A]/40 text-center flex flex-col md:flex-row items-center justify-between gap-6"
           >
             <div className="text-left max-w-2xl">
               <h4 className="text-2xl font-bold text-[#F5EBD8]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
@@ -657,7 +657,7 @@ export default function AboutPage() {
 
             <a 
               href="/enquiry"
-              className="px-7 py-3 rounded-full bg-[#C5963A] text-[#082B49] hover:bg-[#D2AA55] font-bold text-xs uppercase tracking-wider transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg flex-shrink-0"
+              className="px-7 py-3 rounded-full bg-[#C5963A] text-[#0C0D11] hover:bg-[#D2AA55] font-bold text-xs uppercase tracking-wider transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg flex-shrink-0"
             >
               Book Demo Session
             </a>

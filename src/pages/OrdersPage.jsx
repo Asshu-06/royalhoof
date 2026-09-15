@@ -31,13 +31,13 @@ function OrderCard({ order }) {
 
   return (
     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-      className="bg-[#FAF3E4] border border-[rgba(8,43,73,0.15)] rounded-2xl overflow-hidden shadow-sm">
+      className="bg-[#FAF3E4] border border-[rgba(12, 13, 17,0.15)] rounded-2xl overflow-hidden shadow-sm">
       {/* Header */}
       <div className="flex items-center justify-between px-5 py-4 cursor-pointer hover:bg-[#F4E9D2] transition-colors"
         onClick={() => setOpen(o => !o)}>
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-[#082B49]/10 rounded-xl flex items-center justify-center flex-shrink-0">
-            <Package size={18} className="text-[#082B49]" />
+          <div className="w-10 h-10 bg-[#0C0D11]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+            <Package size={18} className="text-[#0C0D11]" />
           </div>
           <div>
             <p className="text-[#292725] font-semibold text-sm">{orderId}</p>
@@ -46,7 +46,7 @@ function OrderCard({ order }) {
         </div>
         <div className="flex items-center gap-3">
           <div className="text-right">
-            <p className="text-[#082B49] font-bold text-sm">{formatINR(order.total_amount)}</p>
+            <p className="text-[#0C0D11] font-bold text-sm">{formatINR(order.total_amount)}</p>
             <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${badge.color}`}>{badge.label}</span>
           </div>
           {open ? <ChevronUp size={16} className="text-[#765334]" /> : <ChevronDown size={16} className="text-[#765334]" />}
@@ -57,7 +57,7 @@ function OrderCard({ order }) {
       <AnimatePresence>
         {open && (
           <motion.div initial={{ height: 0 }} animate={{ height: 'auto' }} exit={{ height: 0 }} className="overflow-hidden">
-            <div className="border-t border-[rgba(8,43,73,0.15)] px-5 py-4 space-y-4">
+            <div className="border-t border-[rgba(12, 13, 17,0.15)] px-5 py-4 space-y-4">
 
               {/* Order progress */}
               {!isCancelled && !isPending && (
@@ -108,10 +108,10 @@ function OrderCard({ order }) {
                     )}
                     <div className="flex-1 min-w-0">
                       <p className="text-[#292725] text-sm font-medium truncate">{item.products?.name || 'Product'}</p>
-                      {item.products?.custom_id && <p className="text-[#082B49] text-xs font-mono">{item.products.custom_id}</p>}
+                      {item.products?.custom_id && <p className="text-[#0C0D11] text-xs font-mono">{item.products.custom_id}</p>}
                       <p className="text-[#765334] text-xs">Qty: {item.quantity} &middot; {formatINR(item.price)} each</p>
                     </div>
-                    <p className="text-[#082B49] font-semibold text-sm flex-shrink-0">{formatINR(item.quantity * item.price)}</p>
+                    <p className="text-[#0C0D11] font-semibold text-sm flex-shrink-0">{formatINR(item.quantity * item.price)}</p>
                   </div>
                 ))}
               </div>
@@ -131,7 +131,7 @@ function OrderCard({ order }) {
               <div className="bg-[#F4E9D2] rounded-xl p-3 space-y-1 text-xs">
                 <div className="flex justify-between text-[#765334]">
                   <span>Order Total</span>
-                  <span className="text-[#082B49] font-bold text-sm">{formatINR(order.total_amount)}</span>
+                  <span className="text-[#0C0D11] font-bold text-sm">{formatINR(order.total_amount)}</span>
                 </div>
                 {order.payment_method && (
                   <div className="flex justify-between text-[#765334]">
@@ -187,7 +187,7 @@ export default function OrdersPage() {
         <div className="relative mb-6">
           <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#765334]" />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search by order ID..."
-            className="w-full bg-[#FAF3E4] border border-[rgba(8,43,73,0.15)] rounded-lg pl-9 pr-4 py-2.5 text-sm text-[#292725] placeholder-[#765334] focus:outline-none focus:border-[#082B49]" />
+            className="w-full bg-[#FAF3E4] border border-[rgba(12, 13, 17,0.15)] rounded-lg pl-9 pr-4 py-2.5 text-sm text-[#292725] placeholder-[#765334] focus:outline-none focus:border-[#0C0D11]" />
           {search && (
             <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#765334] hover:text-[#292725] text-xs">Clear</button>
           )}
@@ -199,7 +199,7 @@ export default function OrdersPage() {
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-20">
-            <Package size={56} className="text-[rgba(8,43,73,0.15)] mx-auto mb-4" />
+            <Package size={56} className="text-[rgba(12, 13, 17,0.15)] mx-auto mb-4" />
             {search ? (
               <>
                 <p className="text-[#765334] text-lg">No orders found for &ldquo;{search}&rdquo;</p>
@@ -209,7 +209,7 @@ export default function OrdersPage() {
               <>
                 <p className="text-[#765334] text-lg font-semibold mb-2">No orders yet</p>
                 <p className="text-[#765334] text-sm mb-6">Your sacred bead orders will appear here</p>
-                <Link to="/products" className="px-6 py-2.5 bg-[#082B49] text-white rounded-lg text-sm font-semibold hover:bg-[#0B304D] transition-all">
+                <Link to="/products" className="px-6 py-2.5 bg-[#0C0D11] text-white rounded-lg text-sm font-semibold hover:bg-[#0C0D11] transition-all">
                   Shop Horse Riding
                 </Link>
               </>

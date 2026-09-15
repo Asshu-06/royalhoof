@@ -7,12 +7,12 @@ import { DEFAULT_BENEFITS } from "../../data/defaultBenefits"
 import toast from "react-hot-toast"
 
 const CARD_BG = "#FAF3E4"
-const CARD_BORDER = "rgba(8,43,73,0.12)"
+const CARD_BORDER = "rgba(12, 13, 17,0.12)"
 const TEXT_PRIMARY = "#292725"
 const TEXT_SECONDARY = "#765334"
 const ACCENT = "#C5963A"
 
-const inp = "w-full bg-[#FAF3E4] border border-[rgba(8,43,73,0.15)] rounded-lg px-3 py-2 text-sm text-[#292725] placeholder-[#765334]/50 focus:outline-none focus:border-[#082B49]"
+const inp = "w-full bg-[#FAF3E4] border border-[rgba(12, 13, 17,0.15)] rounded-lg px-3 py-2 text-sm text-[#292725] placeholder-[#765334]/50 focus:outline-none focus:border-[#0C0D11]"
 const lbl = "text-xs text-[#765334] mb-1 block font-medium"
 
 const BENEFIT_ICON_OPTIONS = [
@@ -53,7 +53,7 @@ function BenefitIconPicker({ value, onChange }) {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-lg border border-[#082B49]/20 bg-[#082B49] text-[#F5EBD8] hover:bg-[#0B304D] transition-all shadow-sm text-left"
+        className="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-lg border border-[#0C0D11]/20 bg-[#0C0D11] text-[#F5EBD8] hover:bg-[#0C0D11] transition-all shadow-sm text-left"
       >
         <div className="flex items-center gap-2.5 min-w-0">
           <div className="w-7 h-7 rounded-md bg-[#C5963A]/20 text-[#C5963A] border border-[#C5963A]/40 flex items-center justify-center flex-shrink-0">
@@ -73,7 +73,7 @@ function BenefitIconPicker({ value, onChange }) {
             animate={{ opacity: 1, y: 4, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.15 }}
-            className="absolute left-0 right-0 z-50 mt-1.5 p-2 rounded-xl bg-[#082B49] border-2 border-[#C5963A] shadow-2xl overflow-hidden"
+            className="absolute left-0 right-0 z-50 mt-1.5 p-2 rounded-xl bg-[#0C0D11] border-2 border-[#C5963A] shadow-2xl overflow-hidden"
           >
             <div className="grid grid-cols-1 gap-1 max-h-56 overflow-y-auto">
               {BENEFIT_ICON_OPTIONS.map(opt => {
@@ -94,7 +94,7 @@ function BenefitIconPicker({ value, onChange }) {
                     }`}
                   >
                     <div className={`w-6 h-6 rounded flex items-center justify-center flex-shrink-0 ${
-                      isSelected ? "bg-[#C5963A] text-[#082B49]" : "bg-[#C5963A]/20 text-[#C5963A]"
+                      isSelected ? "bg-[#C5963A] text-[#0C0D11]" : "bg-[#C5963A]/20 text-[#C5963A]"
                     }`}>
                       <IconComp size={14} />
                     </div>
@@ -279,14 +279,14 @@ export default function AdminBenefits() {
           <button
             onClick={handleReset}
             disabled={saving}
-            className="flex items-center gap-1.5 px-4 py-2 border border-[#C5963A]/40 text-[#F5EBD8] bg-[#082B49] rounded-lg text-sm hover:bg-[#0B304D] transition-all disabled:opacity-50"
+            className="flex items-center gap-1.5 px-4 py-2 border border-[#C5963A]/40 text-[#F5EBD8] bg-[#0C0D11] rounded-lg text-sm hover:bg-[#0C0D11] transition-all disabled:opacity-50"
           >
             <RefreshCw size={14} /> Reset Defaults
           </button>
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex items-center gap-2 px-6 py-2 bg-[#C5963A] text-[#082B49] font-bold rounded-lg text-sm hover:bg-[#D2AA55] transition-all disabled:opacity-50 shadow-md"
+            className="flex items-center gap-2 px-6 py-2 bg-[#C5963A] text-[#0C0D11] font-bold rounded-lg text-sm hover:bg-[#D2AA55] transition-all disabled:opacity-50 shadow-md"
           >
             {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />} Save Changes
           </button>
@@ -294,8 +294,8 @@ export default function AdminBenefits() {
       </div>
 
       {/* Main Section Header Settings */}
-      <div className="bg-[#FAF3E4] border border-[rgba(8,43,73,0.15)] rounded-xl p-5 space-y-4">
-        <h2 className="text-base font-bold text-[#082B49]" style={{ fontFamily: "Georgia, serif" }}>
+      <div className="bg-[#FAF3E4] border border-[rgba(12, 13, 17,0.15)] rounded-xl p-5 space-y-4">
+        <h2 className="text-base font-bold text-[#0C0D11]" style={{ fontFamily: "Georgia, serif" }}>
           Section Header Settings
         </h2>
 
@@ -344,15 +344,15 @@ export default function AdminBenefits() {
           </span>
         </div>
 
-        <div className="flex flex-wrap gap-2 border-b border-[rgba(8,43,73,0.15)] pb-3">
+        <div className="flex flex-wrap gap-2 border-b border-[rgba(12, 13, 17,0.15)] pb-3">
           {data.categories.map((cat, idx) => (
             <button
               key={cat.id || idx}
               onClick={() => setActiveCategoryIdx(idx)}
               className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                 activeCategoryIdx === idx
-                  ? "bg-[#082B49] text-[#C5963A] shadow-sm"
-                  : "bg-[#FAF3E4] text-[#765334] border border-[rgba(8,43,73,0.15)] hover:bg-[#F4E9D2]"
+                  ? "bg-[#0C0D11] text-[#C5963A] shadow-sm"
+                  : "bg-[#FAF3E4] text-[#765334] border border-[rgba(12, 13, 17,0.15)] hover:bg-[#F4E9D2]"
               }`}
             >
               {cat.label || `Category ${idx + 1}`} ({cat.items?.length || 0})
@@ -363,9 +363,9 @@ export default function AdminBenefits() {
 
       {/* Selected Category Settings */}
       {currentCat && (
-        <div className="bg-[#FAF3E4] border border-[rgba(8,43,73,0.15)] rounded-xl p-5 space-y-6">
-          <div className="border-b border-[rgba(8,43,73,0.12)] pb-4">
-            <h3 className="text-base font-bold text-[#082B49] mb-3">
+        <div className="bg-[#FAF3E4] border border-[rgba(12, 13, 17,0.15)] rounded-xl p-5 space-y-6">
+          <div className="border-b border-[rgba(12, 13, 17,0.12)] pb-4">
+            <h3 className="text-base font-bold text-[#0C0D11] mb-3">
               Category #{activeCategoryIdx + 1}: {currentCat.label}
             </h3>
 
@@ -407,7 +407,7 @@ export default function AdminBenefits() {
             </div>
 
             {/* Category Watermark Background */}
-            <div className="mt-4 p-3 bg-[#F4E9D2] rounded-lg border border-[rgba(8,43,73,0.12)] space-y-2">
+            <div className="mt-4 p-3 bg-[#F4E9D2] rounded-lg border border-[rgba(12, 13, 17,0.12)] space-y-2">
               <label className={lbl}>Watermark Background Horse Photo (URL or File Upload)</label>
               <div className="flex flex-wrap items-center gap-3">
                 <input
@@ -416,7 +416,7 @@ export default function AdminBenefits() {
                   className={`${inp} flex-1 min-w-[200px]`}
                   placeholder="https://images.unsplash.com/..."
                 />
-                <label className="flex items-center gap-1.5 px-3 py-2 bg-[#082B49] text-white text-xs rounded-lg cursor-pointer hover:bg-[#0B304D] transition-all">
+                <label className="flex items-center gap-1.5 px-3 py-2 bg-[#0C0D11] text-white text-xs rounded-lg cursor-pointer hover:bg-[#0C0D11] transition-all">
                   <Upload size={13} />
                   <span>{uploadingState === `cat_bg_${activeCategoryIdx}` ? "Uploading..." : "Upload File"}</span>
                   <input
@@ -429,7 +429,7 @@ export default function AdminBenefits() {
                 </label>
               </div>
               {currentCat.bgImage && (
-                <div className="w-24 h-14 rounded overflow-hidden border border-[#082B49]/20 mt-1">
+                <div className="w-24 h-14 rounded overflow-hidden border border-[#0C0D11]/20 mt-1">
                   <img src={currentCat.bgImage} alt="Watermark preview" className="w-full h-full object-cover" onError={e => { e.target.style.display = 'none' }} />
                 </div>
               )}
@@ -439,12 +439,12 @@ export default function AdminBenefits() {
           {/* Benefit Cards List */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h4 className="text-sm font-bold text-[#082B49] uppercase tracking-wider">
+              <h4 className="text-sm font-bold text-[#0C0D11] uppercase tracking-wider">
                 Benefit Cards in {currentCat.label} ({currentCat.items?.length || 0})
               </h4>
               <button
                 onClick={() => handleAddItem(activeCategoryIdx)}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#082B49] text-white rounded-lg text-xs font-semibold hover:bg-[#0B304D] transition-all"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#0C0D11] text-white rounded-lg text-xs font-semibold hover:bg-[#0C0D11] transition-all"
               >
                 <Plus size={14} /> Add Benefit Card
               </button>
@@ -454,10 +454,10 @@ export default function AdminBenefits() {
               {currentCat.items?.map((item, itemIdx) => (
                 <div
                   key={itemIdx}
-                  className="bg-[#F4E9D2] border border-[rgba(8,43,73,0.15)] rounded-xl p-4 space-y-3 relative shadow-sm"
+                  className="bg-[#F4E9D2] border border-[rgba(12, 13, 17,0.15)] rounded-xl p-4 space-y-3 relative shadow-sm"
                 >
-                  <div className="flex items-center justify-between border-b border-[rgba(8,43,73,0.1)] pb-2">
-                    <span className="text-xs font-bold text-[#C5963A] bg-[#082B49] px-2 py-0.5 rounded">
+                  <div className="flex items-center justify-between border-b border-[rgba(12, 13, 17,0.1)] pb-2">
+                    <span className="text-xs font-bold text-[#C5963A] bg-[#0C0D11] px-2 py-0.5 rounded">
                       Card #{itemIdx + 1}
                     </span>
                     <button
@@ -521,7 +521,7 @@ export default function AdminBenefits() {
                         className={`${inp} text-xs`}
                         placeholder="https://..."
                       />
-                      <label className="flex items-center gap-1 px-2.5 py-2 bg-[#082B49] text-white text-xs rounded-lg cursor-pointer hover:bg-[#0B304D] transition-all shrink-0">
+                      <label className="flex items-center gap-1 px-2.5 py-2 bg-[#0C0D11] text-white text-xs rounded-lg cursor-pointer hover:bg-[#0C0D11] transition-all shrink-0">
                         <Upload size={12} />
                         <span>{uploadingState === `item_img_${activeCategoryIdx}_${itemIdx}` ? "..." : "Upload"}</span>
                         <input
@@ -534,7 +534,7 @@ export default function AdminBenefits() {
                       </label>
                     </div>
                     {item.image && (
-                      <div className="w-full h-20 rounded-lg overflow-hidden border border-[#082B49]/15 mt-1">
+                      <div className="w-full h-20 rounded-lg overflow-hidden border border-[#0C0D11]/15 mt-1">
                         <img src={item.image} alt="Benefit Preview" className="w-full h-full object-cover" onError={e => { e.target.style.display = 'none' }} />
                       </div>
                     )}
@@ -547,14 +547,14 @@ export default function AdminBenefits() {
       )}
 
       {/* Live Preview Card */}
-      <div className="bg-[#082B49] rounded-xl p-5 border border-[#C5963A]/40 text-[#F5EBD8]">
+      <div className="bg-[#0C0D11] rounded-xl p-5 border border-[#C5963A]/40 text-[#F5EBD8]">
         <h3 className="text-sm font-bold uppercase tracking-widest text-[#C5963A] mb-3 flex items-center gap-2">
           <span>✦</span> Live Preview: {currentCat?.label}
         </h3>
 
         <div className="bg-[#FAF3E4] text-[#292725] rounded-xl p-6 space-y-4 max-h-[450px] overflow-y-auto">
           <div className="border-b border-[#C5963A]/30 pb-3">
-            <h4 className="text-2xl font-bold text-[#082B49]" style={{ fontFamily: "Georgia, serif" }}>
+            <h4 className="text-2xl font-bold text-[#0C0D11]" style={{ fontFamily: "Georgia, serif" }}>
               {currentCat?.label}
             </h4>
             <p className="text-xs text-[#765334] mt-1">{currentCat?.summary}</p>
@@ -572,9 +572,9 @@ export default function AdminBenefits() {
                   <span className="text-[0.65rem] font-bold uppercase bg-[#C5963A]/20 text-[#C5963A] px-2 py-0.5 rounded">
                     {it.topicTag}
                   </span>
-                  <span className="text-xs font-bold text-[#082B49]">#{it.num}</span>
+                  <span className="text-xs font-bold text-[#0C0D11]">#{it.num}</span>
                 </div>
-                <p className="text-xs font-bold text-[#082B49]">{it.title}</p>
+                <p className="text-xs font-bold text-[#0C0D11]">{it.title}</p>
                 <p className="text-[0.75rem] text-[#5A4430] leading-snug">{it.desc}</p>
               </div>
             ))}

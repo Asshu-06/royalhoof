@@ -47,7 +47,7 @@ export default function Footer() {
   }, [])
   return (
     <footer style={{
-      background: "linear-gradient(180deg, #061D33 0%, #082B49 60%, #041424 100%)",
+      background: "linear-gradient(180deg, #0C0D11 0%, #0C0D11 60%, #0C0D11 100%)",
       borderTop: "2px solid #C5963A",
     }} className="mt-20 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none" style={{
@@ -55,7 +55,7 @@ export default function Footer() {
       }} />
 
       {/* Decorative top ribbon strip */}
-      <div className="bg-[#082B49] border-b border-[#C5963A]/40 py-2.5 px-6 text-center">
+      <div className="bg-[#0C0D11] border-b border-[#C5963A]/40 py-2.5 px-6 text-center">
         <p className="text-xs tracking-[0.3em] uppercase text-[#C5963A] font-medium" style={{ fontFamily: "'Inter', sans-serif" }}>
           ✦ RIDE • LEARN • GROW • BELONG ✦
         </p>
@@ -106,7 +106,7 @@ export default function Footer() {
                   href="https://facebook.com/royalhoofhorseriddingacademy"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-full bg-[#082B49] border border-[#C5963A]/40 text-[#C5963A] hover:text-[#082B49] hover:bg-[#C5963A] hover:border-[#C5963A] transition-all duration-300 flex items-center justify-center shadow-md hover:scale-110"
+                  className="w-9 h-9 rounded-full bg-[#0C0D11] border border-[#C5963A]/40 text-[#C5963A] hover:text-[#0C0D11] hover:bg-[#C5963A] hover:border-[#C5963A] transition-all duration-300 flex items-center justify-center shadow-md hover:scale-110"
                   title="Facebook"
                   aria-label="Royal Hoof Facebook"
                 >
@@ -116,7 +116,7 @@ export default function Footer() {
                   href="https://www.instagram.com/royal_hoof_horse_ridding?stkn=eWwydWVidzcxMjRq"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-full bg-[#082B49] border border-[#C5963A]/40 text-[#C5963A] hover:text-[#082B49] hover:bg-[#C5963A] hover:border-[#C5963A] transition-all duration-300 flex items-center justify-center shadow-md hover:scale-110"
+                  className="w-9 h-9 rounded-full bg-[#0C0D11] border border-[#C5963A]/40 text-[#C5963A] hover:text-[#0C0D11] hover:bg-[#C5963A] hover:border-[#C5963A] transition-all duration-300 flex items-center justify-center shadow-md hover:scale-110"
                   title="Instagram"
                   aria-label="Royal Hoof Instagram"
                 >

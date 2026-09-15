@@ -10,7 +10,7 @@ import { formatINR } from '../../utils/format'
 
 // Royal Hoof palette
 const CARD_BG = "#FAF3E4"
-const CARD_BORDER = "rgba(8,43,73,0.12)"
+const CARD_BORDER = "rgba(12, 13, 17,0.12)"
 const TEXT_PRIMARY = "#292725"
 const TEXT_SECONDARY = "#765334"
 const TEXT_MUTED = "#9A8870"
@@ -34,7 +34,7 @@ const StatCard = ({ icon: Icon, label, value, sub, to, accent }) => (
         cursor: "pointer",
         transition: "all 0.3s ease",
         minHeight: 140,
-        boxShadow: "0 2px 8px rgba(8,43,73,0.06)",
+        boxShadow: "0 2px 8px rgba(12, 13, 17,0.06)",
       }}
       onMouseEnter={e => {
         e.currentTarget.style.borderColor = ACCENT
@@ -202,7 +202,7 @@ export default function AdminDashboard() {
                 textAlign: "center", 
                 color: TEXT_SECONDARY, 
                 fontSize: "0.9375rem",
-                boxShadow: "0 2px 8px rgba(8,43,73,0.06)"
+                boxShadow: "0 2px 8px rgba(12, 13, 17,0.06)"
               }}>
                 No orders in the last 3 days
               </div>
@@ -214,7 +214,7 @@ export default function AdminDashboard() {
                 border: `1px solid ${CARD_BORDER}`, 
                 borderRadius: 12, 
                 overflow: "hidden",
-                boxShadow: "0 2px 8px rgba(8,43,73,0.06)"
+                boxShadow: "0 2px 8px rgba(12, 13, 17,0.06)"
               }}>
                 <div style={{ 
                   display: "flex", 
@@ -222,7 +222,7 @@ export default function AdminDashboard() {
                   justifyContent: "space-between", 
                   padding: "14px 20px", 
                   borderBottom: `1px solid ${CARD_BORDER}`, 
-                  background: "rgba(8,43,73,0.02)" 
+                  background: "rgba(12, 13, 17,0.02)" 
                 }}>
                   <span style={{ 
                     color: ACCENT, 
@@ -270,7 +270,7 @@ export default function AdminDashboard() {
                             borderTop: `1px solid ${CARD_BORDER}`,
                             transition: "background 0.15s"
                           }}
-                          onMouseEnter={e => e.currentTarget.style.background = "rgba(8,43,73,0.02)"}
+                          onMouseEnter={e => e.currentTarget.style.background = "rgba(12, 13, 17,0.02)"}
                           onMouseLeave={e => e.currentTarget.style.background = "transparent"}
                           >
                             <td style={{ 

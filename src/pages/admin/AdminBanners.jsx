@@ -40,7 +40,7 @@ const EMPTY = {
   bg: COLORS[0].bg, accent: COLORS[0].accent, image: ""
 }
 
-const inp = "w-full bg-[#FAF3E4] border border-[rgba(8,43,73,0.15)] rounded-lg px-3 py-2 text-sm text-[#292725] placeholder-[#765334] focus:outline-none focus:border-[#082B49]"
+const inp = "w-full bg-[#FAF3E4] border border-[rgba(12, 13, 17,0.15)] rounded-lg px-3 py-2 text-sm text-[#292725] placeholder-[#765334] focus:outline-none focus:border-[#0C0D11]"
 const lbl = "text-xs text-[#765334] mb-1 block font-medium"
 
 function BannerPreview({ banner }) {
@@ -85,7 +85,7 @@ function ProductSelector({ form, setForm }) {
         const id = e.target.value
         setForm(f => ({ ...f, productId: id, link: id ? `/products/${id}` : f.link }))
       }}
-      className="w-full bg-[#FAF3E4] border border-gray-200 rounded-lg px-3 py-2 text-sm text-[#292725] focus:outline-none focus:border-[#082B49]"
+      className="w-full bg-[#FAF3E4] border border-gray-200 rounded-lg px-3 py-2 text-sm text-[#292725] focus:outline-none focus:border-[#0C0D11]"
     >
       <option value="">- None (use link above) -</option>
       {products.map(p => (
@@ -130,7 +130,7 @@ function BannerForm({ initial, onSave, onCancel }) {
   }
 
   return (
-    <div className="bg-[#FAF3E4] border border-[rgba(8,43,73,0.15)] rounded-xl p-4 space-y-4">
+    <div className="bg-[#FAF3E4] border border-[rgba(12, 13, 17,0.15)] rounded-xl p-4 space-y-4">
       <div className="grid grid-cols-2 gap-3">
         <div>
           <label className={lbl}>Badge Text</label>
@@ -166,7 +166,7 @@ function BannerForm({ initial, onSave, onCancel }) {
         <div>
           <label className={lbl}>Button Link</label>
           <select value={form.link||"/products"} onChange={e=>setForm(f=>({...f,link:e.target.value}))}
-            className="w-full bg-[#FAF3E4] border border-gray-200 rounded-lg px-3 py-2 text-sm text-[#292725] focus:outline-none focus:border-[#082B49]">
+            className="w-full bg-[#FAF3E4] border border-gray-200 rounded-lg px-3 py-2 text-sm text-[#292725] focus:outline-none focus:border-[#0C0D11]">
             {LINK_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
@@ -179,15 +179,15 @@ function BannerForm({ initial, onSave, onCancel }) {
         <div className="col-span-2">
           <label className={lbl}>Banner Image</label>
           <div className="flex gap-2 items-start">
-            <label className="flex-1 flex items-center gap-2 px-4 py-2.5 border border-dashed border-[rgba(8,43,73,0.15)] hover:border-[#082B49]/40 rounded-lg cursor-pointer transition-all bg-[#F4E9D2]">
+            <label className="flex-1 flex items-center gap-2 px-4 py-2.5 border border-dashed border-[rgba(12, 13, 17,0.15)] hover:border-[#0C0D11]/40 rounded-lg cursor-pointer transition-all bg-[#F4E9D2]">
               <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
               {uploading
-                ? <><Loader2 size={15} className="text-[#082B49] animate-spin" /><span className="text-gray-400 text-sm">Uploading...</span></>
-                : <><ImagePlus size={15} className="text-[#082B49]" /><span className="text-gray-400 text-sm">Upload from device</span></>
+                ? <><Loader2 size={15} className="text-[#0C0D11] animate-spin" /><span className="text-gray-400 text-sm">Uploading...</span></>
+                : <><ImagePlus size={15} className="text-[#0C0D11]" /><span className="text-gray-400 text-sm">Upload from device</span></>
               }
             </label>
             {form.image && (
-              <div className="relative w-16 h-12 rounded-lg overflow-hidden border border-[#082B49]/20 flex-shrink-0">
+              <div className="relative w-16 h-12 rounded-lg overflow-hidden border border-[#0C0D11]/20 flex-shrink-0">
                 <img src={form.image} alt="" className="w-full h-full object-cover" />
                 <button type="button" onClick={() => setForm(f => ({ ...f, image: "" }))}
                   className="absolute top-0.5 right-0.5 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs leading-none">x</button>
@@ -216,9 +216,9 @@ function BannerForm({ initial, onSave, onCancel }) {
       </div>
 
       <div className="flex gap-2">
-        <button type="button" onClick={onCancel} className="flex-1 py-2 border border-[rgba(8,43,73,0.15)] text-[#765334] rounded-lg text-sm">Cancel</button>
+        <button type="button" onClick={onCancel} className="flex-1 py-2 border border-[rgba(12, 13, 17,0.15)] text-[#765334] rounded-lg text-sm">Cancel</button>
         <button type="button" onClick={handleSave} disabled={saving || uploading}
-          className="flex-1 py-2 bg-[#082B49] text-white font-semibold rounded-lg text-sm hover:bg-[#0B304D] disabled:opacity-60 flex items-center justify-center gap-1">
+          className="flex-1 py-2 bg-[#0C0D11] text-white font-semibold rounded-lg text-sm hover:bg-[#0C0D11] disabled:opacity-60 flex items-center justify-center gap-1">
           {saving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
           {initial?.id ? "Update Banner" : "Add Banner"}
         </button>
@@ -279,13 +279,13 @@ function LogoManager() {
   }
 
   return (
-    <div className="bg-[#FAF3E4] border border-[rgba(8,43,73,0.15)] rounded-xl p-5 space-y-4">
+    <div className="bg-[#FAF3E4] border border-[rgba(12, 13, 17,0.15)] rounded-xl p-5 space-y-4">
       {cropSrc && (
         <ImageCropper imageSrc={cropSrc} aspect={1} title="Crop Logo (Square)" onCrop={handleCropped} onCancel={() => setCropSrc(null)} />
       )}
       <div className="flex items-center gap-2 mb-1">
-        <Image size={18} className="text-[#082B49]" />
-        <h2 className="text-base font-bold text-[#082B49]" style={{ fontFamily: "Georgia, serif" }}>Site Logo (Navbar)</h2>
+        <Image size={18} className="text-[#0C0D11]" />
+        <h2 className="text-base font-bold text-[#0C0D11]" style={{ fontFamily: "Georgia, serif" }}>Site Logo (Navbar)</h2>
       </div>
       <p className="text-xs text-gray-500">Upload a square logo to replace the default logo in the top navigation bar.</p>
 
@@ -300,11 +300,11 @@ function LogoManager() {
               </div>
             </div>
           )}
-          <label className="flex items-center gap-2 px-4 py-2.5 border border-dashed border-[rgba(8,43,73,0.15)] hover:border-[#082B49]/40 rounded-lg cursor-pointer transition-all bg-[#F4E9D2] w-fit">
+          <label className="flex items-center gap-2 px-4 py-2.5 border border-dashed border-[rgba(12, 13, 17,0.15)] hover:border-[#0C0D11]/40 rounded-lg cursor-pointer transition-all bg-[#F4E9D2] w-fit">
             <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleFileSelect} />
             {uploading
-              ? <><Loader2 size={15} className="text-[#082B49] animate-spin" /><span className="text-gray-500 text-sm">Uploading...</span></>
-              : <><ImagePlus size={15} className="text-[#082B49]" /><span className="text-gray-500 text-sm">Upload logo (will open crop tool)</span></>
+              ? <><Loader2 size={15} className="text-[#0C0D11] animate-spin" /><span className="text-gray-500 text-sm">Uploading...</span></>
+              : <><ImagePlus size={15} className="text-[#0C0D11]" /><span className="text-gray-500 text-sm">Upload logo (will open crop tool)</span></>
             }
           </label>
           <div>
@@ -313,7 +313,7 @@ function LogoManager() {
           </div>
           <div className="flex gap-2 pt-1">
             <button onClick={handleSave} disabled={saving || uploading}
-              className="flex items-center gap-1.5 px-5 py-2 bg-[#082B49] text-white font-semibold rounded-lg text-sm hover:bg-[#0B304D] disabled:opacity-60 transition-all">
+              className="flex items-center gap-1.5 px-5 py-2 bg-[#0C0D11] text-white font-semibold rounded-lg text-sm hover:bg-[#0C0D11] disabled:opacity-60 transition-all">
               {saving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />} Save
             </button>
             {logoUrl && (
@@ -382,7 +382,7 @@ function HeroBgManager() {
   }
 
   return (
-    <div className="bg-[#FAF3E4] border border-[rgba(8,43,73,0.15)] rounded-xl p-5 space-y-4">
+    <div className="bg-[#FAF3E4] border border-[rgba(12, 13, 17,0.15)] rounded-xl p-5 space-y-4">
       {/* Crop modal */}
       {cropSrc && (
         <ImageCropper
@@ -395,8 +395,8 @@ function HeroBgManager() {
       )}
 
       <div className="flex items-center gap-2 mb-1">
-        <Image size={18} className="text-[#082B49]" />
-        <h2 className="text-base font-bold text-[#082B49]" style={{ fontFamily: "Georgia, serif" }}>Hero Background Image</h2>
+        <Image size={18} className="text-[#0C0D11]" />
+        <h2 className="text-base font-bold text-[#0C0D11]" style={{ fontFamily: "Georgia, serif" }}>Hero Background Image</h2>
       </div>
       <p className="text-xs text-gray-500">
         Upload a hero image. The built-in crop tool will let you select the exact visible area (16:5 ratio - works perfectly on both desktop and mobile).
@@ -405,7 +405,7 @@ function HeroBgManager() {
       {loading ? <div className="flex items-center gap-2 text-gray-400 text-sm"><Loader2 size={14} className="animate-spin" /> Loading...</div> : (
         <>
           {imageUrl && (
-            <div className="relative w-full rounded-lg overflow-hidden border border-[rgba(8,43,73,0.15)]" style={{ aspectRatio: "16/5" }}>
+            <div className="relative w-full rounded-lg overflow-hidden border border-[rgba(12, 13, 17,0.15)]" style={{ aspectRatio: "16/5" }}>
               <img src={imageUrl} alt="Hero background preview" className="w-full h-full object-cover" onError={e => { e.target.style.display = "none" }} />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-3">
                 <span className="text-white text-xs font-medium bg-black/50 px-2 py-0.5 rounded">Preview (16:5)</span>
@@ -413,11 +413,11 @@ function HeroBgManager() {
             </div>
           )}
 
-          <label className="flex items-center gap-2 px-4 py-2.5 border border-dashed border-[rgba(8,43,73,0.15)] hover:border-[#082B49]/40 rounded-lg cursor-pointer transition-all bg-[#F4E9D2] w-fit">
+          <label className="flex items-center gap-2 px-4 py-2.5 border border-dashed border-[rgba(12, 13, 17,0.15)] hover:border-[#0C0D11]/40 rounded-lg cursor-pointer transition-all bg-[#F4E9D2] w-fit">
             <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleFileSelect} />
             {uploading
-              ? <><Loader2 size={15} className="text-[#082B49] animate-spin" /><span className="text-gray-500 text-sm">Uploading...</span></>
-              : <><ImagePlus size={15} className="text-[#082B49]" /><span className="text-gray-500 text-sm">Upload & Crop image</span></>
+              ? <><Loader2 size={15} className="text-[#0C0D11] animate-spin" /><span className="text-gray-500 text-sm">Uploading...</span></>
+              : <><ImagePlus size={15} className="text-[#0C0D11]" /><span className="text-gray-500 text-sm">Upload & Crop image</span></>
             }
           </label>
 
@@ -428,7 +428,7 @@ function HeroBgManager() {
 
           <div className="flex gap-2 pt-1">
             <button onClick={handleSave} disabled={saving || uploading}
-              className="flex items-center gap-1.5 px-5 py-2 bg-[#082B49] text-white font-semibold rounded-lg text-sm hover:bg-[#0B304D] disabled:opacity-60 transition-all">
+              className="flex items-center gap-1.5 px-5 py-2 bg-[#0C0D11] text-white font-semibold rounded-lg text-sm hover:bg-[#0C0D11] disabled:opacity-60 transition-all">
               {saving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />} Save
             </button>
             {imageUrl && (
@@ -484,12 +484,12 @@ export default function AdminBanners() {
 
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#082B49]" style={{ fontFamily: "Georgia, serif" }}>Promo Banners</h1>
+          <h1 className="text-2xl font-bold text-[#0C0D11]" style={{ fontFamily: "Georgia, serif" }}>Promo Banners</h1>
           <p className="text-gray-500 text-sm mt-1">Manage sliding offer banners on the homepage</p>
         </div>
         {!showForm && !editBanner && (
           <button onClick={() => setShowForm(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-[#082B49] text-white font-semibold rounded-lg hover:bg-[#0B304D] transition-all text-sm">
+            className="flex items-center gap-2 px-4 py-2 bg-[#0C0D11] text-white font-semibold rounded-lg hover:bg-[#0C0D11] transition-all text-sm">
             <Plus size={16} /> Add Banner
           </button>
         )}
@@ -505,13 +505,13 @@ export default function AdminBanners() {
 
       {loading ? (
         <div className="flex items-center justify-center h-32">
-          <div className="w-6 h-6 border-2 border-[#082B49] border-t-transparent rounded-full animate-spin" />
+          <div className="w-6 h-6 border-2 border-[#0C0D11] border-t-transparent rounded-full animate-spin" />
         </div>
       ) : banners.length === 0 && !showForm ? (
-        <div className="text-center py-16 bg-[#FAF3E4] rounded-xl border border-[rgba(8,43,73,0.15)]">
+        <div className="text-center py-16 bg-[#FAF3E4] rounded-xl border border-[rgba(12, 13, 17,0.15)]">
           <p className="text-4xl mb-3">??</p>
           <p className="text-[#765334]">No banners yet.</p>
-          <button onClick={() => setShowForm(true)} className="mt-4 px-6 py-2 bg-[#082B49] text-white rounded-lg text-sm font-medium hover:bg-[#0B304D] transition-all">+ Add Banner</button>
+          <button onClick={() => setShowForm(true)} className="mt-4 px-6 py-2 bg-[#0C0D11] text-white rounded-lg text-sm font-medium hover:bg-[#0C0D11] transition-all">+ Add Banner</button>
         </div>
       ) : (
         <div className="space-y-3">
@@ -522,16 +522,16 @@ export default function AdminBanners() {
                   <BannerForm initial={editBanner} onSave={handleEdit} onCancel={() => setEditBanner(null)} />
                 </motion.div>
               ) : (
-                <div className="bg-[#FAF3E4] border border-[rgba(8,43,73,0.15)] rounded-xl overflow-hidden shadow-sm">
+                <div className="bg-[#FAF3E4] border border-[rgba(12, 13, 17,0.15)] rounded-xl overflow-hidden shadow-sm">
                   <BannerPreview banner={banner} />
-                  <div className="flex items-center justify-between px-4 py-2 border-t border-[#082B49]/10">
+                  <div className="flex items-center justify-between px-4 py-2 border-t border-[#0C0D11]/10">
                     <div className="flex items-center gap-1">
                       <span className="text-gray-500 text-xs">#{idx + 1}</span>
                       <button onClick={() => move(idx, -1)} disabled={idx === 0} className="p-1 text-gray-500 hover:text-[#292725] disabled:opacity-30"><ChevronUp size={14} /></button>
                       <button onClick={() => move(idx, 1)} disabled={idx === banners.length - 1} className="p-1 text-gray-500 hover:text-[#292725] disabled:opacity-30"><ChevronDown size={14} /></button>
                     </div>
                     <div className="flex items-center gap-2">
-                      <button onClick={() => setEditBanner(banner)} disabled={saving} className="flex items-center gap-1 px-3 py-1.5 text-xs text-gray-400 hover:text-[#082B49] border border-[#082B49]/20 rounded-lg disabled:opacity-40"><Edit2 size={12} /> Edit</button>
+                      <button onClick={() => setEditBanner(banner)} disabled={saving} className="flex items-center gap-1 px-3 py-1.5 text-xs text-gray-400 hover:text-[#0C0D11] border border-[#0C0D11]/20 rounded-lg disabled:opacity-40"><Edit2 size={12} /> Edit</button>
                       <button onClick={() => handleDelete(banner.id)} disabled={saving} className="flex items-center gap-1 px-3 py-1.5 text-xs text-gray-400 hover:text-red-400 border border-red-500/20 rounded-lg disabled:opacity-40">
                         {saving ? <Loader2 size={12} className="animate-spin" /> : <Trash2 size={12} />} Delete
                       </button>
@@ -544,7 +544,7 @@ export default function AdminBanners() {
         </div>
       )}
       {saving && (
-        <div className="fixed bottom-4 right-4 bg-[#082B49] text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-lg">
+        <div className="fixed bottom-4 right-4 bg-[#0C0D11] text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-lg">
           <Loader2 size={14} className="animate-spin" /> Saving...
         </div>
       )}

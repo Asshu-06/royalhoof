@@ -92,7 +92,7 @@ export default function GalleryPage() {
           <div className="flex items-center justify-between mb-8">
             <button
               onClick={handleBack}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#082B49] text-[#C5963A] hover:bg-[#C5963A] hover:text-[#082B49] transition-all text-xs font-semibold uppercase tracking-wider border border-[#C5963A]/40 shadow-sm cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#0C0D11] text-[#C5963A] hover:bg-[#C5963A] hover:text-[#0C0D11] transition-all text-xs font-semibold uppercase tracking-wider border border-[#C5963A]/40 shadow-sm cursor-pointer"
             >
               <ArrowLeft size={14} /> Back
             </button>
@@ -120,7 +120,7 @@ export default function GalleryPage() {
                 onClick={() => setActiveTab(tab)}
                 className={`px-6 py-2 rounded-sm text-sm font-medium uppercase tracking-wider transition-all border ${
                   activeTab === tab 
-                    ? 'bg-[#C5963A] text-[#082B49] border-[#C5963A]' 
+                    ? 'bg-[#C5963A] text-[#0C0D11] border-[#C5963A]' 
                     : 'bg-transparent text-[#765334] border-[rgba(197, 150, 58,0.25)] hover:border-[rgba(197, 150, 58,0.45)] hover:text-[#D8C7A0]'
                 }`}
               >
@@ -151,11 +151,11 @@ export default function GalleryPage() {
           {/* Photos per page control bar */}
           <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-[#FAF3E4] border border-[rgba(197,150,58,0.3)] rounded-lg p-3 sm:px-6">
             <div className="text-xs sm:text-sm text-[#765334] font-medium">
-              Showing <span className="font-bold text-[#082B49]">{displayMedia.length === 0 ? 0 : (itemsPerPage === 'all' ? 1 : (safeCurrentPage - 1) * itemsPerPage + 1)} - {itemsPerPage === 'all' ? displayMedia.length : Math.min(safeCurrentPage * itemsPerPage, displayMedia.length)}</span> of <span className="font-bold text-[#082B49]">{displayMedia.length}</span> photos
+              Showing <span className="font-bold text-[#0C0D11]">{displayMedia.length === 0 ? 0 : (itemsPerPage === 'all' ? 1 : (safeCurrentPage - 1) * itemsPerPage + 1)} - {itemsPerPage === 'all' ? displayMedia.length : Math.min(safeCurrentPage * itemsPerPage, displayMedia.length)}</span> of <span className="font-bold text-[#0C0D11]">{displayMedia.length}</span> photos
             </div>
             
             <div className="flex items-center gap-2">
-              <label className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#082B49]">
+              <label className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#0C0D11]">
                 Photos per page:
               </label>
               <select
@@ -165,7 +165,7 @@ export default function GalleryPage() {
                   setItemsPerPage(val)
                   setCurrentPage(1)
                 }}
-                className="bg-white border border-[#C5963A]/40 rounded px-3 py-1 text-xs sm:text-sm font-bold text-[#082B49] focus:outline-none focus:border-[#082B49] cursor-pointer"
+                className="bg-white border border-[#C5963A]/40 rounded px-3 py-1 text-xs sm:text-sm font-bold text-[#0C0D11] focus:outline-none focus:border-[#0C0D11] cursor-pointer"
               >
                 <option value={4}>4</option>
                 <option value={8}>8</option>
@@ -203,7 +203,7 @@ export default function GalleryPage() {
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     {item.type === 'video' && (
                       <div className="w-12 h-12 rounded-full bg-[#FAF3E4]/90 flex items-center justify-center">
-                        <Play size={24} className="text-[#082B49] ml-1" />
+                        <Play size={24} className="text-[#0C0D11] ml-1" />
                       </div>
                     )}
                   </div>
@@ -221,7 +221,7 @@ export default function GalleryPage() {
               <button
                 disabled={safeCurrentPage === 1}
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                className="px-4 py-2 text-xs uppercase font-bold tracking-wider rounded border border-[#C5963A]/30 bg-white text-[#082B49] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#C5963A] hover:text-[#082B49] transition-all"
+                className="px-4 py-2 text-xs uppercase font-bold tracking-wider rounded border border-[#C5963A]/30 bg-white text-[#0C0D11] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#C5963A] hover:text-[#0C0D11] transition-all"
               >
                 Previous
               </button>
@@ -232,7 +232,7 @@ export default function GalleryPage() {
                   onClick={() => setCurrentPage(page)}
                   className={`w-9 h-9 rounded text-xs font-bold transition-all border ${
                     page === safeCurrentPage
-                      ? 'bg-[#C5963A] text-[#082B49] border-[#C5963A]'
+                      ? 'bg-[#C5963A] text-[#0C0D11] border-[#C5963A]'
                       : 'bg-white text-[#765334] border-[#C5963A]/30 hover:border-[#C5963A]'
                   }`}
                 >
@@ -243,7 +243,7 @@ export default function GalleryPage() {
               <button
                 disabled={safeCurrentPage === totalPages}
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                className="px-4 py-2 text-xs uppercase font-bold tracking-wider rounded border border-[#C5963A]/30 bg-white text-[#082B49] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#C5963A] hover:text-[#082B49] transition-all"
+                className="px-4 py-2 text-xs uppercase font-bold tracking-wider rounded border border-[#C5963A]/30 bg-white text-[#0C0D11] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#C5963A] hover:text-[#0C0D11] transition-all"
               >
                 Next
               </button>

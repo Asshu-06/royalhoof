@@ -85,7 +85,7 @@ export default function TestimonialsPage() {
                     <div className="h-4 bg-[#FAF3E4] rounded w-5/6" />
                     <div className="h-4 bg-[#FAF3E4] rounded w-4/6" />
                   </div>
-                  <div className="flex items-center gap-3 pt-4 border-t border-[rgba(8,43,73,0.15)]">
+                  <div className="flex items-center gap-3 pt-4 border-t border-[rgba(12, 13, 17,0.15)]">
                     <div className="w-12 h-12 bg-[#FAF3E4] rounded-full" />
                     <div className="space-y-1">
                       <div className="h-4 bg-[#FAF3E4] rounded w-20" />
@@ -122,7 +122,7 @@ export default function TestimonialsPage() {
                   </p>
 
                   {/* Author */}
-                  <div className="flex items-center gap-3 pt-4 border-t border-[rgba(8,43,73,0.15)]">
+                  <div className="flex items-center gap-3 pt-4 border-t border-[rgba(12, 13, 17,0.15)]">
                     <img 
                       src={testimonial.image_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonial.name)}&background=9A7650&color=fff`}
                       alt={testimonial.name}

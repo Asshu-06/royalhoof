@@ -114,7 +114,7 @@ export default function EventsPage() {
           <div className="flex items-center justify-between mb-8">
             <button
               onClick={handleBack}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#082B49] text-[#C5963A] hover:bg-[#C5963A] hover:text-[#082B49] transition-all text-xs font-semibold uppercase tracking-wider border border-[#C5963A]/40 shadow-sm cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#0C0D11] text-[#C5963A] hover:bg-[#C5963A] hover:text-[#0C0D11] transition-all text-xs font-semibold uppercase tracking-wider border border-[#C5963A]/40 shadow-sm cursor-pointer"
             >
               <ArrowLeft size={14} /> Back
             </button>
@@ -173,7 +173,7 @@ export default function EventsPage() {
                   style={{
                     border: "1.5px solid #C5963A",
                     background: "#FAF3E4",
-                    boxShadow: "0 4px 16px rgba(8, 43, 73, 0.08)"
+                    boxShadow: "0 4px 16px rgba(12, 13, 17, 0.08)"
                   }}
                   className="equestrian-card rounded-lg overflow-hidden flex flex-col justify-between max-w-[340px] w-full transition-all duration-300 hover:shadow-md"
                 >
@@ -267,7 +267,7 @@ export default function EventsPage() {
                   style={{
                     border: "1.5px solid #C5963A",
                     background: "#FAF3E4",
-                    boxShadow: "0 4px 16px rgba(8, 43, 73, 0.08)"
+                    boxShadow: "0 4px 16px rgba(12, 13, 17, 0.08)"
                   }}
                   className="equestrian-card rounded-lg overflow-hidden group max-w-[340px] w-full transition-all duration-300 hover:shadow-md"
                 >
@@ -279,7 +279,7 @@ export default function EventsPage() {
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                     />
                     <div className="absolute top-2.5 right-2.5">
-                      <span className="bg-[#FAF3E4] text-[#765334] px-2.5 py-0.5 rounded-full text-[0.625rem] font-bold uppercase tracking-wider border border-[#082B49]/30">
+                      <span className="bg-[#FAF3E4] text-[#765334] px-2.5 py-0.5 rounded-full text-[0.625rem] font-bold uppercase tracking-wider border border-[#0C0D11]/30">
                         {event.category}
                       </span>
                     </div>
@@ -309,7 +309,7 @@ export default function EventsPage() {
           {/* Empty State */}
           {!loading && ((activeTab === 'upcoming' && upcomingEvents.length === 0) || 
             (activeTab === 'past' && pastEvents.length === 0)) && (
-            <div className="text-center py-20 equestrian-card rounded-lg" style={{ border: "1.5px solid #082B49" }}>
+            <div className="text-center py-20 equestrian-card rounded-lg" style={{ border: "1.5px solid #0C0D11" }}>
               <p className="text-[#765334] text-lg font-medium">No {activeTab} events at the moment</p>
               <p className="text-[#765334] text-sm mt-2">Check back soon for updates!</p>
             </div>

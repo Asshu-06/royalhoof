@@ -10,7 +10,7 @@ import { isValidPhone, sanitizePhone } from '../utils/validation'
 
 const EMPTY_ADDR = { label: 'Home', full_name: '', phone: '', address1: '', address2: '', city: '', state: '', pincode: '', is_default: false }
 
-const inp = 'w-full bg-[#F4E9D2] border border-[rgba(8,43,73,0.15)] rounded-lg px-3 py-2.5 text-sm text-[#292725] placeholder-[#765334] focus:outline-none focus:border-[#082B49]'
+const inp = 'w-full bg-[#F4E9D2] border border-[rgba(12, 13, 17,0.15)] rounded-lg px-3 py-2.5 text-sm text-[#292725] placeholder-[#765334] focus:outline-none focus:border-[#0C0D11]'
 const lbl = 'text-xs text-[#765334] mb-1 block font-medium'
 
 function AddressForm({ initial, onSave, onCancel, saving }) {
@@ -30,18 +30,18 @@ function AddressForm({ initial, onSave, onCancel, saving }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-[#F4E9D2] border border-[rgba(8,43,73,0.15)] rounded-xl p-4 space-y-3">
+    <form onSubmit={handleSubmit} className="bg-[#F4E9D2] border border-[rgba(12, 13, 17,0.15)] rounded-xl p-4 space-y-3">
       <div className="flex items-center justify-between mb-1">
         <div className="flex gap-2">
           {['Home', 'Work', 'Other'].map(l => (
             <button key={l} type="button" onClick={() => set('label', l)}
-              className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${form.label === l ? 'bg-[#082B49] text-white' : 'bg-[#FAF3E4] text-[#765334] border border-[rgba(8,43,73,0.15)] hover:border-[#082B49]'}`}>
+              className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${form.label === l ? 'bg-[#0C0D11] text-white' : 'bg-[#FAF3E4] text-[#765334] border border-[rgba(12, 13, 17,0.15)] hover:border-[#0C0D11]'}`}>
               {l}
             </button>
           ))}
         </div>
         <label className="flex items-center gap-2 text-xs text-[#765334] cursor-pointer">
-          <input type="checkbox" checked={form.is_default} onChange={e => set('is_default', e.target.checked)} className="accent-[#082B49]" />
+          <input type="checkbox" checked={form.is_default} onChange={e => set('is_default', e.target.checked)} className="accent-[#0C0D11]" />
           Set as default
         </label>
       </div>
@@ -78,8 +78,8 @@ function AddressForm({ initial, onSave, onCancel, saving }) {
         </div>
       </div>
       <div className="flex gap-2 pt-1">
-        <button type="button" onClick={onCancel} className="flex-1 py-2 border border-[rgba(8,43,73,0.15)] text-[#765334] rounded-lg text-sm hover:bg-[#FAF3E4] transition-all">Cancel</button>
-        <button type="submit" disabled={saving} className="flex-1 py-2 bg-[#082B49] text-white font-semibold rounded-lg text-sm hover:bg-[#0B304D] disabled:opacity-60 flex items-center justify-center gap-1 transition-all">
+        <button type="button" onClick={onCancel} className="flex-1 py-2 border border-[rgba(12, 13, 17,0.15)] text-[#765334] rounded-lg text-sm hover:bg-[#FAF3E4] transition-all">Cancel</button>
+        <button type="submit" disabled={saving} className="flex-1 py-2 bg-[#0C0D11] text-white font-semibold rounded-lg text-sm hover:bg-[#0C0D11] disabled:opacity-60 flex items-center justify-center gap-1 transition-all">
           {saving && <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />}
           Save Address
         </button>
@@ -160,36 +160,36 @@ export default function ProfilePage() {
         <h1 className="text-3xl font-bold text-[#292725]" style={{ fontFamily: 'Georgia, serif' }}>My Profile</h1>
 
         {/* User Info */}
-        <div className="bg-[#FAF3E4] border border-[rgba(8,43,73,0.15)] rounded-2xl p-6 shadow-sm">
+        <div className="bg-[#FAF3E4] border border-[rgba(12, 13, 17,0.15)] rounded-2xl p-6 shadow-sm">
           <div className="flex items-center gap-4 mb-6">
             {user?.user_metadata?.avatar_url
-              ? <img src={user.user_metadata.avatar_url} alt="avatar" className="w-16 h-16 rounded-full object-cover border-2 border-[#082B49]" />
-              : <div className="w-16 h-16 rounded-full bg-[#082B49] flex items-center justify-center flex-shrink-0">
+              ? <img src={user.user_metadata.avatar_url} alt="avatar" className="w-16 h-16 rounded-full object-cover border-2 border-[#0C0D11]" />
+              : <div className="w-16 h-16 rounded-full bg-[#0C0D11] flex items-center justify-center flex-shrink-0">
                   <User size={28} className="text-white" />
                 </div>
             }
             <div>
               <p className="text-[#292725] font-semibold text-lg">{user?.user_metadata?.full_name || user?.user_metadata?.name || 'User'}</p>
               <p className="text-[#765334] text-sm flex items-center gap-1.5 mt-0.5">
-                <Mail size={13} className="text-[#082B49]" /> {user?.email}
+                <Mail size={13} className="text-[#0C0D11]" /> {user?.email}
               </p>
             </div>
           </div>
           <button onClick={handleSignOut}
-            className="flex items-center gap-2 px-4 py-2 border border-[rgba(8,43,73,0.15)] text-[#765334] rounded-lg text-sm hover:text-red-500 hover:border-red-300 hover:bg-red-50 transition-all">
+            className="flex items-center gap-2 px-4 py-2 border border-[rgba(12, 13, 17,0.15)] text-[#765334] rounded-lg text-sm hover:text-red-500 hover:border-red-300 hover:bg-red-50 transition-all">
             <LogOut size={14} /> Sign Out
           </button>
         </div>
 
         {/* Addresses */}
-        <div className="bg-[#FAF3E4] border border-[rgba(8,43,73,0.15)] rounded-2xl p-6 shadow-sm">
+        <div className="bg-[#FAF3E4] border border-[rgba(12, 13, 17,0.15)] rounded-2xl p-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-[#082B49] font-semibold flex items-center gap-2">
+            <h2 className="text-[#0C0D11] font-semibold flex items-center gap-2">
               <MapPin size={16} /> Saved Addresses
             </h2>
             {!showForm && !editAddr && (
               <button onClick={() => setShowForm(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#082B49] text-white rounded-lg text-xs font-semibold hover:bg-[#0B304D] transition-all">
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#0C0D11] text-white rounded-lg text-xs font-semibold hover:bg-[#0C0D11] transition-all">
                 <Plus size={13} /> Add New
               </button>
             )}
@@ -212,11 +212,11 @@ export default function ProfilePage() {
                       <AddressForm initial={editAddr} onSave={handleSave} onCancel={() => setEditAddr(null)} saving={saving} />
                     </motion.div>
                   ) : (
-                    <div className={`border rounded-xl p-4 transition-all ${addr.is_default ? 'border-[#082B49]/40 bg-[#082B49]/5' : 'border-[rgba(8,43,73,0.15)] bg-[#F4E9D2]'}`}>
+                    <div className={`border rounded-xl p-4 transition-all ${addr.is_default ? 'border-[#0C0D11]/40 bg-[#0C0D11]/5' : 'border-[rgba(12, 13, 17,0.15)] bg-[#F4E9D2]'}`}>
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-1.5">
-                            <span className="text-xs font-semibold bg-[#082B49]/10 text-[#082B49] px-2 py-0.5 rounded-full">{addr.label}</span>
+                            <span className="text-xs font-semibold bg-[#0C0D11]/10 text-[#0C0D11] px-2 py-0.5 rounded-full">{addr.label}</span>
                             {addr.is_default && <span className="text-xs font-medium text-[#C5963A] bg-[#C5963A]/10 px-2 py-0.5 rounded-full">Default</span>}
                           </div>
                           <p className="text-[#292725] text-sm font-medium">{addr.full_name} &middot; {addr.phone}</p>
@@ -225,11 +225,11 @@ export default function ProfilePage() {
                         </div>
                         <div className="flex items-center gap-2 ml-3">
                           {!addr.is_default && (
-                            <button onClick={() => handleSetDefault(addr.id)} className="text-[#765334] hover:text-[#082B49] transition-colors" title="Set as default">
+                            <button onClick={() => handleSetDefault(addr.id)} className="text-[#765334] hover:text-[#0C0D11] transition-colors" title="Set as default">
                               <Star size={14} />
                             </button>
                           )}
-                          <button onClick={() => setEditAddr(addr)} className="text-[#765334] hover:text-[#082B49] transition-colors">
+                          <button onClick={() => setEditAddr(addr)} className="text-[#765334] hover:text-[#0C0D11] transition-colors">
                             <Edit2 size={14} />
                           </button>
                           <button onClick={() => handleDelete(addr.id)} className="text-[#765334] hover:text-red-500 transition-colors">

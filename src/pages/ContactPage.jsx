@@ -113,7 +113,7 @@ export default function ContactPage() {
   `
   const inputStyle = {
     background: "#FAF3E4",
-    border: "1px solid rgba(8, 43, 73, 0.2)",
+    border: "1px solid rgba(12, 13, 17, 0.2)",
     fontFamily: "'Inter', sans-serif",
   }
   const inputFocusStyle = {
@@ -258,7 +258,7 @@ export default function ContactPage() {
               </div>
 
               {/* Social Media Links */}
-              <div style={{ marginTop: "32px", paddingTop: "24px", borderTop: "1px solid rgba(8,43,73,0.15)" }}>
+              <div style={{ marginTop: "32px", paddingTop: "24px", borderTop: "1px solid rgba(12, 13, 17,0.15)" }}>
                 <h3 style={{
                   fontFamily: "'Cormorant Garamond', serif",
                   fontSize: "1.25rem",
@@ -282,7 +282,7 @@ export default function ContactPage() {
                     href="https://facebook.com/royalhoofhorseriddingacademy"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#082B49] text-[#C5963A] hover:bg-[#C5963A] hover:text-[#082B49] transition-all duration-300 font-medium text-xs tracking-wider uppercase border border-[#C5963A]/40 shadow-sm"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#0C0D11] text-[#C5963A] hover:bg-[#C5963A] hover:text-[#0C0D11] transition-all duration-300 font-medium text-xs tracking-wider uppercase border border-[#C5963A]/40 shadow-sm"
                   >
                     <FacebookIcon size={18} />
                     <span>Facebook</span>
@@ -291,7 +291,7 @@ export default function ContactPage() {
                     href="https://www.instagram.com/royal_hoof_horse_ridding?stkn=eWwydWVidzcxMjRq"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#082B49] text-[#C5963A] hover:bg-[#C5963A] hover:text-[#082B49] transition-all duration-300 font-medium text-xs tracking-wider uppercase border border-[#C5963A]/40 shadow-sm"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#0C0D11] text-[#C5963A] hover:bg-[#C5963A] hover:text-[#0C0D11] transition-all duration-300 font-medium text-xs tracking-wider uppercase border border-[#C5963A]/40 shadow-sm"
                   >
                     <InstagramIcon size={18} />
                     <span>Instagram</span>
@@ -454,7 +454,7 @@ export default function ContactPage() {
                   disabled={submitting}
                   style={{
                     background: submitting ? "rgba(216,199,174,0.5)" : "#C5963A",
-                    color: "#082B49",
+                    color: "#0C0D11",
                     border: "none",
                     borderRadius: "4px",
                     padding: "13px 28px",
@@ -478,7 +478,7 @@ export default function ContactPage() {
                     <>
                       <div style={{
                         width: "16px", height: "16px",
-                        border: "2px solid #082B49",
+                        border: "2px solid #0C0D11",
                         borderTopColor: "transparent",
                         borderRadius: "50%",
                         animation: "spin 0.7s linear infinite",
@@ -533,7 +533,7 @@ export default function ContactPage() {
         .contact-detail-link:hover,
         .contact-detail-link:focus,
         .contact-detail-link:active {
-          color: #082B49 !important;
+          color: #0C0D11 !important;
           text-decoration: underline !important;
         }
         .contact-detail-link:visited {

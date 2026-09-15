@@ -5,7 +5,7 @@ import 'jspdf-autotable'
 import toast from 'react-hot-toast'
 
 const CARD_BG = "#FAF3E4"
-const CARD_BORDER = "rgba(8,43,73,0.12)"
+const CARD_BORDER = "rgba(12, 13, 17,0.12)"
 const TEXT_PRIMARY = "#292725"
 const TEXT_SECONDARY = "#765334"
 const TEXT_MUTED = "#9A8870"
@@ -14,7 +14,7 @@ const ACCENT_LIGHT = "#D2AA55"
 
 const inputStyle = {
   background: "#FFFFFF",
-  border: "1px solid rgba(8,43,73,0.15)",
+  border: "1px solid rgba(12, 13, 17,0.15)",
   borderRadius: 6,
   padding: "10px 14px",
   color: TEXT_PRIMARY,
@@ -355,7 +355,7 @@ export default function InvoiceGenerator({ enquiry, onClose }) {
                 alignItems: "center",
                 gap: 6,
                 background: ACCENT,
-                color: "#082B49",
+                color: "#0C0D11",
                 border: "none",
                 borderRadius: 4,
                 padding: "6px 12px",
@@ -501,7 +501,7 @@ export default function InvoiceGenerator({ enquiry, onClose }) {
               justifyContent: "center",
               gap: 8,
               background: ACCENT,
-              color: "#082B49",
+              color: "#0C0D11",
               border: "none",
               borderRadius: 6,
               padding: "12px 20px",

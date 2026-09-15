@@ -61,7 +61,7 @@ function GridCard({ product, inCart, wishlisted, onAddToCart, onWishlist }) {
           )}
 
           {/* Overlay on Hover */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#082B49]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0C0D11]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
           {/* Out of Stock Overlay */}
           {product.stock === 0 && (
@@ -156,7 +156,7 @@ function GridCard({ product, inCart, wishlisted, onAddToCart, onWishlist }) {
           className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-sm text-xs font-semibold transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed uppercase tracking-wider ${
             inCart
               ? 'bg-green-700 hover:bg-green-600 text-white'
-              : 'bg-[#C5963A] hover:bg-[#D2AA55] text-[#082B49]'
+              : 'bg-[#C5963A] hover:bg-[#D2AA55] text-[#0C0D11]'
           }`}
           style={{ fontFamily: "'Inter', sans-serif" }}>
           {inCart ? (
@@ -276,7 +276,7 @@ function ListCard({ product, inCart, wishlisted, onAddToCart, onWishlist }) {
               className={`flex items-center gap-1.5 px-4 py-2 rounded-sm text-xs font-semibold transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap uppercase tracking-wider ${
                 inCart
                   ? 'bg-green-700 hover:bg-green-600 text-white'
-                  : 'bg-[#C5963A] hover:bg-[#D2AA55] text-[#082B49]'
+                  : 'bg-[#C5963A] hover:bg-[#D2AA55] text-[#0C0D11]'
               }`}
               style={{ fontFamily: "'Inter', sans-serif" }}>
               {inCart ? (

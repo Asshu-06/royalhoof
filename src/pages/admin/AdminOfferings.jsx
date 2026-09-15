@@ -11,7 +11,7 @@ import ImageUploader from "../../components/admin/ImageUploader"
 import toast from "react-hot-toast"
 
 const CARD_BG = "#FAF3E4"
-const CARD_BORDER = "rgba(8,43,73,0.12)"
+const CARD_BORDER = "rgba(12, 13, 17,0.12)"
 const TEXT_PRIMARY = "#292725"
 const TEXT_SECONDARY = "#765334"
 const TEXT_MUTED = "#9A8870"
@@ -84,10 +84,10 @@ function CustomProgramSelect({ programs, selectedId, onSelect, onAddNew }) {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between gap-2 px-3.5 py-2.5 rounded-lg border-2 border-[#C5963A] bg-[#082B49] text-[#F5EBD8] hover:bg-[#0B304D] shadow-md transition-all text-left"
+        className="w-full flex items-center justify-between gap-2 px-3.5 py-2.5 rounded-lg border-2 border-[#C5963A] bg-[#0C0D11] text-[#F5EBD8] hover:bg-[#0C0D11] shadow-md transition-all text-left"
       >
         <div className="flex items-center gap-2 min-w-0">
-          <span className="w-5 h-5 rounded-full bg-[#C5963A] text-[#082B49] text-xs font-bold flex items-center justify-center flex-shrink-0">
+          <span className="w-5 h-5 rounded-full bg-[#C5963A] text-[#0C0D11] text-xs font-bold flex items-center justify-center flex-shrink-0">
             {selectedIndex > 0 ? selectedIndex : 1}
           </span>
           <span className="font-bold text-xs sm:text-sm font-serif truncate text-[#F5EBD8]">
@@ -104,7 +104,7 @@ function CustomProgramSelect({ programs, selectedId, onSelect, onAddNew }) {
             animate={{ opacity: 1, y: 4, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.15 }}
-            className="absolute left-0 right-0 z-50 mt-1 max-w-[calc(100vw-3rem)] w-full rounded-xl bg-[#082B49] border-2 border-[#C5963A] shadow-2xl overflow-hidden"
+            className="absolute left-0 right-0 z-50 mt-1 max-w-[calc(100vw-3rem)] w-full rounded-xl bg-[#0C0D11] border-2 border-[#C5963A] shadow-2xl overflow-hidden"
           >
             <div className="max-h-72 overflow-y-auto divide-y divide-white/10">
               {programs.map((prog, idx) => {
@@ -147,7 +147,7 @@ function CustomProgramSelect({ programs, selectedId, onSelect, onAddNew }) {
                   onAddNew()
                   setIsOpen(false)
                 }}
-                className="w-full flex items-center gap-2 px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#C5963A] hover:bg-[#C5963A]/15 transition-colors bg-[#082B49]"
+                className="w-full flex items-center gap-2 px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#C5963A] hover:bg-[#C5963A]/15 transition-colors bg-[#0C0D11]"
               >
                 <Plus size={16} />
                 <span>+ Add New Program...</span>
@@ -182,7 +182,7 @@ function ProgramIconPicker({ value, onChange }) {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between gap-3 px-3.5 py-2 rounded-lg border border-[#C5963A]/40 bg-[#082B49] text-[#F5EBD8] hover:bg-[#0B304D] transition-all shadow-sm text-left"
+        className="w-full flex items-center justify-between gap-3 px-3.5 py-2 rounded-lg border border-[#C5963A]/40 bg-[#0C0D11] text-[#F5EBD8] hover:bg-[#0C0D11] transition-all shadow-sm text-left"
       >
         <div className="flex items-center gap-2.5 min-w-0">
           <div className="w-7 h-7 rounded-md bg-[#C5963A]/20 text-[#C5963A] border border-[#C5963A]/40 flex items-center justify-center flex-shrink-0">
@@ -204,7 +204,7 @@ function ProgramIconPicker({ value, onChange }) {
             animate={{ opacity: 1, y: 4, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.15 }}
-            className="absolute left-0 right-0 z-50 mt-1.5 p-2.5 rounded-xl bg-[#082B49] border-2 border-[#C5963A] shadow-2xl overflow-hidden"
+            className="absolute left-0 right-0 z-50 mt-1.5 p-2.5 rounded-xl bg-[#0C0D11] border-2 border-[#C5963A] shadow-2xl overflow-hidden"
           >
             <div className="text-[10px] font-bold text-[#C5963A] uppercase tracking-wider mb-2 px-1 font-serif">
               Select Program Icon
@@ -228,7 +228,7 @@ function ProgramIconPicker({ value, onChange }) {
                     }`}
                   >
                     <div className={`w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0 ${
-                      isSelected ? "bg-[#C5963A] text-[#082B49]" : "bg-[#C5963A]/20 text-[#C5963A]"
+                      isSelected ? "bg-[#C5963A] text-[#0C0D11]" : "bg-[#C5963A]/20 text-[#C5963A]"
                     }`}>
                       <IconComp size={16} />
                     </div>
@@ -382,13 +382,13 @@ export default function AdminOfferings() {
     <div className="max-w-6xl mx-auto space-y-8 pb-16">
       
       {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 rounded-xl bg-[#FAF3E4] border border-[#082B49]/10 shadow-md">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 rounded-xl bg-[#FAF3E4] border border-[#0C0D11]/10 shadow-md">
         <div>
           <div className="flex items-center gap-2 text-[#C5963A] text-sm font-bold uppercase tracking-wider">
             <Layers size={18} />
             <span>Admin Management</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold font-serif text-[#082B49]">
+          <h1 className="text-2xl sm:text-3xl font-bold font-serif text-[#0C0D11]">
             What We Offer Section & Programs
           </h1>
           <p className="text-xs sm:text-sm text-[#765334] mt-1 font-sans">
@@ -399,7 +399,7 @@ export default function AdminOfferings() {
         <div className="flex items-center gap-3 flex-wrap">
           <button
             onClick={handleReset}
-            className="px-4 py-2.5 rounded-lg border border-[#C5963A]/40 text-[#765334] hover:bg-[#082B49]/5 text-xs font-bold uppercase tracking-wider inline-flex items-center gap-2 transition-colors"
+            className="px-4 py-2.5 rounded-lg border border-[#C5963A]/40 text-[#765334] hover:bg-[#0C0D11]/5 text-xs font-bold uppercase tracking-wider inline-flex items-center gap-2 transition-colors"
           >
             <RefreshCw size={14} />
             Reset Defaults
@@ -417,8 +417,8 @@ export default function AdminOfferings() {
       </div>
 
       {/* Section Header Settings Card */}
-      <div className="p-6 rounded-xl bg-[#FAF3E4] border border-[#082B49]/10 shadow-md space-y-4">
-        <h2 className="text-lg font-bold text-[#082B49] font-serif border-b border-[#082B49]/10 pb-3 flex items-center gap-2">
+      <div className="p-6 rounded-xl bg-[#FAF3E4] border border-[#0C0D11]/10 shadow-md space-y-4">
+        <h2 className="text-lg font-bold text-[#0C0D11] font-serif border-b border-[#0C0D11]/10 pb-3 flex items-center gap-2">
           <Layers size={18} className="text-[#C5963A]" />
           Homepage Section Header Configuration
         </h2>
@@ -460,9 +460,9 @@ export default function AdminOfferings() {
       </div>
 
       {/* Program Selection Dropdown Card */}
-      <div className="p-6 rounded-xl bg-[#FAF3E4] border border-[#082B49]/10 shadow-md space-y-6">
+      <div className="p-6 rounded-xl bg-[#FAF3E4] border border-[#0C0D11]/10 shadow-md space-y-6">
         
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-[#082B49]/10 pb-4">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-[#0C0D11]/10 pb-4">
           <div>
             <label style={{ ...labelStyle, fontSize: "0.875rem", marginBottom: 4 }}>
               Select Program to Edit (Dropdown)
@@ -484,7 +484,7 @@ export default function AdminOfferings() {
             <button
               type="button"
               onClick={handleAddProgram}
-              className="px-3.5 py-2.5 rounded-lg bg-[#082B49] text-[#F5EBD8] hover:bg-[#0B304D] text-xs font-bold uppercase tracking-wider inline-flex items-center justify-center gap-1.5 flex-shrink-0 transition-colors shadow-md whitespace-nowrap"
+              className="px-3.5 py-2.5 rounded-lg bg-[#0C0D11] text-[#F5EBD8] hover:bg-[#0C0D11] text-xs font-bold uppercase tracking-wider inline-flex items-center justify-center gap-1.5 flex-shrink-0 transition-colors shadow-md whitespace-nowrap"
             >
               <Plus size={14} className="text-[#C5963A]" />
               <span>New</span>
@@ -498,15 +498,15 @@ export default function AdminOfferings() {
             
             <div className="flex items-center justify-between bg-white p-4 rounded-lg border border-[#C5963A]/30">
               <div className="flex items-center gap-3">
-                <span className="w-8 h-8 rounded-full bg-[#C5963A] text-[#082B49] font-bold flex items-center justify-center text-xs">
+                <span className="w-8 h-8 rounded-full bg-[#C5963A] text-[#0C0D11] font-bold flex items-center justify-center text-xs">
                   ID
                 </span>
                 <div>
-                  <h3 className="font-bold text-[#082B49] text-base font-serif">
+                  <h3 className="font-bold text-[#0C0D11] text-base font-serif">
                     Editing: {currentProgram.title}
                   </h3>
                   <p className="text-xs text-[#765334]">
-                    Slug / URL: <code className="bg-[#FAF3E4] px-2 py-0.5 rounded text-[#082B49] font-mono">/programs/{currentProgram.slug}</code>
+                    Slug / URL: <code className="bg-[#FAF3E4] px-2 py-0.5 rounded text-[#0C0D11] font-mono">/programs/{currentProgram.slug}</code>
                   </p>
                 </div>
               </div>
@@ -516,7 +516,7 @@ export default function AdminOfferings() {
                   href={`/programs/${currentProgram.slug}`} 
                   target="_blank" 
                   rel="noreferrer"
-                  className="px-3 py-1.5 rounded bg-[#FAF3E4] text-[#082B49] hover:bg-[#C5963A]/20 text-xs font-bold inline-flex items-center gap-1 border border-[#C5963A]/30"
+                  className="px-3 py-1.5 rounded bg-[#FAF3E4] text-[#0C0D11] hover:bg-[#C5963A]/20 text-xs font-bold inline-flex items-center gap-1 border border-[#C5963A]/30"
                 >
                   <Eye size={14} /> Preview Page
                 </a>
@@ -656,7 +656,7 @@ export default function AdminOfferings() {
                     const currentH = currentProgram.highlights || []
                     handleUpdateCurrent('highlights', [...currentH, { title: "New Feature", desc: "Feature description." }])
                   }}
-                  className="px-3 py-1 rounded bg-[#082B49] text-[#F5EBD8] hover:bg-[#0B304D] text-xs font-bold inline-flex items-center gap-1"
+                  className="px-3 py-1 rounded bg-[#0C0D11] text-[#F5EBD8] hover:bg-[#0C0D11] text-xs font-bold inline-flex items-center gap-1"
                 >
                   <Plus size={13} className="text-[#C5963A]" /> Add Highlight
                 </button>
@@ -721,7 +721,7 @@ export default function AdminOfferings() {
                     const currentC = currentProgram.curriculum || []
                     handleUpdateCurrent('curriculum', [...currentC, `Level ${currentC.length + 1}: New Curriculum Stage`])
                   }}
-                  className="px-3 py-1 rounded bg-[#082B49] text-[#F5EBD8] hover:bg-[#0B304D] text-xs font-bold inline-flex items-center gap-1"
+                  className="px-3 py-1 rounded bg-[#0C0D11] text-[#F5EBD8] hover:bg-[#0C0D11] text-xs font-bold inline-flex items-center gap-1"
                 >
                   <Plus size={13} className="text-[#C5963A]" /> Add Stage
                 </button>
@@ -730,7 +730,7 @@ export default function AdminOfferings() {
               <div className="space-y-2">
                 {(currentProgram.curriculum || []).map((stepText, cIdx) => (
                   <div key={cIdx} className="flex items-center gap-3">
-                    <span className="w-6 h-6 rounded-full bg-[#C5963A] text-[#082B49] text-xs font-bold flex items-center justify-center flex-shrink-0">
+                    <span className="w-6 h-6 rounded-full bg-[#C5963A] text-[#0C0D11] text-xs font-bold flex items-center justify-center flex-shrink-0">
                       {cIdx + 1}
                     </span>
                     <input 
@@ -770,7 +770,7 @@ export default function AdminOfferings() {
                     const currentG = currentProgram.gallery || []
                     handleUpdateCurrent('gallery', [...currentG, "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=800&q=80"])
                   }}
-                  className="px-3 py-1 rounded bg-[#082B49] text-[#F5EBD8] hover:bg-[#0B304D] text-xs font-bold inline-flex items-center gap-1"
+                  className="px-3 py-1 rounded bg-[#0C0D11] text-[#F5EBD8] hover:bg-[#0C0D11] text-xs font-bold inline-flex items-center gap-1"
                 >
                   <Plus size={13} className="text-[#C5963A]" /> Add Gallery Image
                 </button>

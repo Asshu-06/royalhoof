@@ -28,7 +28,7 @@ export default function IntroAnimation({ onComplete }) {
         transition={{ duration: 0.5 }}
         className="fixed inset-0 z-[100] flex items-center justify-center cursor-pointer"
         style={{ 
-          background: 'linear-gradient(135deg, #082B49 0%, #0B304D 50%, #102F48 100%)',
+          background: 'linear-gradient(135deg, #0C0D11 0%, #0C0D11 50%, #0C0D11 100%)',
           backgroundSize: '400% 400%',
           animation: 'smokeGradient 8s ease infinite'
         }}
@@ -50,7 +50,7 @@ export default function IntroAnimation({ onComplete }) {
             transition={{ duration: 0.6 }}
             className="relative flex items-center justify-center"
           >
-            <div className="relative p-1 rounded-full border-2 border-[#C5963A]/50 shadow-2xl overflow-hidden bg-[#082B49]">
+            <div className="relative p-1 rounded-full border-2 border-[#C5963A]/50 shadow-2xl overflow-hidden bg-[#0C0D11]">
               <video 
                 src="/animation.mp4"
                 autoPlay

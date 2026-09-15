@@ -5,7 +5,7 @@ import { Plus, Edit2, Trash2, Image, Video, Eye, EyeOff } from 'lucide-react'
 import ImageUploader from '../../components/admin/ImageUploader'
 
 const CARD_BG = "#FAF3E4"
-const CARD_BORDER = "rgba(8,43,73,0.12)"
+const CARD_BORDER = "rgba(12, 13, 17,0.12)"
 const TEXT_PRIMARY = "#292725"
 const TEXT_SECONDARY = "#765334"
 const TEXT_MUTED = "#9A8870"
@@ -15,7 +15,7 @@ const ACCENT_LIGHT = "#D2AA55"
 const inputStyle = {
   width: "100%",
   background: "#FFFFFF",
-  border: "1px solid rgba(8,43,73,0.15)",
+  border: "1px solid rgba(12, 13, 17,0.15)",
   borderRadius: 6,
   padding: "10px 14px",
   color: TEXT_PRIMARY,
@@ -120,7 +120,7 @@ export default function AdminGallery() {
             alignItems: "center", 
             gap: 8, 
             background: ACCENT, 
-            color: "#082B49", 
+            color: "#0C0D11", 
             border: "none", 
             borderRadius: 6, 
             padding: "12px 24px", 
@@ -180,7 +180,7 @@ export default function AdminGallery() {
                     e.target.style.boxShadow = '0 0 0 3px rgba(197,150,58,0.1)'
                   }}
                   onBlur={e => {
-                    e.target.style.borderColor = 'rgba(8,43,73,0.15)'
+                    e.target.style.borderColor = 'rgba(12, 13, 17,0.15)'
                     e.target.style.boxShadow = 'none'
                   }}
                 />
@@ -197,7 +197,7 @@ export default function AdminGallery() {
                     e.target.style.boxShadow = '0 0 0 3px rgba(197,150,58,0.1)'
                   }}
                   onBlur={e => {
-                    e.target.style.borderColor = 'rgba(8,43,73,0.15)'
+                    e.target.style.borderColor = 'rgba(12, 13, 17,0.15)'
                     e.target.style.boxShadow = 'none'
                   }}
                 />
@@ -215,7 +215,7 @@ export default function AdminGallery() {
                   e.target.style.boxShadow = '0 0 0 3px rgba(197,150,58,0.1)'
                 }}
                 onBlur={e => {
-                  e.target.style.borderColor = 'rgba(8,43,73,0.15)'
+                  e.target.style.borderColor = 'rgba(12, 13, 17,0.15)'
                   e.target.style.boxShadow = 'none'
                 }}
               />
@@ -244,7 +244,7 @@ export default function AdminGallery() {
                     e.target.style.boxShadow = '0 0 0 3px rgba(197,150,58,0.1)'
                   }}
                   onBlur={e => {
-                    e.target.style.borderColor = 'rgba(8,43,73,0.15)'
+                    e.target.style.borderColor = 'rgba(12, 13, 17,0.15)'
                     e.target.style.boxShadow = 'none'
                   }}
                 >
@@ -264,7 +264,7 @@ export default function AdminGallery() {
                     e.target.style.boxShadow = '0 0 0 3px rgba(197,150,58,0.1)'
                   }}
                   onBlur={e => {
-                    e.target.style.borderColor = 'rgba(8,43,73,0.15)'
+                    e.target.style.borderColor = 'rgba(12, 13, 17,0.15)'
                     e.target.style.boxShadow = 'none'
                   }}
                 />
@@ -288,7 +288,7 @@ export default function AdminGallery() {
                 type="submit" 
                 style={{ 
                   background: ACCENT, 
-                  color: "#082B49", 
+                  color: "#0C0D11", 
                   border: "none", 
                   borderRadius: 6, 
                   padding: "12px 32px", 
@@ -326,7 +326,7 @@ export default function AdminGallery() {
                   transition: "all 0.2s"
                 }}
                 onMouseEnter={e => {
-                  e.currentTarget.style.background = "rgba(8,43,73,0.05)"
+                  e.currentTarget.style.background = "rgba(12, 13, 17,0.05)"
                   e.currentTarget.style.borderColor = TEXT_SECONDARY
                 }}
                 onMouseLeave={e => {
@@ -435,7 +435,7 @@ export default function AdminGallery() {
               padding: "8px 16px",
               borderRadius: 6,
               border: `1px solid ${CARD_BORDER}`,
-              background: safeCurrentPage === 1 ? "rgba(8,43,73,0.05)" : "#FFFFFF",
+              background: safeCurrentPage === 1 ? "rgba(12, 13, 17,0.05)" : "#FFFFFF",
               color: safeCurrentPage === 1 ? TEXT_MUTED : TEXT_PRIMARY,
               cursor: safeCurrentPage === 1 ? "not-allowed" : "pointer",
               fontWeight: 600,
@@ -455,7 +455,7 @@ export default function AdminGallery() {
                 borderRadius: 6,
                 border: `1px solid ${page === safeCurrentPage ? ACCENT : CARD_BORDER}`,
                 background: page === safeCurrentPage ? ACCENT : "#FFFFFF",
-                color: page === safeCurrentPage ? "#082B49" : TEXT_PRIMARY,
+                color: page === safeCurrentPage ? "#0C0D11" : TEXT_PRIMARY,
                 cursor: "pointer",
                 fontWeight: 700,
                 fontSize: "0.8125rem",
@@ -473,7 +473,7 @@ export default function AdminGallery() {
               padding: "8px 16px",
               borderRadius: 6,
               border: `1px solid ${CARD_BORDER}`,
-              background: safeCurrentPage === totalPages ? "rgba(8,43,73,0.05)" : "#FFFFFF",
+              background: safeCurrentPage === totalPages ? "rgba(12, 13, 17,0.05)" : "#FFFFFF",
               color: safeCurrentPage === totalPages ? TEXT_MUTED : TEXT_PRIMARY,
               cursor: safeCurrentPage === totalPages ? "not-allowed" : "pointer",
               fontWeight: 600,

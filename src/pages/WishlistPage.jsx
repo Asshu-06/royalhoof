@@ -13,7 +13,7 @@ export default function WishlistPage() {
         <Heart size={64} className="text-[#C5963A] mx-auto mb-4" />
         <h2 className="text-2xl font-bold text-[#292725] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Your wishlist is empty</h2>
         <p className="text-[#765334] mb-6">Save beads you love to revisit later</p>
-        <Link to="/products" className="px-8 py-3 bg-[#082B49] text-white font-semibold rounded-lg hover:bg-[#0B304D] transition-all">
+        <Link to="/products" className="px-8 py-3 bg-[#0C0D11] text-white font-semibold rounded-lg hover:bg-[#0C0D11] transition-all">
           Browse Horse Riding
         </Link>
       </div>

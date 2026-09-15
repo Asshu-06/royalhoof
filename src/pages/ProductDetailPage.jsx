@@ -92,7 +92,7 @@ export default function ProductDetailPage() {
     return (
       <div className="text-center py-20">
         <p className="text-[#765334] text-lg">Product not found</p>
-        <button onClick={() => navigate('/products')} className="mt-4 px-6 py-2 bg-[#082B49] text-white rounded-lg text-sm">
+        <button onClick={() => navigate('/products')} className="mt-4 px-6 py-2 bg-[#0C0D11] text-white rounded-lg text-sm">
           Browse Horse Riding
         </button>
       </div>

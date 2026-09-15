@@ -8,10 +8,10 @@ export const colors = {
   creamInput: '#FAF3E4',
 
   // Navy brand
-  navy: '#082B49',
-  navyMid: '#0B304D',
-  navyDeep: '#102F48',
-  navyAlt: '#173A55',
+  navy: '#0C0D11',
+  navyMid: '#0C0D11',
+  navyDeep: '#0C0D11',
+  navyAlt: '#0C0D11',
 
   // Gold accents
   gold: '#C5963A',
@@ -30,13 +30,13 @@ export const colors = {
 
   // Legacy mappings for gradual migration
   primary: '#F4E9D2',
-  primaryDark: '#082B49',
+  primaryDark: '#0C0D11',
   primaryLight: '#FAF3E4',
-  primaryHover: '#0B304D',
+  primaryHover: '#0C0D11',
 
-  oxblood: '#082B49',
-  burgundyDeep: '#102F48',
-  burgundyMid: '#0B304D',
+  oxblood: '#0C0D11',
+  burgundyDeep: '#0C0D11',
+  burgundyMid: '#0C0D11',
 
   beige: '#F5EBD8',
   beigeLight: '#FAF3E4',
@@ -52,9 +52,9 @@ export const colors = {
   secondaryDark: '#4A2F20',
   secondaryLight: '#D8C5A0',
 
-  dark: '#082B49',
-  darkLight: '#0B304D',
-  darkDark: '#102F48',
+  dark: '#0C0D11',
+  darkLight: '#0C0D11',
+  darkDark: '#0C0D11',
 
   background: '#F4E9D2',
   surface: '#FAF3E4',
@@ -68,9 +68,9 @@ export const colors = {
   textDisabled: 'rgba(41,39,37,0.4)',
 
   border: 'rgba(197,150,58,0.45)',
-  borderNavy: 'rgba(8,43,73,0.2)',
+  borderNavy: 'rgba(12, 13, 17,0.2)',
   borderLight: 'rgba(197,150,58,0.25)',
-  borderSubtle: 'rgba(8,43,73,0.12)',
+  borderSubtle: 'rgba(12, 13, 17,0.12)',
 
   divider: 'rgba(197,150,58,0.35)',
 
@@ -90,10 +90,10 @@ export const gradients = {
   heroCinematic: 'linear-gradient(to top, rgba(244,233,210,0.92) 0%, rgba(244,233,210,0.5) 45%, rgba(244,233,210,0.15) 100%)',
   accent: 'linear-gradient(135deg, #B8862D 0%, #C5963A 50%, #D2AA55 100%)',
   goldText: 'linear-gradient(180deg, #B8862D 0%, #D2AA55 45%, #C5963A 100%)',
-  dark: 'linear-gradient(180deg, #082B49 0%, #102F48 100%)',
-  overlay: 'linear-gradient(to bottom, rgba(8,43,73,0) 0%, rgba(8,43,73,0.85) 100%)',
+  dark: 'linear-gradient(180deg, #0C0D11 0%, #0C0D11 100%)',
+  overlay: 'linear-gradient(to bottom, rgba(12, 13, 17,0) 0%, rgba(12, 13, 17,0.85) 100%)',
   card: 'linear-gradient(145deg, #FAF3E4 0%, #F4E9D2 100%)',
-  cardDark: 'linear-gradient(145deg, #082B49 0%, #102F48 100%)',
+  cardDark: 'linear-gradient(145deg, #0C0D11 0%, #0C0D11 100%)',
   glass: 'linear-gradient(135deg, rgba(250,243,228,0.95) 0%, rgba(244,233,210,0.9) 100%)',
 }
 

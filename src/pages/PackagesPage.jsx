@@ -209,7 +209,7 @@ export default function PackagesPage() {
           <div className="flex items-center justify-between mb-8">
             <button
               onClick={handleBack}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#082B49] text-[#C5963A] hover:bg-[#C5963A] hover:text-[#082B49] transition-all text-xs font-semibold uppercase tracking-wider border border-[#C5963A]/40 shadow-sm cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#0C0D11] text-[#C5963A] hover:bg-[#C5963A] hover:text-[#0C0D11] transition-all text-xs font-semibold uppercase tracking-wider border border-[#C5963A]/40 shadow-sm cursor-pointer"
             >
               <ArrowLeft size={14} /> Back
             </button>
@@ -329,10 +329,10 @@ export default function PackagesPage() {
                         onClick={(e) => handleCardClick(e, pkg.id)}
                         className={`group relative rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 cursor-pointer select-none border border-[#C5963A] ${
                           isCardActive 
-                            ? 'bg-[#082B49] shadow-xl shadow-[#082B49]/40' 
+                            ? 'bg-[#0C0D11] shadow-xl shadow-[#0C0D11]/40' 
                             : (pkg.popular 
-                                ? 'bg-white shadow-xl shadow-[#C5963A]/20 hover:bg-[#082B49] hover:shadow-2xl hover:shadow-[#082B49]/40' 
-                                : 'bg-white hover:bg-[#082B49] hover:shadow-xl hover:shadow-[#082B49]/30')
+                                ? 'bg-white shadow-xl shadow-[#C5963A]/20 hover:bg-[#0C0D11] hover:shadow-2xl hover:shadow-[#0C0D11]/40' 
+                                : 'bg-white hover:bg-[#0C0D11] hover:shadow-xl hover:shadow-[#0C0D11]/30')
                         }`}
                       >
                         {pkg.popular && (
@@ -386,8 +386,8 @@ export default function PackagesPage() {
                               <li key={i} className="flex items-start gap-2.5 text-xs leading-snug group/item">
                                 <div className={`mt-0.5 flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center transition-all duration-300 ${
                                   isCardActive 
-                                    ? 'bg-[#C5963A] text-[#082B49]' 
-                                    : 'bg-[#C5963A]/20 text-[#C5963A] group-hover:bg-[#C5963A] group-hover:text-[#082B49]'
+                                    ? 'bg-[#C5963A] text-[#0C0D11]' 
+                                    : 'bg-[#C5963A]/20 text-[#C5963A] group-hover:bg-[#C5963A] group-hover:text-[#0C0D11]'
                                 }`}>
                                   <Check size={12} strokeWidth={3} />
                                 </div>
@@ -406,10 +406,10 @@ export default function PackagesPage() {
                           onClick={() => handleEnquiry(pkg)}
                           className={`w-full py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-300 text-xs relative overflow-hidden group/btn mt-auto ${
                             isCardActive
-                              ? 'bg-gradient-to-r from-[#C5963A] to-[#D2AA55] text-[#082B49] shadow-md shadow-[#C5963A]/30 font-extrabold'
+                              ? 'bg-gradient-to-r from-[#C5963A] to-[#D2AA55] text-[#0C0D11] shadow-md shadow-[#C5963A]/30 font-extrabold'
                               : (pkg.popular
-                                  ? 'bg-gradient-to-r from-[#C5963A] to-[#D2AA55] text-white shadow-md shadow-[#C5963A]/30 group-hover:text-[#082B49] group-hover:font-extrabold'
-                                  : 'bg-[#292725] text-white group-hover:bg-gradient-to-r group-hover:from-[#C5963A] group-hover:to-[#D2AA55] group-hover:text-[#082B49] group-hover:font-extrabold')
+                                  ? 'bg-gradient-to-r from-[#C5963A] to-[#D2AA55] text-white shadow-md shadow-[#C5963A]/30 group-hover:text-[#0C0D11] group-hover:font-extrabold'
+                                  : 'bg-[#292725] text-white group-hover:bg-gradient-to-r group-hover:from-[#C5963A] group-hover:to-[#D2AA55] group-hover:text-[#0C0D11] group-hover:font-extrabold')
                           }`}
                         >
                           <span className="relative z-10">Book Now →</span>
@@ -454,8 +454,8 @@ export default function PackagesPage() {
                         onClick={(e) => handleCardClick(e, pkg.id)}
                         className={`group relative rounded-2xl p-6 border border-[#C5963A] flex flex-col justify-between transition-all duration-300 cursor-pointer select-none ${
                           isCardActive
-                            ? 'bg-[#082B49] text-[#F5EBD8] shadow-xl shadow-[#082B49]/40'
-                            : 'bg-white text-[#292725] hover:bg-[#082B49] hover:text-[#F5EBD8] hover:shadow-xl hover:shadow-[#082B49]/30'
+                            ? 'bg-[#0C0D11] text-[#F5EBD8] shadow-xl shadow-[#0C0D11]/40'
+                            : 'bg-white text-[#292725] hover:bg-[#0C0D11] hover:text-[#F5EBD8] hover:shadow-xl hover:shadow-[#0C0D11]/30'
                         }`}
                       >
                         <div>
@@ -503,8 +503,8 @@ export default function PackagesPage() {
                               <li key={i} className="flex items-start gap-2.5 text-xs leading-snug group/item">
                                 <div className={`mt-0.5 flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center transition-all duration-300 ${
                                   isCardActive 
-                                    ? 'bg-[#C5963A] text-[#082B49]' 
-                                    : 'bg-[#C5963A]/20 text-[#C5963A] group-hover:bg-[#C5963A] group-hover:text-[#082B49]'
+                                    ? 'bg-[#C5963A] text-[#0C0D11]' 
+                                    : 'bg-[#C5963A]/20 text-[#C5963A] group-hover:bg-[#C5963A] group-hover:text-[#0C0D11]'
                                 }`}>
                                   <Check size={12} strokeWidth={3} />
                                 </div>
@@ -523,8 +523,8 @@ export default function PackagesPage() {
                           onClick={() => handleEnquiry(pkg)}
                           className={`w-full py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-300 text-xs shadow-md shadow-[#C5963A]/30 relative overflow-hidden group/btn mt-auto ${
                             isCardActive
-                              ? 'bg-gradient-to-r from-[#C5963A] to-[#D2AA55] text-[#082B49] font-extrabold'
-                              : 'bg-gradient-to-r from-[#C5963A] to-[#D2AA55] text-white group-hover:text-[#082B49] group-hover:font-extrabold'
+                              ? 'bg-gradient-to-r from-[#C5963A] to-[#D2AA55] text-[#0C0D11] font-extrabold'
+                              : 'bg-gradient-to-r from-[#C5963A] to-[#D2AA55] text-white group-hover:text-[#0C0D11] group-hover:font-extrabold'
                           }`}
                         >
                           <span className="relative z-10">Book Now →</span>

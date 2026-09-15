@@ -129,7 +129,7 @@ export default function CSRPage() {
   const focusAreasList = data.focusAreas && data.focusAreas.length ? data.focusAreas : DEFAULT_CSR.focusAreas
 
   return (
-    <div className="min-h-screen bg-[#041424] text-[#F5EBD8] overflow-x-hidden">
+    <div className="min-h-screen bg-[#0C0D11] text-[#F5EBD8] overflow-x-hidden">
       <Helmet>
         <title>CSR Initiatives | Royal Hoof Horse Riding Academy</title>
         <meta name="description" content="Explore Corporate Social Responsibility (CSR) initiatives at Royal Hoof: animal welfare, youth education, inclusive riding, and sustainability." />
@@ -138,7 +138,7 @@ export default function CSRPage() {
       {/* HERO BANNER - Deep dark vignette & black shadow style */}
       <section className="relative py-24 md:py-32 px-6 lg:px-12 border-b border-[#C5963A]/30 overflow-hidden"
         style={{
-          background: "radial-gradient(ellipse at 50% 30%, #082B49 0%, #041424 85%)",
+          background: "radial-gradient(ellipse at 50% 30%, #0C0D11 0%, #0C0D11 85%)",
           boxShadow: "inset 0 -30px 60px rgba(0,0,0,0.8)"
         }}
       >
@@ -170,7 +170,7 @@ export default function CSRPage() {
 
             <div className="max-w-3xl mx-auto space-y-4 text-base md:text-lg text-[#D8C5A0] leading-relaxed font-light" style={{ fontFamily: "'Inter', sans-serif" }}>
               {data.overview1 && (
-                <p className="bg-[#061D33]/80 p-6 rounded-lg border border-[#C5963A]/25 shadow-[0_15px_35px_rgba(0,0,0,0.7)] backdrop-blur-md">
+                <p className="bg-[#0C0D11]/80 p-6 rounded-lg border border-[#C5963A]/25 shadow-[0_15px_35px_rgba(0,0,0,0.7)] backdrop-blur-md">
                   {data.overview1}
                 </p>
               )}
@@ -219,7 +219,7 @@ export default function CSRPage() {
                 variants={fadeInUp}
                 whileHover={{ y: -6 }}
                 transition={{ duration: 0.3 }}
-                className={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-center rounded-xl overflow-hidden border border-[#C5963A]/30 bg-[#061D33] p-6 lg:p-8 shadow-[0_25px_60px_rgba(0,0,0,0.85)] relative`}
+                className={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-center rounded-xl overflow-hidden border border-[#C5963A]/30 bg-[#0C0D11] p-6 lg:p-8 shadow-[0_25px_60px_rgba(0,0,0,0.85)] relative`}
                 style={{
                   boxShadow: "0 25px 60px rgba(0,0,0,0.75), 0 0 1px rgba(197,150,58,0.3)"
                 }}
@@ -234,7 +234,7 @@ export default function CSRPage() {
                       onError={e => { e.target.src = CSR_IMAGES.animalWelfare }}
                     />
                     {/* Realistic Black Shadow Vignette Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#041424] via-black/40 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0C0D11] via-black/40 to-transparent" />
                     <div className="absolute top-4 left-4 text-2xl p-2 rounded-full bg-black/60 backdrop-blur border border-[#C5963A]/40 shadow-lg">
                       {emoji}
                     </div>
@@ -244,7 +244,7 @@ export default function CSRPage() {
                 {/* Content side */}
                 <div className={`lg:col-span-6 space-y-4 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-[#082B49] border border-[#C5963A]/40 flex items-center justify-center shadow-[0_8px_20px_rgba(0,0,0,0.6)]">
+                    <div className="w-10 h-10 rounded-full bg-[#0C0D11] border border-[#C5963A]/40 flex items-center justify-center shadow-[0_8px_20px_rgba(0,0,0,0.6)]">
                       {icon}
                     </div>
                     <span className="text-xs font-semibold tracking-widest uppercase text-[#D2AA55]">
@@ -284,7 +284,7 @@ export default function CSRPage() {
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
           variants={fadeInUp}
-          className="relative rounded-2xl p-8 md:p-14 text-center border border-[#C5963A]/40 bg-[#061D33] overflow-hidden"
+          className="relative rounded-2xl p-8 md:p-14 text-center border border-[#C5963A]/40 bg-[#0C0D11] overflow-hidden"
           style={{
             boxShadow: "0 30px 80px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(197, 150, 58, 0.08)"
           }}

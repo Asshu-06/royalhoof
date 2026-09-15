@@ -185,7 +185,7 @@ export default function FAQPage() {
                             />
                           </button>
                           {isOpen && (
-                            <div className="px-6 pb-4 pt-2 border-t border-[rgba(8,43,73,0.15)]">
+                            <div className="px-6 pb-4 pt-2 border-t border-[rgba(12, 13, 17,0.15)]">
                               <p className="text-[#C5963A] leading-relaxed">{item.a}</p>
                             </div>
                           )}

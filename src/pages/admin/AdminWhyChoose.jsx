@@ -4,7 +4,7 @@ import { getSetting, setSetting } from "../../services/settingsService"
 import toast from "react-hot-toast"
 
 const CARD_BG = "#FAF3E4"
-const CARD_BORDER = "rgba(8,43,73,0.12)"
+const CARD_BORDER = "rgba(12, 13, 17,0.12)"
 const TEXT_PRIMARY = "#292725"
 const TEXT_SECONDARY = "#765334"
 const TEXT_MUTED = "#9A8870"
@@ -59,7 +59,7 @@ const DEFAULT_SETTINGS = {
 const inputStyle = {
   width: "100%",
   background: "#FFFFFF",
-  border: "1px solid rgba(8,43,73,0.15)",
+  border: "1px solid rgba(12, 13, 17,0.15)",
   borderRadius: 6,
   padding: "10px 14px",
   color: TEXT_PRIMARY,
@@ -182,7 +182,7 @@ export default function AdminWhyChoose() {
           <button onClick={handleSave} disabled={saving}
             style={{ 
               display: "flex", alignItems: "center", gap: 8, 
-              background: saving ? "rgba(197,150,58,0.5)" : ACCENT, color: "#082B49", 
+              background: saving ? "rgba(197,150,58,0.5)" : ACCENT, color: "#0C0D11", 
               border: "none", borderRadius: 6, padding: "10px 24px", 
               cursor: saving ? "not-allowed" : "pointer", fontWeight: 600, 
               fontSize: "0.875rem", fontFamily: "'Inter', sans-serif" 
@@ -227,7 +227,7 @@ export default function AdminWhyChoose() {
                 onClick={handleAddFeature}
                 style={{ 
                   display: "flex", alignItems: "center", gap: 4, 
-                  background: "rgba(197,150,58,0.15)", color: "#082B49", 
+                  background: "rgba(197,150,58,0.15)", color: "#0C0D11", 
                   border: `1px solid ${ACCENT}`, borderRadius: 4, 
                   padding: "4px 10px", fontSize: "0.75rem", fontWeight: 600, cursor: "pointer" 
                 }}>
@@ -237,7 +237,7 @@ export default function AdminWhyChoose() {
 
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               {data.features.map((feat, idx) => (
-                <div key={idx} style={{ background: "#FFFFFF", border: "1px solid rgba(8,43,73,0.15)", borderRadius: 8, padding: 16, display: "flex", flexDirection: "column", gap: 12 }}>
+                <div key={idx} style={{ background: "#FFFFFF", border: "1px solid rgba(12, 13, 17,0.15)", borderRadius: 8, padding: 16, display: "flex", flexDirection: "column", gap: 12 }}>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                     <span style={{ fontSize: "0.75rem", fontWeight: 700, color: ACCENT, fontFamily: "'Inter', sans-serif" }}>
                       Feature #{idx + 1}
@@ -287,7 +287,7 @@ export default function AdminWhyChoose() {
                               justifyContent: "center",
                               padding: "8px",
                               borderRadius: 6,
-                              border: selected ? `2px solid ${ACCENT}` : "1px solid rgba(8,43,73,0.15)",
+                              border: selected ? `2px solid ${ACCENT}` : "1px solid rgba(12, 13, 17,0.15)",
                               background: selected ? "rgba(197,150,58,0.2)" : "#FFFFFF",
                               color: selected ? ACCENT : TEXT_MUTED,
                               cursor: "pointer",
@@ -312,7 +312,7 @@ export default function AdminWhyChoose() {
             Live Section Preview
           </p>
 
-          <div style={{ background: "#F4E9D2", borderRadius: 8, padding: 20, border: "1px solid rgba(8,43,73,0.1)" }}>
+          <div style={{ background: "#F4E9D2", borderRadius: 8, padding: 20, border: "1px solid rgba(12, 13, 17,0.1)" }}>
             <p style={{ textAlign: "center", fontSize: "0.6875rem", letterSpacing: "0.2em", textTransform: "uppercase", color: ACCENT, marginBottom: 4 }}>
               {data.eyebrow || "Premium Service"}
             </p>
@@ -325,10 +325,10 @@ export default function AdminWhyChoose() {
               {data.features.map((feat, i) => (
                 <div key={i} style={{ background: "#FAF3E4", border: "1px solid rgba(197,150,58,0.3)", borderRadius: 6, padding: 12, display: "flex", flexDirection: "column", gap: 6 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                    <div style={{ width: 28, height: 28, borderRadius: "50%", background: "#082B49", color: ACCENT, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <div style={{ width: 28, height: 28, borderRadius: "50%", background: "#0C0D11", color: ACCENT, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                       {ICON_MAP[feat.icon] || <CheckCircle size={16} />}
                     </div>
-                    <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#082B49", fontFamily: "'Cormorant Garamond', serif", lineHeight: 1.2 }}>
+                    <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0C0D11", fontFamily: "'Cormorant Garamond', serif", lineHeight: 1.2 }}>
                       ✔ {feat.title}
                     </span>
                   </div>

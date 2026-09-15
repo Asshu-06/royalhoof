@@ -5,7 +5,7 @@ import { Plus, Edit2, Trash2, Eye, EyeOff, Calendar, Users } from 'lucide-react'
 import ImageUploader from '../../components/admin/ImageUploader'
 
 const CARD_BG = "#FAF3E4"
-const CARD_BORDER = "rgba(8,43,73,0.12)"
+const CARD_BORDER = "rgba(12, 13, 17,0.12)"
 const TEXT_PRIMARY = "#292725"
 const TEXT_SECONDARY = "#765334"
 const TEXT_MUTED = "#9A8870"
@@ -15,7 +15,7 @@ const ACCENT_LIGHT = "#D2AA55"
 const inputStyle = {
   width: "100%",
   background: "#FFFFFF",
-  border: "1px solid rgba(8,43,73,0.15)",
+  border: "1px solid rgba(12, 13, 17,0.15)",
   borderRadius: 6,
   padding: "10px 14px",
   color: TEXT_PRIMARY,
@@ -114,7 +114,7 @@ export default function AdminEvents() {
             alignItems: "center", 
             gap: 8, 
             background: ACCENT, 
-            color: "#082B49", 
+            color: "#0C0D11", 
             border: "none", 
             borderRadius: 6, 
             padding: "12px 24px", 
@@ -147,7 +147,7 @@ export default function AdminEvents() {
           border: `1px solid ${CARD_BORDER}`, 
           borderRadius: 12, 
           padding: 32,
-          boxShadow: "0 4px 16px rgba(8,43,73,0.08)"
+          boxShadow: "0 4px 16px rgba(12, 13, 17,0.08)"
         }}>
           <h2 style={{ 
             color: TEXT_PRIMARY, 
@@ -172,7 +172,7 @@ export default function AdminEvents() {
                     e.target.style.boxShadow = "0 0 0 3px rgba(197,150,58,0.1)"
                   }}
                   onBlur={e => {
-                    e.target.style.borderColor = "rgba(8,43,73,0.15)"
+                    e.target.style.borderColor = "rgba(12, 13, 17,0.15)"
                     e.target.style.boxShadow = "none"
                   }}
                 />
@@ -189,7 +189,7 @@ export default function AdminEvents() {
                     e.target.style.boxShadow = "0 0 0 3px rgba(197,150,58,0.1)"
                   }}
                   onBlur={e => {
-                    e.target.style.borderColor = "rgba(8,43,73,0.15)"
+                    e.target.style.borderColor = "rgba(12, 13, 17,0.15)"
                     e.target.style.boxShadow = "none"
                   }}
                 />
@@ -209,7 +209,7 @@ export default function AdminEvents() {
                   e.target.style.boxShadow = "0 0 0 3px rgba(197,150,58,0.1)"
                 }}
                 onBlur={e => {
-                  e.target.style.borderColor = "rgba(8,43,73,0.15)"
+                  e.target.style.borderColor = "rgba(12, 13, 17,0.15)"
                   e.target.style.boxShadow = "none"
                 }}
               />
@@ -228,7 +228,7 @@ export default function AdminEvents() {
                     e.target.style.boxShadow = "0 0 0 3px rgba(197,150,58,0.1)"
                   }}
                   onBlur={e => {
-                    e.target.style.borderColor = "rgba(8,43,73,0.15)"
+                    e.target.style.borderColor = "rgba(12, 13, 17,0.15)"
                     e.target.style.boxShadow = "none"
                   }}
                 />
@@ -245,7 +245,7 @@ export default function AdminEvents() {
                     e.target.style.boxShadow = "0 0 0 3px rgba(197,150,58,0.1)"
                   }}
                   onBlur={e => {
-                    e.target.style.borderColor = "rgba(8,43,73,0.15)"
+                    e.target.style.borderColor = "rgba(12, 13, 17,0.15)"
                     e.target.style.boxShadow = "none"
                   }}
                 />
@@ -262,7 +262,7 @@ export default function AdminEvents() {
                     e.target.style.boxShadow = "0 0 0 3px rgba(197,150,58,0.1)"
                   }}
                   onBlur={e => {
-                    e.target.style.borderColor = "rgba(8,43,73,0.15)"
+                    e.target.style.borderColor = "rgba(12, 13, 17,0.15)"
                     e.target.style.boxShadow = "none"
                   }}
                 />
@@ -282,7 +282,7 @@ export default function AdminEvents() {
                     e.target.style.boxShadow = "0 0 0 3px rgba(197,150,58,0.1)"
                   }}
                   onBlur={e => {
-                    e.target.style.borderColor = "rgba(8,43,73,0.15)"
+                    e.target.style.borderColor = "rgba(12, 13, 17,0.15)"
                     e.target.style.boxShadow = "none"
                   }}
                 />
@@ -298,7 +298,7 @@ export default function AdminEvents() {
                     e.target.style.boxShadow = "0 0 0 3px rgba(197,150,58,0.1)"
                   }}
                   onBlur={e => {
-                    e.target.style.borderColor = "rgba(8,43,73,0.15)"
+                    e.target.style.borderColor = "rgba(12, 13, 17,0.15)"
                     e.target.style.boxShadow = "none"
                   }}
                 >
@@ -335,7 +335,7 @@ export default function AdminEvents() {
                 type="submit" 
                 style={{ 
                   background: ACCENT, 
-                  color: "#082B49", 
+                  color: "#0C0D11", 
                   border: "none", 
                   borderRadius: 6, 
                   padding: "12px 32px", 
@@ -373,7 +373,7 @@ export default function AdminEvents() {
                   transition: "all 0.2s"
                 }}
                 onMouseEnter={e => {
-                  e.currentTarget.style.background = "rgba(8,43,73,0.05)"
+                  e.currentTarget.style.background = "rgba(12, 13, 17,0.05)"
                   e.currentTarget.style.borderColor = TEXT_SECONDARY
                 }}
                 onMouseLeave={e => {
@@ -394,12 +394,12 @@ export default function AdminEvents() {
         border: `1px solid ${CARD_BORDER}`, 
         borderRadius: 12, 
         overflow: "hidden",
-        boxShadow: "0 2px 8px rgba(8,43,73,0.06)"
+        boxShadow: "0 2px 8px rgba(12, 13, 17,0.06)"
       }}>
         <div style={{ overflowX: "auto" }}>
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
-              <tr style={{ borderBottom: `1px solid ${CARD_BORDER}`, background: "rgba(8,43,73,0.02)" }}>
+              <tr style={{ borderBottom: `1px solid ${CARD_BORDER}`, background: "rgba(12, 13, 17,0.02)" }}>
                 {["Title", "Date", "Location", "Capacity", "Status", "Actions"].map(h => (
                   <th key={h} style={{ 
                     textAlign: "left", 
@@ -422,7 +422,7 @@ export default function AdminEvents() {
                   borderBottom: `1px solid ${CARD_BORDER}`, 
                   transition: "background 0.15s" 
                 }}
-                  onMouseEnter={e => e.currentTarget.style.background = "rgba(8,43,73,0.02)"}
+                  onMouseEnter={e => e.currentTarget.style.background = "rgba(12, 13, 17,0.02)"}
                   onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                   <td style={{ padding: "16px 20px" }}>
                     <p style={{ 

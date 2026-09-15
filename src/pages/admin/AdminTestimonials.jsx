@@ -5,7 +5,7 @@ import { Plus, Edit2, Trash2, Star, CheckCircle, XCircle, Eye, EyeOff } from 'lu
 import ImageUploader from '../../components/admin/ImageUploader'
 
 const CARD_BG = "#FAF3E4"
-const CARD_BORDER = "rgba(8,43,73,0.12)"
+const CARD_BORDER = "rgba(12, 13, 17,0.12)"
 const TEXT_PRIMARY = "#292725"
 const TEXT_SECONDARY = "#765334"
 const TEXT_MUTED = "#9A8870"
@@ -15,7 +15,7 @@ const ACCENT_LIGHT = "#D2AA55"
 const inputStyle = {
   width: "100%",
   background: "#FFFFFF",
-  border: "1px solid rgba(8,43,73,0.15)",
+  border: "1px solid rgba(12, 13, 17,0.15)",
   borderRadius: 6,
   padding: "10px 14px",
   color: TEXT_PRIMARY,
@@ -124,7 +124,7 @@ export default function AdminTestimonials() {
             alignItems: "center", 
             gap: 8, 
             background: ACCENT, 
-            color: "#082B49", 
+            color: "#0C0D11", 
             border: "none", 
             borderRadius: 6, 
             padding: "12px 24px", 
@@ -157,7 +157,7 @@ export default function AdminTestimonials() {
             padding: "7px 16px", borderRadius: 4, fontSize: "0.8125rem", cursor: "pointer",
             fontFamily: "'Inter', sans-serif", border: "1px solid", textTransform: "capitalize",
             background: filter === tab ? ACCENT : "transparent",
-            color: filter === tab ? "#082B49" : TEXT_MUTED,
+            color: filter === tab ? "#0C0D11" : TEXT_MUTED,
             borderColor: filter === tab ? ACCENT : CARD_BORDER,
           }}>
             {tab}
@@ -229,7 +229,7 @@ export default function AdminTestimonials() {
             </div>
 
             <div style={{ display: "flex", gap: 12 }}>
-              <button type="submit" style={{ background: ACCENT, color: "#082B49", border: "none", borderRadius: 4, padding: "10px 24px", cursor: "pointer", fontWeight: 600, fontSize: "0.875rem", fontFamily: "'Inter', sans-serif" }}>
+              <button type="submit" style={{ background: ACCENT, color: "#0C0D11", border: "none", borderRadius: 4, padding: "10px 24px", cursor: "pointer", fontWeight: 600, fontSize: "0.875rem", fontFamily: "'Inter', sans-serif" }}>
                 {editingItem ? 'Update' : 'Create'}
               </button>
               <button type="button" onClick={() => { setShowForm(false); setEditingItem(null); resetForm() }}

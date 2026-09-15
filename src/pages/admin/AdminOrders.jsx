@@ -159,13 +159,13 @@ function OrderRow({ order, expanded, onToggle, onStatusUpdate, onVerify, onRejec
           <div>
             <div className="flex items-center gap-1.5">
               <span className="text-gray-400 text-xs">Order</span>
-              <span className="text-[#082B49] text-xs font-mono font-bold">{orderId}</span>
+              <span className="text-[#0C0D11] text-xs font-mono font-bold">{orderId}</span>
             </div>
             <p className="text-gray-500 text-xs mt-0.5">{addr.full_name || "Customer"} &middot; {formatDate(order.created_at)}</p>
           </div>
         </div>
         <div className="flex items-center gap-3 ml-2">
-          <span className="text-[#082B49] text-sm font-semibold">{formatINR(order.total_amount)}</span>
+          <span className="text-[#0C0D11] text-sm font-semibold">{formatINR(order.total_amount)}</span>
           <span className={`text-xs px-2.5 py-1 rounded-full font-medium whitespace-nowrap ${badge.color}`}>{badge.label}</span>
           {expanded ? <ChevronUp size={14} className="text-gray-400 flex-shrink-0" /> : <ChevronDown size={14} className="text-gray-400 flex-shrink-0" />}
         </div>
@@ -236,10 +236,10 @@ function OrderRow({ order, expanded, onToggle, onStatusUpdate, onVerify, onRejec
                     {item.products?.images?.[0] && <img src={item.products.images[0]} alt="" className="w-7 h-7 object-cover rounded" onError={e=>{e.target.style.display="none"}} />}
                     <div className="flex-1 min-w-0">
                       <p className="text-[#292725] text-xs truncate">{item.products?.name}</p>
-                      {item.products?.custom_id && <p className="text-[#082B49] text-xs font-mono">ID: {item.products.custom_id}</p>}
+                      {item.products?.custom_id && <p className="text-[#0C0D11] text-xs font-mono">ID: {item.products.custom_id}</p>}
                       <p className="text-gray-500 text-xs">x{item.quantity} &middot; {formatINR(item.price)}</p>
                     </div>
-                    <p className="text-[#082B49] text-xs font-semibold flex-shrink-0">{formatINR(item.quantity * item.price)}</p>
+                    <p className="text-[#0C0D11] text-xs font-semibold flex-shrink-0">{formatINR(item.quantity * item.price)}</p>
                   </div>
                 ))}
               </div>
@@ -278,7 +278,7 @@ function OrderRow({ order, expanded, onToggle, onStatusUpdate, onVerify, onRejec
                     )}
                     <div className="flex justify-between font-semibold text-[#292725] border-t border-gray-200 pt-1.5 mt-0.5">
                       <span>Order Total</span>
-                      <span className="text-[#082B49]">{formatINR(total)}</span>
+                      <span className="text-[#0C0D11]">{formatINR(total)}</span>
                     </div>
                   </div>
                 )
@@ -490,12 +490,12 @@ export default function AdminOrders() {
                 display: "flex", alignItems: "center", gap: 6, padding: "6px 12px", borderRadius: 5,
                 fontSize: "0.8125rem", fontWeight: 500, cursor: "pointer", border: "1px solid",
                 background: isActive ? "#C5963A" : "transparent",
-                color: isActive ? "#082B49" : "rgba(243,235,221,0.55)",
+                color: isActive ? "#0C0D11" : "rgba(243,235,221,0.55)",
                 borderColor: isActive ? "#C5963A" : "rgba(255,255,255,0.1)",
                 fontFamily: "'Inter', sans-serif",
               }}>
               {tab.label}
-              <span style={{ padding: "1px 6px", borderRadius: 9999, fontSize: "0.6875rem", fontWeight: 700, background: isActive ? "rgba(23,22,20,0.2)" : "rgba(255,255,255,0.08)", color: isActive ? "#082B49" : "rgba(243,235,221,0.6)" }}>
+              <span style={{ padding: "1px 6px", borderRadius: 9999, fontSize: "0.6875rem", fontWeight: 700, background: isActive ? "rgba(23,22,20,0.2)" : "rgba(255,255,255,0.08)", color: isActive ? "#0C0D11" : "rgba(243,235,221,0.6)" }}>
                 {count}
               </span>
             </button>
@@ -524,22 +524,22 @@ export default function AdminOrders() {
                     : `Showing ${Math.min((page-1)*pageSize+1, filtered.length)}–${Math.min(page*pageSize, filtered.length)} of ${filtered.length}`}
                 </p>
                 <select value={pageSize} onChange={e => { setPageSize(Number(e.target.value)); setPage(1) }}
-                  className="bg-[#FAF3E4] border border-gray-200 rounded-lg px-2 py-1 text-xs focus:outline-none focus:border-[#082B49]">
+                  className="bg-[#FAF3E4] border border-gray-200 rounded-lg px-2 py-1 text-xs focus:outline-none focus:border-[#0C0D11]">
                   {PAGE_SIZE_OPTIONS.map(n => <option key={n} value={n}>{n === 9999 ? "All" : n}</option>)}
                 </select>
               </div>
               {totalPages > 1 && (
                 <div className="flex items-center gap-1">
                   <button onClick={() => setPage(p => Math.max(1, p-1))} disabled={page === 1}
-                    className="px-2 py-1 text-xs rounded border border-gray-200 text-gray-500 hover:border-[#082B49] disabled:opacity-40">‹</button>
+                    className="px-2 py-1 text-xs rounded border border-gray-200 text-gray-500 hover:border-[#0C0D11] disabled:opacity-40">‹</button>
                   {Array.from({ length: totalPages }, (_, i) => i+1).map(p => (
                     <button key={p} onClick={() => setPage(p)}
-                      className={`px-2.5 py-1 text-xs rounded border transition-all ${p === page ? "bg-[#082B49] text-white border-[#082B49]" : "border-gray-200 text-gray-500 hover:border-[#082B49]"}`}>
+                      className={`px-2.5 py-1 text-xs rounded border transition-all ${p === page ? "bg-[#0C0D11] text-white border-[#0C0D11]" : "border-gray-200 text-gray-500 hover:border-[#0C0D11]"}`}>
                       {p}
                     </button>
                   ))}
                   <button onClick={() => setPage(p => Math.min(totalPages, p+1))} disabled={page === totalPages}
-                    className="px-2 py-1 text-xs rounded border border-gray-200 text-gray-500 hover:border-[#082B49] disabled:opacity-40">›</button>
+                    className="px-2 py-1 text-xs rounded border border-gray-200 text-gray-500 hover:border-[#0C0D11] disabled:opacity-40">›</button>
                 </div>
               )}
             </div>
@@ -555,7 +555,7 @@ export default function AdminOrders() {
             onClick={() => setScreenshotModal(null)}>
             <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} className="max-w-lg w-full bg-[#FAF3E4] rounded-2xl overflow-hidden">
               <div className="flex items-center justify-between p-4 border-b border-gray-200">
-                <p className="text-[#082B49] font-medium">Payment Screenshot</p>
+                <p className="text-[#0C0D11] font-medium">Payment Screenshot</p>
                 <button onClick={() => setScreenshotModal(null)} className="text-gray-400 hover:text-[#292725] text-xl">&times;</button>
               </div>
               <img src={screenshotModal} alt="Payment screenshot" className="w-full max-h-[70vh] object-contain p-4" />

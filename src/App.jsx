@@ -193,7 +193,7 @@ export default function App() {
               background: '#FAF3E4',
               color: '#292725',
               border: '1px solid rgba(197, 150, 58, 0.35)',
-              boxShadow: '0 8px 32px rgba(8, 43, 73, 0.12)',
+              boxShadow: '0 8px 32px rgba(12, 13, 17, 0.12)',
               borderRadius: '2px',
               fontSize: '14px',
               fontWeight: '500',

@@ -4,7 +4,7 @@ import toast from 'react-hot-toast'
 import { Plus, Edit2, Trash2, Star, Eye, EyeOff, Package } from 'lucide-react'
 
 const CARD_BG = "#FAF3E4"
-const CARD_BORDER = "rgba(8,43,73,0.12)"
+const CARD_BORDER = "rgba(12, 13, 17,0.12)"
 const TEXT_PRIMARY = "#292725"
 const TEXT_SECONDARY = "#765334"
 const TEXT_MUTED = "#9A8870"
@@ -14,7 +14,7 @@ const ACCENT_LIGHT = "#D2AA55"
 const inputStyle = {
   width: "100%",
   background: "#FFFFFF",
-  border: "1px solid rgba(8,43,73,0.15)",
+  border: "1px solid rgba(12, 13, 17,0.15)",
   borderRadius: 6,
   padding: "10px 14px",
   color: TEXT_PRIMARY,
@@ -121,7 +121,7 @@ export default function AdminPackages() {
             alignItems: "center", 
             gap: 8, 
             background: ACCENT, 
-            color: "#082B49", 
+            color: "#0C0D11", 
             border: "none", 
             borderRadius: 6, 
             padding: "12px 24px", 
@@ -248,7 +248,7 @@ export default function AdminPackages() {
             </div>
 
             <div style={{ display: "flex", gap: 12 }}>
-              <button type="submit" style={{ background: ACCENT, color: "#082B49", border: "none", borderRadius: 4, padding: "10px 24px", cursor: "pointer", fontWeight: 600, fontSize: "0.875rem", fontFamily: "'Inter', sans-serif" }}>
+              <button type="submit" style={{ background: ACCENT, color: "#0C0D11", border: "none", borderRadius: 4, padding: "10px 24px", cursor: "pointer", fontWeight: 600, fontSize: "0.875rem", fontFamily: "'Inter', sans-serif" }}>
                 {editingItem ? 'Update' : 'Create'}
               </button>
               <button type="button" onClick={() => { setShowForm(false); setEditingItem(null); resetForm() }}
@@ -271,7 +271,7 @@ export default function AdminPackages() {
               borderRadius: 12, 
               padding: 24, 
               position: "relative",
-              boxShadow: "0 2px 8px rgba(8,43,73,0.06)",
+              boxShadow: "0 2px 8px rgba(12, 13, 17,0.06)",
               transition: "all 0.3s ease"
             }}
             onMouseEnter={e => {
@@ -282,7 +282,7 @@ export default function AdminPackages() {
             onMouseLeave={e => {
               e.currentTarget.style.borderColor = CARD_BORDER
               e.currentTarget.style.transform = "translateY(0)"
-              e.currentTarget.style.boxShadow = "0 2px 8px rgba(8,43,73,0.06)"
+              e.currentTarget.style.boxShadow = "0 2px 8px rgba(12, 13, 17,0.06)"
             }}
           >
             {item.is_popular && (
@@ -291,7 +291,7 @@ export default function AdminPackages() {
                 top: -12, 
                 right: 20,
                 background: ACCENT,
-                color: "#082B49",
+                color: "#0C0D11",
                 padding: "6px 12px",
                 borderRadius: 6,
                 fontSize: "0.75rem",
@@ -302,7 +302,7 @@ export default function AdminPackages() {
                 alignItems: "center",
                 gap: 4
               }}>
-                <Star size={14} fill="#082B49" stroke="none" />
+                <Star size={14} fill="#0C0D11" stroke="none" />
                 POPULAR
               </div>
             )}

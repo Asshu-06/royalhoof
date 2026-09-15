@@ -93,30 +93,30 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center px-4 py-12">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-[#082B49] mb-2" style={{ fontFamily: "Georgia, serif" }}>?? Royal Hoof</h1>
+          <h1 className="text-3xl font-bold text-[#0C0D11] mb-2" style={{ fontFamily: "Georgia, serif" }}>?? Royal Hoof</h1>
           <p className="text-[#765334] text-sm">
             {mode === "login" ? "Welcome back" : mode === "signup" ? "Create your account" : "Reset your password"}
           </p>
         </div>
 
-        <div className="bg-[#FAF3E4] border border-[rgba(8,43,73,0.15)] rounded-2xl p-8 shadow-md">
+        <div className="bg-[#FAF3E4] border border-[rgba(12, 13, 17,0.15)] rounded-2xl p-8 shadow-md">
 
           {/* Sign Up Confirmation */}
           {signupDone ? (
             <div className="text-center py-4">
-              <div className="w-14 h-14 bg-[#082B49]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Mail size={26} className="text-[#082B49]" />
+              <div className="w-14 h-14 bg-[#0C0D11]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Mail size={26} className="text-[#0C0D11]" />
               </div>
               <p className="text-[#292725] font-bold text-lg mb-2">Check your email</p>
               <p className="text-[#765334] text-sm mb-1">
                 We sent a confirmation link to
               </p>
-              <p className="text-[#082B49] font-semibold text-sm mb-4">{form.email}</p>
+              <p className="text-[#0C0D11] font-semibold text-sm mb-4">{form.email}</p>
               <p className="text-[#765334] text-xs mb-6">
                 Please open that email and click the confirmation link to activate your account. Once confirmed, come back here and sign in.
               </p>
               <button onClick={() => switchMode("login")}
-                className="w-full py-3 bg-[#082B49] text-white font-semibold rounded-lg hover:bg-[#0B304D] transition-all text-sm">
+                className="w-full py-3 bg-[#0C0D11] text-white font-semibold rounded-lg hover:bg-[#0C0D11] transition-all text-sm">
                 Go to Sign In
               </button>
             </div>
@@ -124,7 +124,7 @@ export default function LoginPage() {
             <AnimatePresence mode="wait">
             {mode === "forgot" ? (
               <motion.div key="forgot" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                <button onClick={() => switchMode("login")} className="flex items-center gap-1.5 text-[#765334] hover:text-[#082B49] text-sm mb-5 transition-colors">
+                <button onClick={() => switchMode("login")} className="flex items-center gap-1.5 text-[#765334] hover:text-[#0C0D11] text-sm mb-5 transition-colors">
                   <ArrowLeft size={15} /> Back to Sign In
                 </button>
                 {resetSent ? (
@@ -133,8 +133,8 @@ export default function LoginPage() {
                       <Mail size={22} className="text-green-500" />
                     </div>
                     <p className="text-[#292725] font-semibold mb-1">Check your email</p>
-                    <p className="text-[#765334] text-sm">We sent a password reset link to <span className="font-medium text-[#082B49]">{form.email}</span></p>
-                    <button onClick={() => switchMode("login")} className="mt-5 w-full py-3 bg-[#082B49] text-white font-semibold rounded-lg hover:bg-[#0B304D] transition-all text-sm">
+                    <p className="text-[#765334] text-sm">We sent a password reset link to <span className="font-medium text-[#0C0D11]">{form.email}</span></p>
+                    <button onClick={() => switchMode("login")} className="mt-5 w-full py-3 bg-[#0C0D11] text-white font-semibold rounded-lg hover:bg-[#0C0D11] transition-all text-sm">
                       Back to Sign In
                     </button>
                   </div>
@@ -146,12 +146,12 @@ export default function LoginPage() {
                       <div className="relative">
                         <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#765334]" />
                         <input type="email" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} placeholder="your@email.com"
-                          className="w-full bg-[#F4E9D2] border border-[rgba(8,43,73,0.15)] rounded-lg pl-9 pr-4 py-3 text-sm text-[#292725] placeholder-[#765334] focus:outline-none focus:border-[#082B49]" />
+                          className="w-full bg-[#F4E9D2] border border-[rgba(12, 13, 17,0.15)] rounded-lg pl-9 pr-4 py-3 text-sm text-[#292725] placeholder-[#765334] focus:outline-none focus:border-[#0C0D11]" />
                       </div>
                       {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                     </div>
                     <button type="submit" disabled={loading}
-                      className="w-full py-3 bg-[#082B49] text-white font-semibold rounded-lg hover:bg-[#0B304D] transition-all disabled:opacity-60 flex items-center justify-center gap-2">
+                      className="w-full py-3 bg-[#0C0D11] text-white font-semibold rounded-lg hover:bg-[#0C0D11] transition-all disabled:opacity-60 flex items-center justify-center gap-2">
                       {loading && <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />}
                       Send Reset Link
                     </button>
@@ -162,21 +162,21 @@ export default function LoginPage() {
               <motion.div key="auth" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
                 {/* Google Sign In */}
                 <button onClick={handleGoogle} disabled={googleLoading}
-                  className="w-full flex items-center justify-center gap-3 py-3 bg-[#FAF3E4] hover:bg-[#F4E9D2] text-[#292725] font-semibold rounded-lg transition-all disabled:opacity-60 border border-[rgba(8,43,73,0.15)] shadow-sm mb-5">
+                  className="w-full flex items-center justify-center gap-3 py-3 bg-[#FAF3E4] hover:bg-[#F4E9D2] text-[#292725] font-semibold rounded-lg transition-all disabled:opacity-60 border border-[rgba(12, 13, 17,0.15)] shadow-sm mb-5">
                   {googleLoading ? <div className="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" /> : <GoogleIcon />}
                   Continue with Google
                 </button>
 
                 <div className="flex items-center gap-3 mb-5">
-                  <div className="flex-1 h-px bg-[rgba(8,43,73,0.15)]" />
+                  <div className="flex-1 h-px bg-[rgba(12, 13, 17,0.15)]" />
                   <span className="text-[#765334] text-xs">or use email</span>
-                  <div className="flex-1 h-px bg-[rgba(8,43,73,0.15)]" />
+                  <div className="flex-1 h-px bg-[rgba(12, 13, 17,0.15)]" />
                 </div>
 
                 {/* Sign In / Sign Up tabs */}
                 <div className="flex bg-[#FAF3E4] rounded-lg p-1 mb-5">
-                  <button onClick={() => switchMode("login")} className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${mode === "login" ? "bg-[#082B49] text-white" : "text-[#765334] hover:text-[#082B49]"}`}>Sign In</button>
-                  <button onClick={() => switchMode("signup")} className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${mode === "signup" ? "bg-[#082B49] text-white" : "text-[#765334] hover:text-[#082B49]"}`}>Sign Up</button>
+                  <button onClick={() => switchMode("login")} className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${mode === "login" ? "bg-[#0C0D11] text-white" : "text-[#765334] hover:text-[#0C0D11]"}`}>Sign In</button>
+                  <button onClick={() => switchMode("signup")} className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${mode === "signup" ? "bg-[#0C0D11] text-white" : "text-[#765334] hover:text-[#0C0D11]"}`}>Sign Up</button>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -186,7 +186,7 @@ export default function LoginPage() {
                       <div className="relative">
                         <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#765334]" />
                         <input type="text" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="Your name"
-                          className="w-full bg-[#F4E9D2] border border-[rgba(8,43,73,0.15)] rounded-lg pl-9 pr-4 py-3 text-sm text-[#292725] placeholder-[#765334] focus:outline-none focus:border-[#082B49]" />
+                          className="w-full bg-[#F4E9D2] border border-[rgba(12, 13, 17,0.15)] rounded-lg pl-9 pr-4 py-3 text-sm text-[#292725] placeholder-[#765334] focus:outline-none focus:border-[#0C0D11]" />
                       </div>
                       {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                     </div>
@@ -196,7 +196,7 @@ export default function LoginPage() {
                     <div className="relative">
                       <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#765334]" />
                       <input type="email" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} placeholder="your@email.com"
-                        className="w-full bg-[#F4E9D2] border border-[rgba(8,43,73,0.15)] rounded-lg pl-9 pr-4 py-3 text-sm text-[#292725] placeholder-[#765334] focus:outline-none focus:border-[#082B49]" />
+                        className="w-full bg-[#F4E9D2] border border-[rgba(12, 13, 17,0.15)] rounded-lg pl-9 pr-4 py-3 text-sm text-[#292725] placeholder-[#765334] focus:outline-none focus:border-[#0C0D11]" />
                     </div>
                     {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                   </div>
@@ -204,7 +204,7 @@ export default function LoginPage() {
                     <div className="flex items-center justify-between mb-1">
                       <label className="text-xs text-[#765334] font-medium">Password</label>
                       {mode === "login" && (
-                        <button type="button" onClick={() => switchMode("forgot")} className="text-xs text-[#082B49] hover:underline">
+                        <button type="button" onClick={() => switchMode("forgot")} className="text-xs text-[#0C0D11] hover:underline">
                           Forgot password?
                         </button>
                       )}
@@ -212,7 +212,7 @@ export default function LoginPage() {
                     <div className="relative">
                       <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#765334]" />
                       <input type={showPass ? "text" : "password"} value={form.password} onChange={e => setForm(f => ({ ...f, password: e.target.value }))} placeholder="Min. 8 characters"
-                        className="w-full bg-[#F4E9D2] border border-[rgba(8,43,73,0.15)] rounded-lg pl-9 pr-10 py-3 text-sm text-[#292725] placeholder-[#765334] focus:outline-none focus:border-[#082B49]" />
+                        className="w-full bg-[#F4E9D2] border border-[rgba(12, 13, 17,0.15)] rounded-lg pl-9 pr-10 py-3 text-sm text-[#292725] placeholder-[#765334] focus:outline-none focus:border-[#0C0D11]" />
                       <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#765334] hover:text-[#765334]">
                         {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
                       </button>
@@ -220,7 +220,7 @@ export default function LoginPage() {
                     {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
                   </div>
                   <button type="submit" disabled={loading}
-                    className="w-full py-3 bg-[#082B49] text-white font-semibold rounded-lg hover:bg-[#0B304D] transition-all disabled:opacity-60 flex items-center justify-center gap-2">
+                    className="w-full py-3 bg-[#0C0D11] text-white font-semibold rounded-lg hover:bg-[#0C0D11] transition-all disabled:opacity-60 flex items-center justify-center gap-2">
                     {loading && <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />}
                     {mode === "login" ? "Sign In" : "Create Account"}
                   </button>

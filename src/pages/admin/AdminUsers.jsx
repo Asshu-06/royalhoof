@@ -136,32 +136,32 @@ export default function AdminUsers() {
     <div className="space-y-5">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#082B49]" style={{ fontFamily: "Georgia, serif" }}>Users</h1>
+          <h1 className="text-2xl font-bold text-[#0C0D11]" style={{ fontFamily: "Georgia, serif" }}>Users</h1>
           <p className="text-gray-500 text-sm mt-1">Customer activity, cart & wishlist</p>
         </div>
         <button onClick={fetchAllUsers} disabled={loadingUsers}
-          className="flex items-center gap-2 px-3 py-2 bg-[#082B49] text-white text-xs font-medium rounded-lg hover:bg-[#0B304D] disabled:opacity-60 transition-all">
+          className="flex items-center gap-2 px-3 py-2 bg-[#0C0D11] text-white text-xs font-medium rounded-lg hover:bg-[#0C0D11] disabled:opacity-60 transition-all">
           <RefreshCw size={13} className={loadingUsers ? "animate-spin" : ""} /> Refresh
         </button>
       </div>
 
       <div className="grid grid-cols-3 gap-4">
-        <div className="bg-[#FAF3E4] border border-gray-200 rounded-xl p-5"><Users size={18} className="text-[#082B49] mb-3" /><p className="text-2xl font-bold text-[#082B49]">{allUsers.length}</p><p className="text-gray-500 text-xs mt-1">Total Customers</p></div>
-        <div className="bg-[#FAF3E4] border border-gray-200 rounded-xl p-5"><DollarSign size={18} className="text-green-400 mb-3" /><p className="text-2xl font-bold text-[#082B49]">{formatINR(totalRevenue)}</p><p className="text-gray-500 text-xs mt-1">Total Revenue</p></div>
-        <div className="bg-[#FAF3E4] border border-gray-200 rounded-xl p-5"><ShoppingBag size={18} className="text-blue-400 mb-3" /><p className="text-2xl font-bold text-[#082B49]">{formatINR(avgOrderValue)}</p><p className="text-gray-500 text-xs mt-1">Avg Order Value</p></div>
+        <div className="bg-[#FAF3E4] border border-gray-200 rounded-xl p-5"><Users size={18} className="text-[#0C0D11] mb-3" /><p className="text-2xl font-bold text-[#0C0D11]">{allUsers.length}</p><p className="text-gray-500 text-xs mt-1">Total Customers</p></div>
+        <div className="bg-[#FAF3E4] border border-gray-200 rounded-xl p-5"><DollarSign size={18} className="text-green-400 mb-3" /><p className="text-2xl font-bold text-[#0C0D11]">{formatINR(totalRevenue)}</p><p className="text-gray-500 text-xs mt-1">Total Revenue</p></div>
+        <div className="bg-[#FAF3E4] border border-gray-200 rounded-xl p-5"><ShoppingBag size={18} className="text-blue-400 mb-3" /><p className="text-2xl font-bold text-[#0C0D11]">{formatINR(avgOrderValue)}</p><p className="text-gray-500 text-xs mt-1">Avg Order Value</p></div>
       </div>
 
       <div className="relative">
         <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
         <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search by name or user ID..."
-          className="w-full bg-[#FAF3E4] border border-gray-200 rounded-lg pl-9 pr-4 py-2.5 text-sm text-[#292725] placeholder-gray-600 focus:outline-none focus:border-[#082B49]" />
+          className="w-full bg-[#FAF3E4] border border-gray-200 rounded-lg pl-9 pr-4 py-2.5 text-sm text-[#292725] placeholder-gray-600 focus:outline-none focus:border-[#0C0D11]" />
       </div>
 
       <div className="space-y-3">
         {users.length === 0 ? <div className="text-center py-12 text-gray-500">No customers yet</div>
         : users.map(u => {
           const tier = u.totalSpent >= 20000 ? "Gold" : u.totalSpent >= 8000 ? "Silver" : "Bronze"
-          const tierColor = tier === "Gold" ? "text-[#082B49] bg-[#082B49]/10" : tier === "Silver" ? "text-gray-600 bg-gray-500/10" : "text-orange-400 bg-orange-500/10"
+          const tierColor = tier === "Gold" ? "text-[#0C0D11] bg-[#0C0D11]/10" : tier === "Silver" ? "text-gray-600 bg-gray-500/10" : "text-orange-400 bg-orange-500/10"
           const details = userDetails[u.userId]
           const isExpanded = expanded === u.userId
           return (
@@ -169,8 +169,8 @@ export default function AdminUsers() {
               <div className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 transition-colors"
                 onClick={() => loadUserDetails(u.userId)}>
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 bg-[#082B49]/15 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-[#082B49] text-sm font-bold">{u.name[0]?.toUpperCase()}</span>
+                  <div className="w-9 h-9 bg-[#0C0D11]/15 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-[#0C0D11] text-sm font-bold">{u.name[0]?.toUpperCase()}</span>
                   </div>
                   <div>
                     <p className="text-[#292725] text-sm font-medium">{u.name}</p>
@@ -180,7 +180,7 @@ export default function AdminUsers() {
                 <div className="flex items-center gap-3">
                   <span className={`text-xs px-2 py-0.5 rounded-full ${tierColor}`}>{tier}</span>
                   {loadingDetails[u.userId]
-                    ? <div className="w-4 h-4 border-2 border-[#082B49] border-t-transparent rounded-full animate-spin" />
+                    ? <div className="w-4 h-4 border-2 border-[#0C0D11] border-t-transparent rounded-full animate-spin" />
                     : isExpanded ? <ChevronUp size={15} className="text-gray-400" /> : <ChevronDown size={15} className="text-gray-400" />
                   }
                 </div>

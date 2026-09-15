@@ -7,7 +7,7 @@ import 'jspdf-autotable'
 import InvoiceGenerator from '../../components/InvoiceGenerator'
 
 const CARD_BG = "#FAF3E4"
-const CARD_BORDER = "rgba(8,43,73,0.12)"
+const CARD_BORDER = "rgba(12, 13, 17,0.12)"
 const TEXT_PRIMARY = "#292725"
 const TEXT_SECONDARY = "#765334"
 const TEXT_MUTED = "#9A8870"
@@ -16,7 +16,7 @@ const ACCENT_LIGHT = "#D2AA55"
 
 const inputStyle = {
   background: "#FFFFFF",
-  border: "1px solid rgba(8,43,73,0.15)",
+  border: "1px solid rgba(12, 13, 17,0.15)",
   borderRadius: 6,
   padding: "10px 14px",
   color: TEXT_PRIMARY,
@@ -34,6 +34,21 @@ const getItemCategory = (item) => {
   if (text.includes('category: adult') || text.includes('[category: adult]')) return 'adult'
   if (text.includes('category: child') || text.includes('[category: child]')) return 'child'
   return null
+}
+
+const getItemType = (item) => {
+  if (item.enquiry_type === 'demo' || item.preferred_date) return 'demo'
+  if (item.enquiry_type === 'package') return 'package'
+  if (item.enquiry_type === 'event') return 'event'
+  return 'general'
+}
+
+const getTypeLabel = (type) => {
+  if (type === 'demo') return 'Book a Demo'
+  if (type === 'general') return 'General'
+  if (type === 'package') return 'Package'
+  if (type === 'event') return 'Event'
+  return type ? type.charAt(0).toUpperCase() + type.slice(1) : 'General'
 }
 
 export default function AdminEnquiries() {
@@ -268,12 +283,19 @@ export default function AdminEnquiries() {
     sendNext()
   }
 
-  const types = ['all', 'general', 'demo', 'package', 'event']
+  const typeOptions = [
+    { value: 'all', label: 'All Enquiries' },
+    { value: 'general', label: 'General' },
+    { value: 'demo', label: 'Book a Demo' },
+    ...(items.some(i => getItemType(i) === 'package') ? [{ value: 'package', label: 'Package' }] : []),
+    ...(items.some(i => getItemType(i) === 'event') ? [{ value: 'event', label: 'Event' }] : []),
+  ]
   const statuses = ['all', 'new', 'contacted', 'converted', 'closed']
   const categories = ['all', 'child', 'adult']
 
   const filteredItems = items.filter(item => {
-    const typeMatch = selectedType === 'all' || item.enquiry_type === selectedType
+    const itemType = getItemType(item)
+    const typeMatch = selectedType === 'all' || itemType === selectedType
     const statusMatch = selectedStatus === 'all' || item.status === selectedStatus
     const itemCat = getItemCategory(item)
     const categoryMatch = selectedCategory === 'all' || itemCat === selectedCategory
@@ -339,24 +361,32 @@ export default function AdminEnquiries() {
       </div>
 
       {/* Stat cards */}
-      <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
+        <div style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderRadius: 8, padding: "14px 16px", borderLeft: `3px solid #c084fc` }}>
+          <p style={{ fontSize: "1.375rem", fontWeight: 700, color: TEXT_PRIMARY, fontFamily: "'Inter', sans-serif" }}>{items.filter(i => getItemType(i) === 'general').length}</p>
+          <p style={{ fontSize: "0.75rem", color: TEXT_MUTED, marginTop: 2, fontFamily: "'Inter', sans-serif" }}>General</p>
+        </div>
+        <div style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderRadius: 8, padding: "14px 16px", borderLeft: `3px solid #fb923c` }}>
+          <p style={{ fontSize: "1.375rem", fontWeight: 700, color: TEXT_PRIMARY, fontFamily: "'Inter', sans-serif" }}>{items.filter(i => getItemType(i) === 'demo').length}</p>
+          <p style={{ fontSize: "0.75rem", color: TEXT_MUTED, marginTop: 2, fontFamily: "'Inter', sans-serif" }}>Book a Demo</p>
+        </div>
         {statuses.filter(s => s !== 'all').map(status => {
           const c = statusColor(status)
           const count = items.filter(i => i.status === status).length
           return (
-            <div key={status} style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderRadius: 8, padding: "16px 20px", borderLeft: `3px solid ${c.color}` }}>
-              <p style={{ fontSize: "1.5rem", fontWeight: 700, color: TEXT_PRIMARY, fontFamily: "'Inter', sans-serif" }}>{count}</p>
-              <p style={{ fontSize: "0.8125rem", color: TEXT_MUTED, marginTop: 2, textTransform: "capitalize", fontFamily: "'Inter', sans-serif" }}>{status}</p>
+            <div key={status} style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderRadius: 8, padding: "14px 16px", borderLeft: `3px solid ${c.color}` }}>
+              <p style={{ fontSize: "1.375rem", fontWeight: 700, color: TEXT_PRIMARY, fontFamily: "'Inter', sans-serif" }}>{count}</p>
+              <p style={{ fontSize: "0.75rem", color: TEXT_MUTED, marginTop: 2, textTransform: "capitalize", fontFamily: "'Inter', sans-serif" }}>{status}</p>
             </div>
           )
         })}
-        <div style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderRadius: 8, padding: "16px 20px", borderLeft: `3px solid #3b82f6` }}>
-          <p style={{ fontSize: "1.5rem", fontWeight: 700, color: TEXT_PRIMARY, fontFamily: "'Inter', sans-serif" }}>{items.filter(i => getItemCategory(i) === 'child').length}</p>
-          <p style={{ fontSize: "0.8125rem", color: TEXT_MUTED, marginTop: 2, fontFamily: "'Inter', sans-serif" }}>Child Category</p>
+        <div style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderRadius: 8, padding: "14px 16px", borderLeft: `3px solid #3b82f6` }}>
+          <p style={{ fontSize: "1.375rem", fontWeight: 700, color: TEXT_PRIMARY, fontFamily: "'Inter', sans-serif" }}>{items.filter(i => getItemCategory(i) === 'child').length}</p>
+          <p style={{ fontSize: "0.75rem", color: TEXT_MUTED, marginTop: 2, fontFamily: "'Inter', sans-serif" }}>Child</p>
         </div>
-        <div style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderRadius: 8, padding: "16px 20px", borderLeft: `3px solid #c084fc` }}>
-          <p style={{ fontSize: "1.5rem", fontWeight: 700, color: TEXT_PRIMARY, fontFamily: "'Inter', sans-serif" }}>{items.filter(i => getItemCategory(i) === 'adult').length}</p>
-          <p style={{ fontSize: "0.8125rem", color: TEXT_MUTED, marginTop: 2, fontFamily: "'Inter', sans-serif" }}>Adult Category</p>
+        <div style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderRadius: 8, padding: "14px 16px", borderLeft: `3px solid #c084fc` }}>
+          <p style={{ fontSize: "1.375rem", fontWeight: 700, color: TEXT_PRIMARY, fontFamily: "'Inter', sans-serif" }}>{items.filter(i => getItemCategory(i) === 'adult').length}</p>
+          <p style={{ fontSize: "0.75rem", color: TEXT_MUTED, marginTop: 2, fontFamily: "'Inter', sans-serif" }}>Adult</p>
         </div>
       </div>
 
@@ -398,21 +428,25 @@ export default function AdminEnquiries() {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
-            <p style={{ color: TEXT_MUTED, fontSize: "0.6875rem", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8, fontFamily: "'Inter', sans-serif" }}>Type</p>
+            <p style={{ color: TEXT_MUTED, fontSize: "0.6875rem", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8, fontFamily: "'Inter', sans-serif" }}>Enquiry Type</p>
             <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-              {types.map(type => (
-                <button key={type} onClick={() => setSelectedType(type)} style={{
-                  padding: "5px 12px", borderRadius: 4, fontSize: "0.8125rem", cursor: "pointer",
-                  fontFamily: "'Inter', sans-serif", border: "1px solid",
-                  background: selectedType === type ? ACCENT : "transparent",
-                  color: selectedType === type ? "#082B49" : TEXT_MUTED,
-                  borderColor: selectedType === type ? ACCENT : CARD_BORDER,
-                  textTransform: "capitalize",
-                }}>
-                  {type}
-                  {type !== 'all' && <span style={{ marginLeft: 4, opacity: 0.7 }}>({items.filter(i => i.enquiry_type === type).length})</span>}
-                </button>
-              ))}
+              {typeOptions.map(opt => {
+                const count = opt.value === 'all' ? items.length : items.filter(i => getItemType(i) === opt.value).length
+                const isSelected = selectedType === opt.value
+                return (
+                  <button key={opt.value} onClick={() => setSelectedType(opt.value)} style={{
+                    padding: "5px 12px", borderRadius: 4, fontSize: "0.8125rem", cursor: "pointer",
+                    fontFamily: "'Inter', sans-serif", border: "1px solid",
+                    background: isSelected ? ACCENT : "transparent",
+                    color: isSelected ? "#0C0D11" : TEXT_MUTED,
+                    borderColor: isSelected ? ACCENT : CARD_BORDER,
+                    fontWeight: isSelected ? 600 : 400,
+                  }}>
+                    {opt.label}
+                    <span style={{ marginLeft: 4, opacity: 0.7 }}>({count})</span>
+                  </button>
+                )
+              })}
             </div>
           </div>
 
@@ -424,7 +458,7 @@ export default function AdminEnquiries() {
                   padding: "5px 12px", borderRadius: 4, fontSize: "0.8125rem", cursor: "pointer",
                   fontFamily: "'Inter', sans-serif", border: "1px solid",
                   background: selectedCategory === cat ? ACCENT : "transparent",
-                  color: selectedCategory === cat ? "#082B49" : TEXT_MUTED,
+                  color: selectedCategory === cat ? "#0C0D11" : TEXT_MUTED,
                   borderColor: selectedCategory === cat ? ACCENT : CARD_BORDER,
                   textTransform: "capitalize",
                 }}>
@@ -443,7 +477,7 @@ export default function AdminEnquiries() {
                   padding: "5px 12px", borderRadius: 4, fontSize: "0.8125rem", cursor: "pointer",
                   fontFamily: "'Inter', sans-serif", border: "1px solid",
                   background: selectedStatus === status ? ACCENT : "transparent",
-                  color: selectedStatus === status ? "#082B49" : TEXT_MUTED,
+                  color: selectedStatus === status ? "#0C0D11" : TEXT_MUTED,
                   borderColor: selectedStatus === status ? ACCENT : CARD_BORDER,
                   textTransform: "capitalize",
                 }}>
@@ -460,7 +494,8 @@ export default function AdminEnquiries() {
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
         {filteredItems.map(item => {
           const sc = statusColor(item.status)
-          const tc = typeColor(item.enquiry_type)
+          const itemType = getItemType(item)
+          const tc = typeColor(itemType)
           const itemCat = getItemCategory(item)
           const isSelected = selectedContacts.includes(item.id)
           return (
@@ -505,8 +540,8 @@ export default function AdminEnquiries() {
                           {itemCat === 'child' ? '👶 Child' : '🧑 Adult'}
                         </span>
                       )}
-                      <span style={{ fontSize: "0.6875rem", padding: "2px 8px", borderRadius: 9999, background: tc.bg, color: tc.color, textTransform: "capitalize" }}>
-                        {item.enquiry_type}
+                      <span style={{ fontSize: "0.6875rem", padding: "2px 8px", borderRadius: 9999, background: tc.bg, color: tc.color, fontWeight: 600 }}>
+                        {getTypeLabel(itemType)}
                       </span>
                       <span style={{ fontSize: "0.6875rem", padding: "2px 8px", borderRadius: 9999, background: sc.bg, color: sc.color, textTransform: "capitalize" }}>
                         {item.status}
@@ -606,7 +641,7 @@ export default function AdminEnquiries() {
                     />
                     <div style={{ display: "flex", gap: 8 }}>
                       <button onClick={() => saveNotes(item.id)}
-                        style={{ background: ACCENT, color: "#082B49", border: "none", borderRadius: 4, padding: "6px 16px", cursor: "pointer", fontWeight: 600, fontSize: "0.8125rem", fontFamily: "'Inter', sans-serif" }}>
+                        style={{ background: ACCENT, color: "#0C0D11", border: "none", borderRadius: 4, padding: "6px 16px", cursor: "pointer", fontWeight: 600, fontSize: "0.8125rem", fontFamily: "'Inter', sans-serif" }}>
                         Save
                       </button>
                       <button onClick={() => { setEditingNotes(null); setNotes('') }}
@@ -906,7 +941,7 @@ export default function AdminEnquiries() {
                         justifyContent: "center",
                         gap: 8,
                         background: (selectedEvent && events.length > 0 && !isSending) ? ACCENT : "rgba(255,255,255,0.1)",
-                        color: (selectedEvent && events.length > 0 && !isSending) ? "#082B49" : TEXT_MUTED,
+                        color: (selectedEvent && events.length > 0 && !isSending) ? "#0C0D11" : TEXT_MUTED,
                         border: "none",
                         borderRadius: 6,
                         padding: "12px 20px",
@@ -931,7 +966,7 @@ export default function AdminEnquiries() {
                     style={{
                       flex: 1,
                       background: ACCENT,
-                      color: "#082B49",
+                      color: "#0C0D11",
                       border: "none",
                       borderRadius: 6,
                       padding: "12px 20px",

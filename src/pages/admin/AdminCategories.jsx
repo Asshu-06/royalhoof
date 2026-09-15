@@ -85,7 +85,7 @@ export default function AdminCategories() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#082B49]" style={{ fontFamily: "Georgia, serif" }}>Categories</h1>
+          <h1 className="text-2xl font-bold text-[#0C0D11]" style={{ fontFamily: "Georgia, serif" }}>Categories</h1>
           <p className="text-gray-500 text-sm mt-1">Manage store categories.</p>
         </div>
         <button
@@ -100,7 +100,7 @@ export default function AdminCategories() {
       <div className="bg-[#FAF3E4] border border-gray-200 rounded-xl overflow-hidden">
         {loading ? (
           <div className="flex items-center justify-center py-16">
-            <Loader2 size={22} className="animate-spin text-[#082B49]" />
+            <Loader2 size={22} className="animate-spin text-[#0C0D11]" />
           </div>
         ) : categories.length === 0 ? (
           <div className="text-center py-16 text-gray-400 text-sm">No categories yet</div>
@@ -131,7 +131,7 @@ export default function AdminCategories() {
                           value={editValue}
                           onChange={e => setEditValue(e.target.value.toUpperCase())}
                           onKeyDown={e => { if (e.key === "Enter") handleEditSave(); if (e.key === "Escape") cancelEdit() }}
-                          className="border border-[#082B49]/40 rounded-md px-2 py-1 text-sm w-full max-w-xs focus:outline-none focus:border-[#082B49] uppercase"
+                          className="border border-[#0C0D11]/40 rounded-md px-2 py-1 text-sm w-full max-w-xs focus:outline-none focus:border-[#0C0D11] uppercase"
                         />
                       ) : (
                         cat
@@ -208,7 +208,7 @@ export default function AdminCategories() {
               className="bg-[#FAF3E4] rounded-xl p-6 w-full max-w-sm shadow-xl"
             >
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-[#082B49] font-semibold text-base">Add New Category</h2>
+                <h2 className="text-[#0C0D11] font-semibold text-base">Add New Category</h2>
                 <button onClick={() => setShowAddModal(false)} className="text-gray-400 hover:text-gray-600 p-1">
                   <X size={16} />
                 </button>
@@ -222,7 +222,7 @@ export default function AdminCategories() {
                     onChange={e => setNewName(e.target.value.toUpperCase())}
                     onKeyDown={e => e.key === "Enter" && handleAdd()}
                     placeholder="e.g. ANKLETS, RINGS, HAIR ACCESSORIES..."
-                    className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-[#292725] placeholder-gray-400 focus:outline-none focus:border-[#082B49] uppercase"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-[#292725] placeholder-gray-400 focus:outline-none focus:border-[#0C0D11] uppercase"
                   />
                   {newName.trim() && (
                     <p className="text-xs text-gray-400 mt-1">
@@ -268,7 +268,7 @@ export default function AdminCategories() {
               className="bg-[#FAF3E4] border border-red-200 rounded-xl p-6 max-w-sm w-full text-center"
             >
               <Trash2 size={32} className="text-red-400 mx-auto mb-3" />
-              <h3 className="text-[#082B49] font-semibold mb-1">Delete "{deleteConfirm}"?</h3>
+              <h3 className="text-[#0C0D11] font-semibold mb-1">Delete "{deleteConfirm}"?</h3>
               <p className="text-gray-400 text-sm mb-5">
                 Products in this category won't be deleted, but they'll no longer appear under this category in the navbar or filters.
               </p>

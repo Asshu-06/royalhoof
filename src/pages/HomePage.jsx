@@ -69,7 +69,7 @@ function HeroSlider() {
       
       {/* Reduced Subtle Video Overlay */}
       <div className="absolute inset-0 pointer-events-none" style={{ 
-        background: "linear-gradient(to top, rgba(8,43,73,0.25) 0%, rgba(8,43,73,0.08) 50%, rgba(8,43,73,0.15) 100%)" 
+        background: "linear-gradient(to top, rgba(12, 13, 17,0.25) 0%, rgba(12, 13, 17,0.08) 50%, rgba(12, 13, 17,0.15) 100%)" 
       }} />
       
       {/* Content */}
@@ -136,7 +136,7 @@ function HeroSlider() {
             className={`rounded-full transition-all duration-500 ${
               i === slide 
                 ? "w-8 h-1 bg-[#C5963A] shadow-[0_0_8px_rgba(197, 150, 58,0.4)]" 
-                : "w-1.5 h-1.5 bg-[#082B49]/25 hover:bg-[#082B49]/50"
+                : "w-1.5 h-1.5 bg-[#0C0D11]/25 hover:bg-[#0C0D11]/50"
             }`} 
           />
         ))}
@@ -221,7 +221,7 @@ function AboutSection() {
                   <div key={i} className="text-center py-5 rounded-sm equestrian-card"
                     style={{ transform: "none" }}>
                     <div className="flex justify-center mb-2" style={{ color: "#C5963A" }}>{s.icon}</div>
-                    <p className="font-bold text-base text-[#082B49]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>{s.value}</p>
+                    <p className="font-bold text-base text-[#0C0D11]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>{s.value}</p>
                     <p className="text-xs mt-1 text-[#765334]" style={{ fontFamily: "'Inter', sans-serif" }}>{s.label}</p>
                   </div>
                 ))}
@@ -351,10 +351,10 @@ function WhatWeOfferSection() {
                 to={linkPath}
                 state={{ fromSection: 'what-we-offer' }}
                 onClick={() => prepareSectionReturn('what-we-offer')}
-                className="group relative rounded-xl bg-[#FAF3E4] border-2 border-[#C5963A]/25 shadow-md hover:shadow-[0_12px_36px_rgba(8,43,73,0.2)] hover:border-[#082B49] transition-all duration-300 flex flex-col justify-between h-full block cursor-pointer overflow-hidden"
+                className="group relative rounded-xl bg-[#FAF3E4] border-2 border-[#C5963A]/25 shadow-md hover:shadow-[0_12px_36px_rgba(12, 13, 17,0.2)] hover:border-[#0C0D11] transition-all duration-300 flex flex-col justify-between h-full block cursor-pointer overflow-hidden"
               >
                 {/* Program Card Header Banner Image */}
-                <div className="w-full h-44 overflow-hidden relative border-b border-[#C5963A]/20 bg-[#082B49]/10">
+                <div className="w-full h-44 overflow-hidden relative border-b border-[#C5963A]/20 bg-[#0C0D11]/10">
                   <img 
                     src={item.bannerImage || "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=800&q=80"}
                     alt={item.title}
@@ -364,13 +364,13 @@ function WhatWeOfferSection() {
                       e.target.style.opacity = '0.6';
                     }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#082B49]/80 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0C0D11]/80 via-black/20 to-transparent" />
 
                   <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
-                    <div className="w-10 h-10 rounded-full bg-[#082B49]/90 text-[#C5963A] border border-[#C5963A]/40 flex items-center justify-center shadow-md backdrop-blur-sm">
+                    <div className="w-10 h-10 rounded-full bg-[#0C0D11]/90 text-[#C5963A] border border-[#C5963A]/40 flex items-center justify-center shadow-md backdrop-blur-sm">
                       {iconElem}
                     </div>
-                    <span className="text-[0.65rem] font-bold tracking-[0.15em] uppercase text-[#F5EBD8] bg-[#082B49]/90 backdrop-blur-sm px-2.5 py-1 rounded border border-[#C5963A]/40 font-sans">
+                    <span className="text-[0.65rem] font-bold tracking-[0.15em] uppercase text-[#F5EBD8] bg-[#0C0D11]/90 backdrop-blur-sm px-2.5 py-1 rounded border border-[#C5963A]/40 font-sans">
                       {item.tag}
                     </span>
                   </div>
@@ -378,7 +378,7 @@ function WhatWeOfferSection() {
 
                 <div className="p-6 flex-1 flex flex-col justify-between">
                   <div>
-                    <h3 className="text-xl font-bold text-[#082B49] mb-2 group-hover:text-[#C5963A] transition-colors leading-snug font-serif">
+                    <h3 className="text-xl font-bold text-[#0C0D11] mb-2 group-hover:text-[#C5963A] transition-colors leading-snug font-serif">
                       {item.title}
                     </h3>
 
@@ -387,9 +387,9 @@ function WhatWeOfferSection() {
                     </p>
                   </div>
 
-                  <div className="pt-4 mt-4 border-t border-[#C5963A]/15 group-hover:border-[#082B49]/30 flex items-center justify-between text-xs font-bold text-[#082B49] transition-all font-sans">
-                    <span className="text-[#765334] group-hover:text-[#082B49]">Explore Program</span>
-                    <ArrowRight size={14} className="text-[#C5963A] group-hover:text-[#082B49] group-hover:translate-x-1.5 transition-all duration-300" />
+                  <div className="pt-4 mt-4 border-t border-[#C5963A]/15 group-hover:border-[#0C0D11]/30 flex items-center justify-between text-xs font-bold text-[#0C0D11] transition-all font-sans">
+                    <span className="text-[#765334] group-hover:text-[#0C0D11]">Explore Program</span>
+                    <ArrowRight size={14} className="text-[#C5963A] group-hover:text-[#0C0D11] group-hover:translate-x-1.5 transition-all duration-300" />
                   </div>
                 </div>
               </Link>
@@ -728,7 +728,7 @@ function QuickContactSection() {
                 </div>
               </div>
 
-              <div className="mt-8 pt-6 border-t border-[rgba(8,43,73,0.15)]">
+              <div className="mt-8 pt-6 border-t border-[rgba(12, 13, 17,0.15)]">
                 <Link 
                   to="/contact"
                   className="inline-flex items-center gap-2 text-[#C5963A] hover:text-[#8A6640] font-medium transition-colors"
@@ -753,7 +753,7 @@ function QuickContactSection() {
                     type="text"
                     value={formData.name}
                     onChange={(e) => handleChange('name', e.target.value)}
-                    className="w-full bg-[#F4E9D2] border border-[rgba(8,43,73,0.15)] rounded-lg px-4 py-3 text-[#292725] placeholder-[#B9AFA3]/50 focus:outline-none focus:border-[#C5963A] transition-colors"
+                    className="w-full bg-[#F4E9D2] border border-[rgba(12, 13, 17,0.15)] rounded-lg px-4 py-3 text-[#292725] placeholder-[#B9AFA3]/50 focus:outline-none focus:border-[#C5963A] transition-colors"
                     placeholder="Your full name"
                     required
                   />
@@ -767,7 +767,7 @@ function QuickContactSection() {
                     type="email"
                     value={formData.email}
                     onChange={(e) => handleChange('email', e.target.value)}
-                    className="w-full bg-[#F4E9D2] border border-[rgba(8,43,73,0.15)] rounded-lg px-4 py-3 text-[#292725] placeholder-[#B9AFA3]/50 focus:outline-none focus:border-[#C5963A] transition-colors"
+                    className="w-full bg-[#F4E9D2] border border-[rgba(12, 13, 17,0.15)] rounded-lg px-4 py-3 text-[#292725] placeholder-[#B9AFA3]/50 focus:outline-none focus:border-[#C5963A] transition-colors"
                     placeholder="Your email address"
                   />
                 </div>
@@ -793,7 +793,7 @@ function QuickContactSection() {
                     maxLength={10}
                     inputMode="numeric"
                     pattern="[0-9]{10}"
-                    className="w-full bg-[#F4E9D2] border border-[rgba(8,43,73,0.15)] rounded-lg px-4 py-3 text-[#292725] placeholder-[#B9AFA3]/50 focus:outline-none focus:border-[#C5963A] transition-colors"
+                    className="w-full bg-[#F4E9D2] border border-[rgba(12, 13, 17,0.15)] rounded-lg px-4 py-3 text-[#292725] placeholder-[#B9AFA3]/50 focus:outline-none focus:border-[#C5963A] transition-colors"
                     placeholder="10-digit mobile number"
                     required
                   />
@@ -825,7 +825,7 @@ function QuickContactSection() {
                       }
                     }}
                     rows={4}
-                    className="w-full bg-[#F4E9D2] border border-[rgba(8,43,73,0.15)] rounded-lg px-4 py-3 text-[#292725] placeholder-[#B9AFA3]/50 focus:outline-none focus:border-[#C5963A] transition-colors resize-none"
+                    className="w-full bg-[#F4E9D2] border border-[rgba(12, 13, 17,0.15)] rounded-lg px-4 py-3 text-[#292725] placeholder-[#B9AFA3]/50 focus:outline-none focus:border-[#C5963A] transition-colors resize-none"
                     placeholder="How can we help you? (Max 1000 characters)"
                     required
                   />
@@ -977,11 +977,11 @@ function WhyChooseUs({ customData }) {
               transition={{ duration: 0.3 }}
               className="p-5 rounded-md bg-[#FAF3E4] border border-[#C5963A]/30 shadow-sm hover:shadow-md transition-all flex items-start gap-4"
             >
-              <div className="w-11 h-11 rounded-full bg-[#082B49] text-[#C5963A] flex items-center justify-center shrink-0 shadow">
+              <div className="w-11 h-11 rounded-full bg-[#0C0D11] text-[#C5963A] flex items-center justify-center shrink-0 shadow">
                 {getIconByName(item.icon, 20)}
               </div>
               <div>
-                <h3 className="text-base font-bold text-[#082B49] flex items-center gap-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                <h3 className="text-base font-bold text-[#0C0D11] flex items-center gap-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                   <span className="text-[#C5963A]">✔</span> {item.title}
                 </h3>
                 {item.desc && (
@@ -1050,8 +1050,8 @@ function PackageCard({ pkg, isActive, onToggleActive }) {
       onClick={handleClick}
       className={`group relative rounded-xl p-6 h-full flex flex-col justify-between transition-all duration-300 cursor-pointer select-none border border-[#C5963A] ${
         isCardActive
-          ? 'bg-[#082B49] text-[#F5EBD8] shadow-xl shadow-[#082B49]/40 -translate-y-1.5'
-          : 'bg-[#FAF3E4] text-[#292725] hover:bg-[#082B49] hover:text-[#F5EBD8] hover:shadow-xl hover:shadow-[#082B49]/30 hover:-translate-y-1.5'
+          ? 'bg-[#0C0D11] text-[#F5EBD8] shadow-xl shadow-[#0C0D11]/40 -translate-y-1.5'
+          : 'bg-[#FAF3E4] text-[#292725] hover:bg-[#0C0D11] hover:text-[#F5EBD8] hover:shadow-xl hover:shadow-[#0C0D11]/30 hover:-translate-y-1.5'
       }`}
     >
       <div>
@@ -1100,7 +1100,7 @@ function PackageCard({ pkg, isActive, onToggleActive }) {
               : 'text-[#C5963A] group-hover:text-[#D2AA55] group-hover:translate-x-1'
           }`}
         >
-          <span>Book Now</span>
+          <span>View Details</span>
           <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
         </Link>
       </div>
@@ -1178,7 +1178,7 @@ function BenefitsPosterSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 bg-[#082B49] text-[#C5963A] text-xs font-bold uppercase tracking-[0.2em] px-4 py-1.5 rounded-full border border-[#C5963A]/40 mb-3 shadow-sm"
+            className="inline-flex items-center gap-2 bg-[#0C0D11] text-[#C5963A] text-xs font-bold uppercase tracking-[0.2em] px-4 py-1.5 rounded-full border border-[#C5963A]/40 mb-3 shadow-sm"
           >
             <span>✦</span>
             <span>{benefitsData.badge || "RIDING FOR A BETTER TOMORROW"}</span>
@@ -1189,7 +1189,7 @@ function BenefitsPosterSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#082B49] mb-3" 
+            className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#0C0D11] mb-3" 
             style={{ fontFamily: "'Playfair Display', 'Cormorant Garamond', serif" }}
           >
             {benefitsData.title || "Benefits of Horse Riding"}
@@ -1213,7 +1213,7 @@ function BenefitsPosterSection() {
                 onClick={() => setActiveTab(catId)}
                 className={`flex items-center gap-2.5 px-6 py-3.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 shadow-sm ${
                   isActive
-                    ? 'bg-[#082B49] text-[#C5963A] border-2 border-[#C5963A] shadow-md scale-105'
+                    ? 'bg-[#0C0D11] text-[#C5963A] border-2 border-[#C5963A] shadow-md scale-105'
                     : 'bg-[#FAF3E4] text-[#5A4430] border border-[#C5963A]/30 hover:bg-[#F4E9D2] hover:border-[#C5963A]/60'
                 }`}
                 style={{ fontFamily: "'Inter', sans-serif" }}
@@ -1258,14 +1258,14 @@ function BenefitsPosterSection() {
               {/* Category Header Bar */}
               <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-8 border-b border-[#C5963A]/25">
                 <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-xl bg-[#082B49] text-[#C5963A] flex items-center justify-center shadow-lg shrink-0 border border-[#C5963A]/40">
+                  <div className="w-14 h-14 rounded-xl bg-[#0C0D11] text-[#C5963A] flex items-center justify-center shadow-lg shrink-0 border border-[#C5963A]/40">
                     {getCategoryIcon(currentCategory.iconName || currentCategory.icon)}
                   </div>
                   <div>
                     <span className="text-[0.7rem] font-bold tracking-[0.2em] uppercase text-[#C5963A] bg-[#C5963A]/10 px-2.5 py-0.5 rounded border border-[#C5963A]/20">
                       {currentCategory.badge}
                     </span>
-                    <h3 className="text-2xl sm:text-3xl font-bold text-[#082B49] mt-1" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                    <h3 className="text-2xl sm:text-3xl font-bold text-[#0C0D11] mt-1" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                       {currentCategory.label}
                     </h3>
                   </div>
@@ -1289,20 +1289,20 @@ function BenefitsPosterSection() {
                   >
                     <div>
                       {/* Card Image Banner & Topic Tag */}
-                      <div className="relative w-full h-36 overflow-hidden bg-[#082B49]">
+                      <div className="relative w-full h-36 overflow-hidden bg-[#0C0D11]">
                         <img 
                           src={item.image} 
                           alt={item.title}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-90"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#082B49] via-black/20 to-transparent opacity-80" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0C0D11] via-black/20 to-transparent opacity-80" />
                         
                         {/* Number & Topic Badge */}
                         <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-                          <span className="w-7 h-7 rounded-full bg-[#C5963A] text-[#082B49] font-bold text-xs flex items-center justify-center shadow">
+                          <span className="w-7 h-7 rounded-full bg-[#C5963A] text-[#0C0D11] font-bold text-xs flex items-center justify-center shadow">
                             {item.num}
                           </span>
-                          <span className="text-[0.625rem] font-bold tracking-[0.15em] uppercase bg-[#082B49]/90 text-[#C5963A] px-2.5 py-1 rounded border border-[#C5963A]/40 backdrop-blur-sm">
+                          <span className="text-[0.625rem] font-bold tracking-[0.15em] uppercase bg-[#0C0D11]/90 text-[#C5963A] px-2.5 py-1 rounded border border-[#C5963A]/40 backdrop-blur-sm">
                             {item.topicTag}
                           </span>
                         </div>
@@ -1310,7 +1310,7 @@ function BenefitsPosterSection() {
 
                       {/* Card Content Body */}
                       <div className="p-5">
-                        <h4 className="text-lg font-bold text-[#082B49] leading-snug mb-2 group-hover:text-[#C5963A] transition-colors" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                        <h4 className="text-lg font-bold text-[#0C0D11] leading-snug mb-2 group-hover:text-[#C5963A] transition-colors" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                           {item.title}
                         </h4>
                         <p className="text-xs sm:text-sm text-[#5A4430] leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -1343,7 +1343,7 @@ function BenefitsPosterSection() {
         {/* "LEGENDS HAVE SPOKEN" Quotes Strip */}
         <div className="mt-12">
           <div className="text-center mb-8">
-            <span className="inline-block bg-[#082B49] text-[#C5963A] text-xs font-bold uppercase tracking-[0.25em] px-6 py-2 rounded-full border border-[#C5963A]">
+            <span className="inline-block bg-[#0C0D11] text-[#C5963A] text-xs font-bold uppercase tracking-[0.25em] px-6 py-2 rounded-full border border-[#C5963A]">
               LEGENDS HAVE SPOKEN
             </span>
           </div>
@@ -1358,7 +1358,7 @@ function BenefitsPosterSection() {
                   </p>
                 </div>
                 <div className="pt-3 border-t border-[#C5963A]/20">
-                  <p className="text-xs font-bold text-[#082B49] tracking-wider uppercase">
+                  <p className="text-xs font-bold text-[#0C0D11] tracking-wider uppercase">
                     — {item.author}
                   </p>
                 </div>

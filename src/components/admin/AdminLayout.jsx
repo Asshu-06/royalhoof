@@ -13,7 +13,7 @@ import toast from "react-hot-toast"
 import logoImg from "../../assets/logo.png"
 
 // Royal Hoof dark theme palette
-// bg: #082B49  sidebar: #082B49  card: #082B49  accent: #C5963A  text: #F5EBD8
+// bg: #0C0D11  sidebar: #0C0D11  card: #0C0D11  accent: #C5963A  text: #F5EBD8
 
 const NAV = [
   { path: "/admin", label: "Dashboard", icon: LayoutDashboard },
@@ -40,7 +40,7 @@ function Sidebar({ pathname, onSignOut, onNavClick, user, pendingCount }) {
       animate={{ width: 248, opacity: 1 }}
       exit={{ width: 0, opacity: 0 }}
       transition={{ duration: 0.2 }}
-      style={{ background: "#082B49", borderRight: "1px solid rgba(255,255,255,0.06)" }}
+      style={{ background: "#0C0D11", borderRight: "1px solid rgba(255,255,255,0.06)" }}
       className="flex-shrink-0 flex flex-col overflow-hidden"
     >
       {/* Logo */}
@@ -95,7 +95,7 @@ function Sidebar({ pathname, onSignOut, onNavClick, user, pendingCount }) {
               <Icon size={15} style={{ color: active ? "#C5963A" : "currentColor", flexShrink: 0 }} />
               <span style={{ flex: 1, fontSize: "0.8125rem", fontFamily: "'Inter', sans-serif", fontWeight: active ? 600 : 400 }}>{label}</span>
               {badge && (
-                <span style={{ background: "#C5963A", color: "#082B49", fontSize: "0.625rem", fontWeight: 700, padding: "2px 6px", borderRadius: "9999px", minWidth: 18, textAlign: "center" }}>
+                <span style={{ background: "#C5963A", color: "#0C0D11", fontSize: "0.625rem", fontWeight: 700, padding: "2px 6px", borderRadius: "9999px", minWidth: 18, textAlign: "center" }}>
                   {badge > 99 ? "99+" : badge}
                 </span>
               )}
@@ -144,7 +144,7 @@ function Sidebar({ pathname, onSignOut, onNavClick, user, pendingCount }) {
             width: 32, height: 32, borderRadius: "50%",
             background: "linear-gradient(135deg, #C5963A, #9A8870)",
             display: "flex", alignItems: "center", justifyContent: "center",
-            flexShrink: 0, color: "#082B49", fontWeight: 700, fontSize: "0.75rem",
+            flexShrink: 0, color: "#0C0D11", fontWeight: 700, fontSize: "0.75rem",
           }}>
             {initials}
           </div>
@@ -207,7 +207,7 @@ export default function AdminLayout({ children }) {
     .split(" ").map(w => w[0]).slice(0, 2).join("").toUpperCase()
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#082B49]">
+    <div className="flex h-screen overflow-hidden bg-[#0C0D11]">
       <AnimatePresence initial={false}>
         {sidebarOpen && (
           <Sidebar
@@ -224,20 +224,20 @@ export default function AdminLayout({ children }) {
         {/* Header */}
         <header style={{
           background: "#FAF3E4",
-          borderBottom: "1px solid rgba(8,43,73,0.12)",
+          borderBottom: "1px solid rgba(12, 13, 17,0.12)",
           flexShrink: 0,
         }}>
           <div className="h-14 flex items-center justify-between px-4">
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setSidebarOpen(o => !o)}
-                style={{ color: "#082B49", background: "none", border: "none", cursor: "pointer", padding: "6px", borderRadius: "4px" }}
-                onMouseEnter={e => e.currentTarget.style.background = "rgba(8,43,73,0.06)"}
+                style={{ color: "#0C0D11", background: "none", border: "none", cursor: "pointer", padding: "6px", borderRadius: "4px" }}
+                onMouseEnter={e => e.currentTarget.style.background = "rgba(12, 13, 17,0.06)"}
                 onMouseLeave={e => e.currentTarget.style.background = "none"}
               >
                 <Menu size={20} />
               </button>
-              <span style={{ color: "#082B49", fontSize: "0.875rem", fontWeight: 600, fontFamily: "'Inter', sans-serif" }}
+              <span style={{ color: "#0C0D11", fontSize: "0.875rem", fontWeight: 600, fontFamily: "'Inter', sans-serif" }}
                 className="hidden sm:block">
                 {currentPageLabel}
               </span>
@@ -255,7 +255,7 @@ export default function AdminLayout({ children }) {
                 <button
                   onClick={() => setNotifOpen(o => !o)}
                   style={{ color: "#765334", background: "none", border: "none", cursor: "pointer", padding: "6px", borderRadius: "4px", position: "relative" }}
-                  onMouseEnter={e => e.currentTarget.style.background = "rgba(8,43,73,0.06)"}
+                  onMouseEnter={e => e.currentTarget.style.background = "rgba(12, 13, 17,0.06)"}
                   onMouseLeave={e => e.currentTarget.style.background = "none"}
                 >
                   <Bell size={18} />
@@ -277,13 +277,13 @@ export default function AdminLayout({ children }) {
                       style={{
                         position: "absolute", right: 0, top: "100%", marginTop: 8,
                         width: 280, background: "#FAF3E4",
-                        border: "1px solid rgba(8,43,73,0.12)",
-                        borderRadius: 8, boxShadow: "0 8px 32px rgba(8,43,73,0.12)",
+                        border: "1px solid rgba(12, 13, 17,0.12)",
+                        borderRadius: 8, boxShadow: "0 8px 32px rgba(12, 13, 17,0.12)",
                         zIndex: 100, overflow: "hidden",
                       }}
                     >
                       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-                        <span style={{ color: "#082B49", fontSize: "0.875rem", fontWeight: 600 }}>Notifications</span>
+                        <span style={{ color: "#0C0D11", fontSize: "0.875rem", fontWeight: 600 }}>Notifications</span>
                         <button onClick={() => setNotifOpen(false)} style={{ color: "#765334", background: "none", border: "none", cursor: "pointer" }}>
                           <X size={14} />
                         </button>
@@ -292,7 +292,7 @@ export default function AdminLayout({ children }) {
                         {notifications.length === 0
                           ? <p style={{ color: "#765334", fontSize: "0.75rem", textAlign: "center", padding: "24px" }}>No notifications</p>
                           : notifications.map(n => (
-                            <div key={n.id} style={{ display: "flex", alignItems: "flex-start", gap: 12, padding: "12px 16px", borderBottom: "1px solid rgba(8,43,73,0.08)", cursor: "pointer" }}>
+                            <div key={n.id} style={{ display: "flex", alignItems: "flex-start", gap: 12, padding: "12px 16px", borderBottom: "1px solid rgba(12, 13, 17,0.08)", cursor: "pointer" }}>
                               <AlertTriangle size={13} style={{ color: "#C5963A", marginTop: 2 }} />
                               <div style={{ flex: 1 }}>
                                 <p style={{ color: "#292725", fontSize: "0.75rem" }}>{n.msg}</p>
@@ -316,7 +316,7 @@ export default function AdminLayout({ children }) {
                   width: 30, height: 30, borderRadius: "50%",
                   background: "linear-gradient(135deg, #C5963A, #9A8870)",
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  color: "#082B49", fontWeight: 700, fontSize: "0.6875rem",
+                  color: "#0C0D11", fontWeight: 700, fontSize: "0.6875rem",
                   border: "2px solid rgba(216,199,174,0.3)",
                   flexShrink: 0, cursor: "default",
                 }}>
@@ -331,7 +331,7 @@ export default function AdminLayout({ children }) {
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto bg-[#082B49]" style={{ padding: "24px" }}>
+        <main className="flex-1 overflow-y-auto bg-[#0C0D11]" style={{ padding: "24px" }}>
           {children}
         </main>
       </div>

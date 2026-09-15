@@ -4,10 +4,10 @@
   --color-royal-cream: #F4E9D2;
   --color-royal-cream-light: #F5EBD8;
   --color-royal-cream-input: #FAF3E4;
-  --color-royal-navy: #082B49;
-  --color-royal-navy-mid: #0B304D;
-  --color-royal-navy-deep: #102F48;
-  --color-royal-navy-alt: #173A55;
+  --color-royal-navy: #0C0D11;
+  --color-royal-navy-mid: #0C0D11;
+  --color-royal-navy-deep: #0C0D11;
+  --color-royal-navy-alt: #0C0D11;
   --color-royal-gold: #C5963A;
   --color-royal-gold-light: #D2AA55;
   --color-royal-gold-dark: #B8862D;
@@ -24,10 +24,10 @@
     --royal-cream:         #F4E9D2;
     --royal-cream-light:   #F5EBD8;
     --royal-cream-input:   #FAF3E4;
-    --royal-navy:          #082B49;
-    --royal-navy-mid:      #0B304D;
-    --royal-navy-deep:     #102F48;
-    --royal-navy-alt:      #173A55;
+    --royal-navy:          #0C0D11;
+    --royal-navy-mid:      #0C0D11;
+    --royal-navy-deep:     #0C0D11;
+    --royal-navy-alt:      #0C0D11;
     --royal-gold:          #C5963A;
     --royal-gold-light:    #D2AA55;
     --royal-gold-dark:     #B8862D;
@@ -56,14 +56,14 @@
     --gold-muted:          var(--royal-gold-dark);
 
     --border-gold:         rgba(197, 150, 58, 0.45);
-    --border-navy:         rgba(8, 43, 73, 0.2);
-    --border-subtle:       rgba(8, 43, 73, 0.12);
+    --border-navy:         rgba(12, 13, 17, 0.2);
+    --border-subtle:       rgba(12, 13, 17, 0.12);
     --border-light:        rgba(197, 150, 58, 0.25);
     --divider:             rgba(197, 150, 58, 0.35);
 
-    --shadow-soft:         0 4px 24px rgba(8, 43, 73, 0.08);
-    --shadow-card:         0 2px 16px rgba(8, 43, 73, 0.1);
-    --shadow-card-lg:      0 8px 32px rgba(8, 43, 73, 0.14);
+    --shadow-soft:         0 4px 24px rgba(12, 13, 17, 0.08);
+    --shadow-card:         0 2px 16px rgba(12, 13, 17, 0.1);
+    --shadow-card-lg:      0 8px 32px rgba(12, 13, 17, 0.14);
     --shadow-gold:         0 4px 20px rgba(197, 150, 58, 0.18);
 
     /* Legacy compatibility mappings */
@@ -189,13 +189,13 @@
     width: 3.25rem;
     height: 3.25rem;
     border-radius: 9999px;
-    background-color: #082B49;
+    background-color: #0C0D11;
     border: 2px solid #C5963A;
     color: #C5963A;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(8, 43, 73, 0.25);
+    box-shadow: 0 4px 12px rgba(12, 13, 17, 0.25);
     transition: transform 0.3s ease, border-color 0.3s ease;
   }
   .poster-navy-badge:hover {
@@ -205,17 +205,17 @@
   }
 
   .poster-ribbon {
-    background: linear-gradient(90deg, #061D33 0%, #082B49 50%, #061D33 100%);
+    background: linear-gradient(90deg, #0C0D11 0%, #0C0D11 50%, #0C0D11 100%);
     border-top: 2px solid #C5963A;
     border-bottom: 2px solid #C5963A;
     color: #F5EBD8;
-    box-shadow: 0 8px 24px rgba(8, 43, 73, 0.3);
+    box-shadow: 0 8px 24px rgba(12, 13, 17, 0.3);
   }
 
   .poster-parchment-card {
     background-color: #F5EBD8;
     border: 1px solid rgba(197, 150, 58, 0.45);
-    box-shadow: 0 4px 16px rgba(8, 43, 73, 0.08);
+    box-shadow: 0 4px 16px rgba(12, 13, 17, 0.08);
     position: relative;
     transition: all 0.3s ease;
   }
@@ -289,7 +289,7 @@
 
   /* Primary Button — Obsidian Black */
   .btn-primary-equestrian {
-    background: #0B0C10;
+    background: #0C0D11;
     color: var(--royal-cream-light);
     font-weight: 600;
     font-size: 0.8125rem;
@@ -325,7 +325,7 @@
     font-family: 'Inter', sans-serif;
   }
   .btn-secondary-equestrian:hover {
-    background: rgba(8, 43, 73, 0.06);
+    background: rgba(12, 13, 17, 0.06);
     border-color: var(--royal-gold);
     color: var(--royal-navy);
   }
@@ -385,7 +385,7 @@
   }
   select.input-premium option, select option {
     background-color: #FAF3E4;
-    color: #082B49;
+    color: #0C0D11;
     padding: 8px 12px;
   }
 

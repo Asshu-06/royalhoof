@@ -134,7 +134,7 @@ export default function ProgramDetailPage() {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center bg-[#FAF3E4] px-4 text-center">
         <HelpCircle className="w-16 h-16 text-[#C5963A] mb-4" />
-        <h2 className="text-2xl font-bold text-[#082B49] mb-2 font-serif">Program Not Found</h2>
+        <h2 className="text-2xl font-bold text-[#0C0D11] mb-2 font-serif">Program Not Found</h2>
         <p className="text-[#765334] mb-6">The equestrian program you are looking for does not exist or has been moved.</p>
         <Link to="/" className="btn-primary-equestrian px-6 py-3 text-sm">
           Return to Homepage
@@ -156,7 +156,7 @@ export default function ProgramDetailPage() {
       </Helmet>
 
       {/* Header / Breadcrumbs banner */}
-      <div className="bg-[#082B49] text-[#F5EBD8] py-12 px-4 sm:px-6 lg:px-8 border-b border-[#C5963A]/20">
+      <div className="bg-[#0C0D11] text-[#F5EBD8] py-12 px-4 sm:px-6 lg:px-8 border-b border-[#C5963A]/20">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-2 text-xs sm:text-sm text-[#D2AA55] mb-6">
             <button 
@@ -193,7 +193,7 @@ export default function ProgramDetailPage() {
               href="#booking-form"
               className="btn-gold-equestrian flex-shrink-0 px-7 py-3.5 text-xs sm:text-sm tracking-wider uppercase inline-flex items-center gap-2 rounded-lg font-bold shadow-lg border-2 border-[#C5963A] transition-all hover:bg-[#D2AA55] hover:border-[#D2AA55] hover:scale-[1.03]"
             >
-              <Calendar size={18} className="text-[#082B49]" />
+              <Calendar size={18} className="text-[#0C0D11]" />
               Book or Enquire Now
             </a>
           </div>
@@ -218,18 +218,18 @@ export default function ProgramDetailPage() {
                   e.target.style.opacity = '0.7';
                 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#082B49]/70 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0C0D11]/70 via-transparent to-transparent pointer-events-none" />
               
               {/* Quick Info Badges Overlay */}
               <div className="absolute bottom-4 left-4 right-4 flex flex-wrap items-center gap-3 text-xs sm:text-sm text-[#F5EBD8]">
                 {program.suitability && (
-                  <span className="bg-[#082B49]/90 backdrop-blur px-3 py-1.5 rounded-lg border border-[#C5963A]/40 flex items-center gap-2 font-medium">
+                  <span className="bg-[#0C0D11]/90 backdrop-blur px-3 py-1.5 rounded-lg border border-[#C5963A]/40 flex items-center gap-2 font-medium">
                     <Award size={14} className="text-[#C5963A]" />
                     {program.suitability}
                   </span>
                 )}
                 {program.duration && (
-                  <span className="bg-[#082B49]/90 backdrop-blur px-3 py-1.5 rounded-lg border border-[#C5963A]/40 flex items-center gap-2 font-medium">
+                  <span className="bg-[#0C0D11]/90 backdrop-blur px-3 py-1.5 rounded-lg border border-[#C5963A]/40 flex items-center gap-2 font-medium">
                     <Clock size={14} className="text-[#C5963A]" />
                     {program.duration}
                   </span>
@@ -239,7 +239,7 @@ export default function ProgramDetailPage() {
 
             {/* Overview Section */}
             <div className="bg-[#F4E9D2] p-8 rounded-2xl border border-[#C5963A]/20 shadow-md">
-              <h2 className="text-2xl font-bold font-serif text-[#082B49] mb-4 flex items-center gap-3">
+              <h2 className="text-2xl font-bold font-serif text-[#0C0D11] mb-4 flex items-center gap-3">
                 <span className="w-2 h-7 bg-[#C5963A] rounded-full inline-block" />
                 Program Overview
               </h2>
@@ -251,7 +251,7 @@ export default function ProgramDetailPage() {
             {/* Program Key Highlights Grid */}
             {program.highlights && program.highlights.length > 0 && (
               <div>
-                <h2 className="text-2xl font-bold font-serif text-[#082B49] mb-6 flex items-center gap-3">
+                <h2 className="text-2xl font-bold font-serif text-[#0C0D11] mb-6 flex items-center gap-3">
                   <span className="w-2 h-7 bg-[#C5963A] rounded-full inline-block" />
                   Key Highlights & Benefits
                 </h2>
@@ -260,12 +260,12 @@ export default function ProgramDetailPage() {
                     <motion.div 
                       key={idx}
                       whileHover={{ y: -3 }}
-                      className="p-5 rounded-xl bg-white/80 border border-[#C5963A]/20 shadow-sm hover:border-[#082B49] transition-all"
+                      className="p-5 rounded-xl bg-white/80 border border-[#C5963A]/20 shadow-sm hover:border-[#0C0D11] transition-all"
                     >
                       <div className="flex items-start gap-3">
                         <CheckCircle2 className="w-5 h-5 text-[#C5963A] flex-shrink-0 mt-0.5" />
                         <div>
-                          <h3 className="font-bold text-[#082B49] text-base mb-1 font-serif">
+                          <h3 className="font-bold text-[#0C0D11] text-base mb-1 font-serif">
                             {typeof item === 'string' ? item : item.title}
                           </h3>
                           {typeof item === 'object' && item.desc && (
@@ -283,7 +283,7 @@ export default function ProgramDetailPage() {
 
             {/* Curriculum / Modules Section */}
             {program.curriculum && program.curriculum.length > 0 && (
-              <div className="bg-[#082B49] text-[#F5EBD8] p-8 rounded-2xl shadow-xl border border-[#C5963A]/30">
+              <div className="bg-[#0C0D11] text-[#F5EBD8] p-8 rounded-2xl shadow-xl border border-[#C5963A]/30">
                 <h2 className="text-2xl font-bold font-serif text-[#F5EBD8] mb-6 flex items-center gap-3">
                   <Trophy size={22} className="text-[#C5963A]" />
                   Curriculum & Training Stages
@@ -294,7 +294,7 @@ export default function ProgramDetailPage() {
                       key={idx}
                       className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10"
                     >
-                      <span className="w-8 h-8 rounded-full bg-[#C5963A] text-[#082B49] font-bold flex items-center justify-center text-sm flex-shrink-0">
+                      <span className="w-8 h-8 rounded-full bg-[#C5963A] text-[#0C0D11] font-bold flex items-center justify-center text-sm flex-shrink-0">
                         {idx + 1}
                       </span>
                       <span className="text-sm sm:text-base text-[#F5EBD8] font-sans">
@@ -309,7 +309,7 @@ export default function ProgramDetailPage() {
             {/* Program Gallery */}
             {program.gallery && program.gallery.length > 0 && (
               <div>
-                <h2 className="text-2xl font-bold font-serif text-[#082B49] mb-6 flex items-center gap-3">
+                <h2 className="text-2xl font-bold font-serif text-[#0C0D11] mb-6 flex items-center gap-3">
                   <Sparkles size={22} className="text-[#C5963A]" />
                   Program Photo Showcase
                 </h2>
@@ -317,7 +317,7 @@ export default function ProgramDetailPage() {
                   {program.gallery.map((imgUrl, gIdx) => (
                     <div 
                       key={gIdx} 
-                      className="rounded-xl overflow-hidden shadow-md border border-[#C5963A]/20 aspect-video sm:aspect-square group relative bg-[#082B49]/5"
+                      className="rounded-xl overflow-hidden shadow-md border border-[#C5963A]/20 aspect-video sm:aspect-square group relative bg-[#0C0D11]/5"
                     >
                       <img 
                         src={imgUrl} 
@@ -341,7 +341,7 @@ export default function ProgramDetailPage() {
           <div className="space-y-8">
             
             {/* Quick Info Box */}
-            <div className="bg-[#082B49] text-[#F5EBD8] p-6 rounded-2xl shadow-xl border border-[#C5963A]/30">
+            <div className="bg-[#0C0D11] text-[#F5EBD8] p-6 rounded-2xl shadow-xl border border-[#C5963A]/30">
               <h3 className="text-xl font-bold font-serif text-[#C5963A] mb-5 border-b border-white/10 pb-3 flex items-center gap-2">
                 <Shield size={18} />
                 Program Information
@@ -384,7 +384,7 @@ export default function ProgramDetailPage() {
 
             {/* Quick Enquiry / Booking Form */}
             <div id="booking-form" className="bg-[#F4E9D2] p-7 rounded-2xl border-2 border-[#C5963A]/40 shadow-xl">
-              <h3 className="text-xl font-bold font-serif text-[#082B49] mb-1">
+              <h3 className="text-xl font-bold font-serif text-[#0C0D11] mb-1">
                 Enquire for {program.title}
               </h3>
               <p className="text-xs text-[#765334] mb-6 font-sans">
@@ -393,7 +393,7 @@ export default function ProgramDetailPage() {
 
               <form onSubmit={handleFormSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#082B49] mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#0C0D11] mb-1">
                     Your Name *
                   </label>
                   <input 
@@ -402,12 +402,12 @@ export default function ProgramDetailPage() {
                     value={formData.name}
                     onChange={e => setFormData({ ...formData, name: e.target.value })}
                     placeholder="Enter your full name"
-                    className="w-full px-4 py-2.5 rounded-lg border border-[#C5963A]/30 bg-white text-[#292725] text-sm focus:outline-none focus:border-[#082B49]"
+                    className="w-full px-4 py-2.5 rounded-lg border border-[#C5963A]/30 bg-white text-[#292725] text-sm focus:outline-none focus:border-[#0C0D11]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#082B49] mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#0C0D11] mb-1">
                     Phone Number *
                   </label>
                   <input 
@@ -429,12 +429,12 @@ export default function ProgramDetailPage() {
                     inputMode="numeric"
                     pattern="[0-9]{10}"
                     placeholder="10-digit mobile number"
-                    className="w-full px-4 py-2.5 rounded-lg border border-[#C5963A]/30 bg-white text-[#292725] text-sm focus:outline-none focus:border-[#082B49]"
+                    className="w-full px-4 py-2.5 rounded-lg border border-[#C5963A]/30 bg-white text-[#292725] text-sm focus:outline-none focus:border-[#0C0D11]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#082B49] mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#0C0D11] mb-1">
                     Email Address
                   </label>
                   <input 
@@ -442,12 +442,12 @@ export default function ProgramDetailPage() {
                     value={formData.email}
                     onChange={e => setFormData({ ...formData, email: e.target.value })}
                     placeholder="you@example.com"
-                    className="w-full px-4 py-2.5 rounded-lg border border-[#C5963A]/30 bg-white text-[#292725] text-sm focus:outline-none focus:border-[#082B49]"
+                    className="w-full px-4 py-2.5 rounded-lg border border-[#C5963A]/30 bg-white text-[#292725] text-sm focus:outline-none focus:border-[#0C0D11]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#082B49] mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#0C0D11] mb-1">
                     Message / Preferred Timing
                   </label>
                   <textarea 
@@ -456,7 +456,7 @@ export default function ProgramDetailPage() {
                     value={formData.message}
                     onChange={e => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Specify preferred dates, number of riders, or any questions..."
-                    className="w-full px-4 py-2.5 rounded-lg border border-[#C5963A]/30 bg-white text-[#292725] text-sm focus:outline-none focus:border-[#082B49] resize-none"
+                    className="w-full px-4 py-2.5 rounded-lg border border-[#C5963A]/30 bg-white text-[#292725] text-sm focus:outline-none focus:border-[#0C0D11] resize-none"
                   />
                 </div>
 
@@ -467,12 +467,12 @@ export default function ProgramDetailPage() {
                 >
                   {submitting ? (
                     <>
-                      <Loader2 size={16} className="animate-spin text-[#082B49]" />
+                      <Loader2 size={16} className="animate-spin text-[#0C0D11]" />
                       Submitting...
                     </>
                   ) : (
                     <>
-                      <Send size={16} className="text-[#082B49]" />
+                      <Send size={16} className="text-[#0C0D11]" />
                       Send Enquiry Now
                     </>
                   )}
@@ -497,7 +497,7 @@ export default function ProgramDetailPage() {
                 <Link
                   key={idx}
                   to={`/programs/${op.slug}`}
-                  className="group bg-[#FAF3E4] p-6 rounded-xl border border-[#C5963A]/30 shadow-md hover:shadow-xl hover:border-[#082B49] transition-all flex flex-col justify-between"
+                  className="group bg-[#FAF3E4] p-6 rounded-xl border border-[#C5963A]/30 shadow-md hover:shadow-xl hover:border-[#0C0D11] transition-all flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-4">
@@ -505,14 +505,14 @@ export default function ProgramDetailPage() {
                         {op.tag}
                       </span>
                     </div>
-                    <h3 className="text-xl font-bold font-serif text-[#082B49] mb-2 group-hover:text-[#C5963A] transition-colors">
+                    <h3 className="text-xl font-bold font-serif text-[#0C0D11] mb-2 group-hover:text-[#C5963A] transition-colors">
                       {op.title}
                     </h3>
                     <p className="text-xs sm:text-sm text-[#5A4430] line-clamp-3 font-sans leading-relaxed">
                       {op.shortDesc}
                     </p>
                   </div>
-                  <div className="pt-4 mt-4 border-t border-[#C5963A]/15 flex items-center justify-between text-xs font-bold text-[#082B49]">
+                  <div className="pt-4 mt-4 border-t border-[#C5963A]/15 flex items-center justify-between text-xs font-bold text-[#0C0D11]">
                     <span>Explore Program</span>
                     <ArrowRight size={14} className="text-[#C5963A] group-hover:translate-x-1 transition-transform" />
                   </div>

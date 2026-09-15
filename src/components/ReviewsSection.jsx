@@ -42,7 +42,7 @@ function ReviewCard({ review, currentUserId, onEdit, onDelete }) {
             {initials}
           </div>
           <div>
-            <p className="text-[#082B49] text-sm font-semibold">{review.name || "Customer"}</p>
+            <p className="text-[#0C0D11] text-sm font-semibold">{review.name || "Customer"}</p>
             <p className="text-[#765334] text-xs">{new Date(review.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</p>
           </div>
         </div>
@@ -205,7 +205,7 @@ export default function ReviewsSection() {
             onSubmit={handleSubmit}
             className="bg-[#FAF3E4] border border-[#765334] rounded-xl p-6 mb-8 space-y-4"
           >
-            <p className="text-[#082B49] font-semibold">{editingId ? "Edit your review" : "Share your experience"}</p>
+            <p className="text-[#0C0D11] font-semibold">{editingId ? "Edit your review" : "Share your experience"}</p>
             
             {/* Anonymous user fields */}
             {!user && (
@@ -288,7 +288,7 @@ export default function ReviewsSection() {
               </button>
               <button type="submit" disabled={submitting}
                 className="btn-gold-equestrian flex-1 py-2.5 disabled:opacity-50 flex items-center justify-center gap-2">
-                {submitting && <div className="w-3 h-3 border-2 border-[#082B49] border-t-transparent rounded-full animate-spin" />}
+                {submitting && <div className="w-3 h-3 border-2 border-[#0C0D11] border-t-transparent rounded-full animate-spin" />}
                 {editingId ? "Update" : "Submit Review"}
               </button>
             </div>
