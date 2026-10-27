@@ -157,6 +157,50 @@ function AboutSection() {
     getSetting("about_image_url").then(url => {
       if (url) setImageUrl(url)
     }).catch(() => {})
+
+    // Listen for real-time updates from admin panel (same tab)
+    const handleUpdate = (e) => {
+      if (e.detail?.key === 'about_section_en' && e.detail?.value) {
+        // Value is already parsed by settingsService
+        const newData = typeof e.detail.value === 'string' 
+          ? JSON.parse(e.detail.value) 
+          : e.detail.value
+        setDbData(newData)
+      }
+      if (e.detail?.key === 'about_image_url' && e.detail?.value) {
+        setImageUrl(e.detail.value)
+      }
+    }
+    window.addEventListener('site_settings_updated', handleUpdate)
+
+    // Listen for localStorage changes from other tabs
+    const handleStorageChange = (e) => {
+      console.log('Storage event received:', e.key, e.newValue)
+      if (e.key === 'rh_setting_about_section_en' && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue)
+          console.log('Updating about section data:', parsed)
+          setDbData(parsed)
+        } catch (err) {
+          console.error("Error parsing about_section_en from storage:", err)
+        }
+      }
+      if (e.key === 'rh_setting_about_image_url' && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue)
+          console.log('Updating about image URL:', parsed)
+          setImageUrl(parsed)
+        } catch (err) {
+          setImageUrl(e.newValue)
+        }
+      }
+    }
+    window.addEventListener('storage', handleStorageChange)
+
+    return () => {
+      window.removeEventListener('site_settings_updated', handleUpdate)
+      window.removeEventListener('storage', handleStorageChange)
+    }
   }, [])
 
   const d = dbData || {
@@ -273,7 +317,30 @@ function WhatWeOfferSection() {
       }
     }
     window.addEventListener('site_settings_updated', handleUpdate)
-    return () => window.removeEventListener('site_settings_updated', handleUpdate)
+
+    // Listen for localStorage changes from other tabs
+    const handleStorageChange = (e) => {
+      if (e.key === 'rh_setting_site_offerings_header' && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue)
+          setHeader(parsed)
+        } catch (err) {}
+      }
+      if (e.key === 'rh_setting_site_offerings' && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue)
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setOffers(parsed)
+          }
+        } catch (err) {}
+      }
+    }
+    window.addEventListener('storage', handleStorageChange)
+
+    return () => {
+      window.removeEventListener('site_settings_updated', handleUpdate)
+      window.removeEventListener('storage', handleStorageChange)
+    }
   }, [])
 
   const ICON_MAP = {
@@ -1137,6 +1204,39 @@ function BenefitsPosterSection() {
         }
       })
       .catch(() => {})
+
+    // Listen for real-time updates (same tab)
+    const handleUpdate = (e) => {
+      if (e.detail?.key === 'benefits_content' && e.detail?.value) {
+        try {
+          const parsed = typeof e.detail.value === 'string' ? JSON.parse(e.detail.value) : e.detail.value
+          if (parsed && Array.isArray(parsed.categories) && parsed.categories.length > 0) {
+            setBenefitsData(parsed)
+          }
+        } catch (err) {
+          console.error("Error parsing benefits_content update:", err)
+        }
+      }
+    }
+    window.addEventListener('site_settings_updated', handleUpdate)
+
+    // Listen for localStorage changes from other tabs
+    const handleStorageChange = (e) => {
+      if (e.key === 'rh_setting_benefits_content' && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue)
+          if (parsed && Array.isArray(parsed.categories) && parsed.categories.length > 0) {
+            setBenefitsData(parsed)
+          }
+        } catch (err) {}
+      }
+    }
+    window.addEventListener('storage', handleStorageChange)
+
+    return () => {
+      window.removeEventListener('site_settings_updated', handleUpdate)
+      window.removeEventListener('storage', handleStorageChange)
+    }
   }, [])
 
   const categories = benefitsData.categories || DEFAULT_BENEFITS.categories
@@ -1425,6 +1525,53 @@ export default function HomePage() {
     getSetting("why_choose_us_en").then(val => {
       if (val) { try { setWhyChooseData(JSON.parse(val)) } catch {} }
     }).catch(() => {})
+
+    // Listen for real-time updates (same tab)
+    const handleUpdate = (e) => {
+      if (e.detail?.key === 'features_bar' && e.detail?.value) {
+        try {
+          const parsed = typeof e.detail.value === 'string' ? JSON.parse(e.detail.value) : e.detail.value
+          if (Array.isArray(parsed) && parsed.length) {
+            setFeatures(parsed)
+          }
+        } catch (err) {
+          console.error("Error parsing features_bar update:", err)
+        }
+      }
+      if (e.detail?.key === 'why_choose_us_en' && e.detail?.value) {
+        try {
+          const parsed = typeof e.detail.value === 'string' ? JSON.parse(e.detail.value) : e.detail.value
+          setWhyChooseData(parsed)
+        } catch (err) {
+          console.error("Error parsing why_choose_us_en update:", err)
+        }
+      }
+    }
+    window.addEventListener('site_settings_updated', handleUpdate)
+
+    // Listen for localStorage changes from other tabs
+    const handleStorageChange = (e) => {
+      if (e.key === 'rh_setting_features_bar' && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue)
+          if (Array.isArray(parsed) && parsed.length) {
+            setFeatures(parsed)
+          }
+        } catch (err) {}
+      }
+      if (e.key === 'rh_setting_why_choose_us_en' && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue)
+          setWhyChooseData(parsed)
+        } catch (err) {}
+      }
+    }
+    window.addEventListener('storage', handleStorageChange)
+
+    return () => {
+      window.removeEventListener('site_settings_updated', handleUpdate)
+      window.removeEventListener('storage', handleStorageChange)
+    }
 
     // Load events from database
     loadEvents()

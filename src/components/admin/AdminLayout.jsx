@@ -27,7 +27,6 @@ const NAV = [
   { path: "/admin/why-choose", label: "Why Choose Us", icon: CheckCircle },
   { path: "/admin/benefits", label: "Benefits Section", icon: Sparkles },
   { path: "/admin/csr", label: "CSR Section", icon: Heart },
-  { path: "/admin/orders", label: "Orders", icon: ShoppingBag },
 ]
 
 function Sidebar({ pathname, onSignOut, onNavClick, user, pendingCount }) {

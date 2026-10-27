@@ -25,6 +25,29 @@ export default function PackagesPage() {
 
   useEffect(() => {
     loadPackages()
+
+    // Listen for real-time updates when packages are modified
+    const handleUpdate = (e) => {
+      if (e.detail?.key === 'packages_updated') {
+        console.log('Packages updated, reloading...')
+        loadPackages()
+      }
+    }
+    window.addEventListener('site_settings_updated', handleUpdate)
+
+    // Listen for storage changes from other tabs
+    const handleStorageChange = (e) => {
+      if (e.key === 'packages_last_updated') {
+        console.log('Packages updated in another tab, reloading...')
+        loadPackages()
+      }
+    }
+    window.addEventListener('storage', handleStorageChange)
+
+    return () => {
+      window.removeEventListener('site_settings_updated', handleUpdate)
+      window.removeEventListener('storage', handleStorageChange)
+    }
   }, [])
 
   const loadPackages = async () => {
@@ -42,7 +65,7 @@ export default function PackagesPage() {
         throw error
       }
 
-      console.log('Loaded packages from database:', data)
+      console.log('Loaded packages from database (ordered by display_order):', data)
       
       const adult = (data || []).filter(pkg => pkg.package_type === 'adult').map(pkg => ({
         id: pkg.id,
@@ -52,7 +75,8 @@ export default function PackagesPage() {
         popular: pkg.is_popular,
         features: Array.isArray(pkg.features) ? pkg.features : (pkg.features ? JSON.parse(pkg.features) : []),
         color: pkg.is_popular ? '#C5963A' : '#B9AFA3',
-        description: pkg.description
+        description: pkg.description,
+        displayOrder: pkg.display_order
       }))
 
       const kids = (data || []).filter(pkg => pkg.package_type === 'kids').map(pkg => ({
@@ -61,9 +85,14 @@ export default function PackagesPage() {
         price: pkg.price,
         duration: pkg.duration,
         ageGroup: pkg.age_group,
+        popular: pkg.is_popular,
         features: Array.isArray(pkg.features) ? pkg.features : (pkg.features ? JSON.parse(pkg.features) : []),
-        description: pkg.description
+        description: pkg.description,
+        displayOrder: pkg.display_order
       }))
+
+      console.log('Adult packages:', adult)
+      console.log('Kids packages:', kids)
 
       setAdultPackages(adult)
       setKidsPackages(kids)
@@ -458,6 +487,15 @@ export default function PackagesPage() {
                             : 'bg-white text-[#292725] hover:bg-[#0C0D11] hover:text-[#F5EBD8] hover:shadow-xl hover:shadow-[#0C0D11]/30'
                         }`}
                       >
+                        {pkg.popular && (
+                          <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+                            <div className="bg-gradient-to-r from-[#C5963A] to-[#D2AA55] text-white px-5 py-1.5 rounded-full text-xs font-bold uppercase flex items-center gap-1.5 shadow-md shadow-[#C5963A]/30">
+                              <Star size={14} fill="currentColor" />
+                              Most Popular
+                            </div>
+                          </div>
+                        )}
+
                         <div>
                           {/* Package Name & Age Group */}
                           <div className="mb-4">

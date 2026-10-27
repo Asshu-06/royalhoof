@@ -67,11 +67,22 @@ export async function getSetting(key) {
 export async function setSetting(key, value) {
   const stringifiedValue = typeof value === 'string' ? value : JSON.stringify(value)
 
+  // Parse the value for the event dispatch so listeners get the actual data
+  let parsedValue = value
+  if (typeof value === 'string') {
+    try {
+      parsedValue = JSON.parse(value)
+    } catch (e) {
+      // Keep as string if not valid JSON
+      parsedValue = value
+    }
+  }
+
   // 1. Always save to LocalStorage immediately for instant offline/online UI sync
   try {
     localStorage.setItem(`${CACHE_PREFIX}${key}`, stringifiedValue)
     // Dispatch custom event for real-time UI updates across components/tabs
-    window.dispatchEvent(new CustomEvent('site_settings_updated', { detail: { key, value } }))
+    window.dispatchEvent(new CustomEvent('site_settings_updated', { detail: { key, value: parsedValue } }))
   } catch (e) {
     console.warn(`[setSetting] LocalStorage write error for ${key}:`, e)
   }

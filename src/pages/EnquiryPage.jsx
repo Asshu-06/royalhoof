@@ -61,22 +61,17 @@ export default function EnquiryPage() {
         throw error
       }
 
-      toast.success('Your enquiry has been submitted successfully! We will contact you soon.')
-      
-      // Also open WhatsApp for immediate contact
-      const text = `*General Enquiry*\n\nCategory: ${categoryLabel}\nName: ${enquiryForm.name}\nEmail: ${enquiryForm.email}\nPhone: ${enquiryForm.phone}\n\nMessage:\n${enquiryForm.message}`
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank")
+      toast.success('Thank you for your interest in Horse Riding! Our team will contact you soon.', {
+        duration: 5000,
+        icon: '🐴',
+      })
       
       // Reset form
       setEnquiryForm({ name: '', email: '', phone: '', category: 'child', message: '' })
       
     } catch (error) {
       console.error('Error submitting enquiry:', error)
-      toast.error('Failed to submit enquiry. Please try again or contact us directly via WhatsApp.')
-      
-      // Fallback to WhatsApp only
-      const text = `*General Enquiry*\n\nCategory: ${categoryLabel}\nName: ${enquiryForm.name}\nEmail: ${enquiryForm.email}\nPhone: ${enquiryForm.phone}\n\nMessage:\n${enquiryForm.message}`
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank")
+      toast.error('Failed to submit enquiry. Please try again or contact us directly.')
     } finally {
       setSubmittingEnquiry(false)
     }
@@ -115,21 +110,17 @@ export default function EnquiryPage() {
         throw error
       }
 
-      toast.success('Your demo request has been submitted successfully! We will contact you soon.')
-      
-      // Also open WhatsApp for immediate contact
-      const text = `*Free Demo Session Request*\n\nCategory: ${categoryLabel}\nName: ${demoForm.name}\nEmail: ${demoForm.email}\nPhone: ${demoForm.phone}\nPreferred Date: ${demoForm.date}\nPreferred Time: ${demoForm.time || 'Flexible'}\n\nNotes:\n${demoForm.notes || 'N/A'}`
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank")
+      toast.success('Thank you for your interest in Horse Riding! Our team will contact you soon to schedule your free demo session.', {
+        duration: 5000,
+        icon: '🐴',
+      })
       
       // Reset form
       setDemoForm({ name: '', email: '', phone: '', category: 'child', date: '', time: '', notes: '' })
       
     } catch (error) {
       console.error('Error submitting demo request:', error)
-      toast.error('Failed to submit demo request. Please try again or contact us directly via WhatsApp.')
-      
-      const text = `*Free Demo Session Request*\n\nCategory: ${categoryLabel}\nName: ${demoForm.name}\nEmail: ${demoForm.email}\nPhone: ${demoForm.phone}\nPreferred Date: ${demoForm.date}\nPreferred Time: ${demoForm.time || 'Flexible'}\n\nNotes:\n${demoForm.notes || 'N/A'}`
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank")
+      toast.error('Failed to submit demo request. Please try again or contact us directly.')
     } finally {
       setSubmittingDemo(false)
     }

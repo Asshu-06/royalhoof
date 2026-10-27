@@ -71,6 +71,11 @@ export default function AdminPackages() {
         if (error) throw error
         toast.success('Package created!')
       }
+      
+      // Trigger real-time update event
+      window.dispatchEvent(new CustomEvent('site_settings_updated', { detail: { key: 'packages_updated', value: Date.now() } }))
+      localStorage.setItem('packages_last_updated', Date.now().toString())
+      
       setShowForm(false); setEditingItem(null); resetForm(); fetchItems()
     } catch (err) { toast.error(err.message) }
   }
@@ -80,7 +85,13 @@ export default function AdminPackages() {
     try {
       const { error } = await supabase.from('packages').delete().eq('id', id)
       if (error) throw error
-      toast.success('Deleted'); fetchItems()
+      toast.success('Deleted')
+      
+      // Trigger real-time update event
+      window.dispatchEvent(new CustomEvent('site_settings_updated', { detail: { key: 'packages_updated', value: Date.now() } }))
+      localStorage.setItem('packages_last_updated', Date.now().toString())
+      
+      fetchItems()
     } catch (err) { toast.error(err.message) }
   }
 
@@ -88,7 +99,13 @@ export default function AdminPackages() {
     try {
       const { error } = await supabase.from('packages').update({ is_active: !item.is_active }).eq('id', item.id)
       if (error) throw error
-      toast.success(item.is_active ? 'Hidden' : 'Visible'); fetchItems()
+      toast.success(item.is_active ? 'Hidden' : 'Visible')
+      
+      // Trigger real-time update event
+      window.dispatchEvent(new CustomEvent('site_settings_updated', { detail: { key: 'packages_updated', value: Date.now() } }))
+      localStorage.setItem('packages_last_updated', Date.now().toString())
+      
+      fetchItems()
     } catch (err) { toast.error(err.message) }
   }
 

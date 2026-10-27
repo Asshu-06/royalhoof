@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 import toast from 'react-hot-toast'
-import { Phone, Mail, Calendar, MessageSquare, Edit2, Send, Check, X, FileText } from 'lucide-react'
+import { Phone, Mail, Calendar, MessageSquare, Edit2, Send, Check, X, FileText, Trash2 } from 'lucide-react'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import InvoiceGenerator from '../../components/InvoiceGenerator'
@@ -114,6 +114,19 @@ export default function AdminEnquiries() {
       if (error) throw error
       toast.success('Notes saved!'); setEditingNotes(null); setNotes(''); fetchItems()
     } catch (err) { toast.error(err.message) }
+  }
+
+  const deleteEnquiry = async (id, name) => {
+    if (!window.confirm(`Are you sure you want to delete the enquiry from "${name}"? This action cannot be undone.`)) return
+    try {
+      const { error } = await supabase.from('enquiries').delete().eq('id', id)
+      if (error) throw error
+      toast.success('Enquiry deleted successfully')
+      fetchItems()
+    } catch (err) {
+      console.error('Error deleting enquiry:', err)
+      toast.error('Failed to delete enquiry')
+    }
   }
 
   // WhatsApp notification functions
@@ -594,8 +607,8 @@ export default function AdminEnquiries() {
                 </div>
               )}
 
-              {/* Invoice Action */}
-              <div style={{ marginBottom: 12 }}>
+              {/* Invoice and Delete Actions */}
+              <div style={{ marginBottom: 12, display: "flex", gap: 8 }}>
                 <button 
                   onClick={() => {
                     setSelectedEnquiry(item)
@@ -614,12 +627,39 @@ export default function AdminEnquiries() {
                     fontWeight: 600,
                     fontSize: "0.8125rem",
                     fontFamily: "'Inter', sans-serif",
-                    width: "100%",
+                    flex: 1,
                     justifyContent: "center"
                   }}
                 >
                   <FileText size={16} />
                   Generate Invoice
+                </button>
+                <button 
+                  onClick={() => deleteEnquiry(item.id, item.name)}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    background: "rgba(239, 68, 68, 0.1)",
+                    color: "#ef4444",
+                    border: "1px solid rgba(239, 68, 68, 0.3)",
+                    borderRadius: 6,
+                    padding: "10px 16px",
+                    cursor: "pointer",
+                    fontWeight: 600,
+                    fontSize: "0.8125rem",
+                    fontFamily: "'Inter', sans-serif",
+                    justifyContent: "center"
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.background = "rgba(239, 68, 68, 0.2)"
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.background = "rgba(239, 68, 68, 0.1)"
+                  }}
+                >
+                  <Trash2 size={16} />
+                  Delete
                 </button>
               </div>
 
