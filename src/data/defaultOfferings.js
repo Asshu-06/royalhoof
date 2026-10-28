@@ -12,7 +12,7 @@ export const DEFAULT_OFFERINGS = [
     icon: "Target",
     title: "Beginner to Advanced Horse Riding Training",
     shortDesc: "Structured progressive riding curriculum tailored for novices through competitive equestrians with certified instructors.",
-    bannerImage: "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=1200&q=80",
+    bannerImage: "https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=1200&q=80",
     suitability: "All Skill Levels (Ages 6 to Adults)",
     duration: "Flexible 45-min to 1-Hour Sessions",
     location: "Royal Hoof Academy, Giri Farms, Nallambakkam",
@@ -30,9 +30,9 @@ export const DEFAULT_OFFERINGS = [
       "Level 4: Advanced Dressage Patterns, Pole Work & Jumping Prep"
     ],
     gallery: [
-      "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1570051008600-b34bfeaf1546?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=800&q=80"
     ]
   },
   {
@@ -61,8 +61,8 @@ export const DEFAULT_OFFERINGS = [
     ],
     gallery: [
       "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509205477838-a534e43a849f?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1585497184949-88115e6fa4dd?auto=format&fit=crop&w=800&q=80"
     ]
   },
   {
@@ -72,7 +72,7 @@ export const DEFAULT_OFFERINGS = [
     icon: "Calendar",
     title: "Weekend & Recreational Riding Sessions",
     shortDesc: "Relaxing weekend riding slots and flexible sessions perfect for busy professionals, families, and leisure riders.",
-    bannerImage: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=80",
+    bannerImage: "https://images.unsplash.com/photo-1473892845815-102217b409b8?auto=format&fit=crop&w=1200&q=80",
     suitability: "Families, Professionals & Leisure Riders",
     duration: "Weekend Morning / Evening Slots",
     location: "Royal Hoof Giri Farms Nature Trails",
@@ -90,9 +90,9 @@ export const DEFAULT_OFFERINGS = [
       "Post-Ride Club Refreshments & Lounge Relaxation"
     ],
     gallery: [
-      "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1473892845815-102217b409b8?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1564865885-c281506a05de?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1574082811751-022b4e86c099?auto=format&fit=crop&w=800&q=80"
     ]
   },
   {
@@ -102,7 +102,7 @@ export const DEFAULT_OFFERINGS = [
     icon: "Heart",
     title: "Horse Grooming & Care Education",
     shortDesc: "Learn essential equine hygiene, feeding, stable management, and bonding directly with our gentle, healthy horses.",
-    bannerImage: "https://images.unsplash.com/photo-1509205477838-a534e43a849f?auto=format&fit=crop&w=1200&q=80",
+    bannerImage: "https://images.unsplash.com/photo-1514897575457-c4db467cf78e?auto=format&fit=crop&w=1200&q=80",
     suitability: "All Animal Enthusiasts & Aspiring Horse Owners",
     duration: "1 to 2 Hours Interactive Workshop",
     location: "Royal Hoof Stables & Care Center",
@@ -120,9 +120,9 @@ export const DEFAULT_OFFERINGS = [
       "Session 4: Equine Nutrition, Feeding Schedule & Health Checks"
     ],
     gallery: [
-      "https://images.unsplash.com/photo-1509205477838-a534e43a849f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1514897575457-c4db467cf78e?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1583003528928-a97a6d8e2b6d?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1593111774240-d529f12cf4bb?auto=format&fit=crop&w=800&q=80"
     ]
   },
   {
@@ -132,7 +132,7 @@ export const DEFAULT_OFFERINGS = [
     icon: "Users",
     title: "School & College Partnership Programs",
     shortDesc: "Customized sports programs, educational field trips, and accredited equestrian training for schools and universities.",
-    bannerImage: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80",
+    bannerImage: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=80",
     suitability: "Educational Institutions, Schools & Colleges",
     duration: "Field Trips, Weekly Sports Modules or Annual Tie-ups",
     location: "Giri Farms Campus & Institutional Outposts",
@@ -150,9 +150,9 @@ export const DEFAULT_OFFERINGS = [
       "Inter-School Student Competitions & Certification"
     ],
     gallery: [
-      "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1571689935785-2c37b0e1c80c?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1590931511157-35de6e35c57c?auto=format&fit=crop&w=800&q=80"
     ]
   },
   {
@@ -181,8 +181,8 @@ export const DEFAULT_OFFERINGS = [
     ],
     gallery: [
       "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80"
     ]
   },
   {
@@ -192,7 +192,7 @@ export const DEFAULT_OFFERINGS = [
     icon: "Trophy",
     title: "Equestrian Events and Competitions",
     shortDesc: "Host and participate in intra-club showcases, dressage, showjumping, and regional equestrian tournaments.",
-    bannerImage: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=1200&q=80",
+    bannerImage: "https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=1200&q=80",
     suitability: "Intermediate & Advanced Competitive Riders",
     duration: "Scheduled Tournament & Showcase Days",
     location: "Royal Hoof Competition Arena",
@@ -210,9 +210,9 @@ export const DEFAULT_OFFERINGS = [
       "Championship Event Participation & Award Presentation"
     ],
     gallery: [
-      "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1530990933574-c0ca5a98d31a?auto=format&fit=crop&w=800&q=80"
     ]
   },
   {
@@ -222,7 +222,7 @@ export const DEFAULT_OFFERINGS = [
     icon: "Star",
     title: "Club Membership & Exclusive Riding Benefits",
     shortDesc: "Priority booking, exclusive arena access, horse boarding privileges, and private club member discounts.",
-    bannerImage: "https://images.unsplash.com/photo-1517456793572-1d8efd6dc135?auto=format&fit=crop&w=1200&q=80",
+    bannerImage: "https://images.unsplash.com/photo-1595090621832-3fe0d3ede2c0?auto=format&fit=crop&w=1200&q=80",
     suitability: "Equestrian Enthusiasts & Regular Club Members",
     duration: "Annual & Semi-Annual Memberships",
     location: "Royal Hoof Clubhouse & Private Arenas",
@@ -240,9 +240,9 @@ export const DEFAULT_OFFERINGS = [
       "Annual Member Galas, Rides & Community Meetups"
     ],
     gallery: [
-      "https://images.unsplash.com/photo-1517456793572-1d8efd6dc135?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1595090621832-3fe0d3ede2c0?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1560014908-f9b1e8ae67b6?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1563591788-3baf5e25c206?auto=format&fit=crop&w=800&q=80"
     ]
   }
 ]

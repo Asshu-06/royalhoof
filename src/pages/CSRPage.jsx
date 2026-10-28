@@ -6,11 +6,11 @@ import { getSetting } from "../services/settingsService"
 
 // Unsplash high quality equestrian & community images
 const CSR_IMAGES = {
-  animalWelfare: "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800&q=80",
-  education: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&q=80",
-  inclusive: "https://images.unsplash.com/photo-1598974357801-cbca100e65d3?w=800&q=80",
-  sustainability: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80",
-  community: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=800&q=80",
+  animalWelfare: "https://images.unsplash.com/photo-1563591788-3baf5e25c206?w=800&q=80",
+  education: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80",
+  inclusive: "https://images.unsplash.com/photo-1544717304-a2db4a7b16ee?w=800&q=80",
+  sustainability: "https://images.unsplash.com/photo-1566281796817-93bc94d7dbd2?w=800&q=80",
+  community: "https://images.unsplash.com/photo-1571689935785-2c37b0e1c80c?w=800&q=80",
 }
 
 const DEFAULT_CSR = {
