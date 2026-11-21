@@ -124,6 +124,37 @@ export default function CSRPage() {
         }
       })
       .catch(() => {})
+
+    // Live update: same tab (admin saves in same browser session)
+    const handleUpdate = (e) => {
+      if (e.detail?.key === 'csr_section_en' && e.detail?.value) {
+        try {
+          const parsed = typeof e.detail.value === 'string' ? JSON.parse(e.detail.value) : e.detail.value
+          if (parsed && typeof parsed === 'object') {
+            setData(prev => ({ ...prev, ...parsed }))
+          }
+        } catch (err) {}
+      }
+    }
+    window.addEventListener('site_settings_updated', handleUpdate)
+
+    // Live update: different tab (admin saves in another browser tab)
+    const handleStorageChange = (e) => {
+      if (e.key === 'rh_setting_csr_section_en' && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue)
+          if (parsed && typeof parsed === 'object') {
+            setData(prev => ({ ...prev, ...parsed }))
+          }
+        } catch (err) {}
+      }
+    }
+    window.addEventListener('storage', handleStorageChange)
+
+    return () => {
+      window.removeEventListener('site_settings_updated', handleUpdate)
+      window.removeEventListener('storage', handleStorageChange)
+    }
   }, [])
 
   const focusAreasList = data.focusAreas && data.focusAreas.length ? data.focusAreas : DEFAULT_CSR.focusAreas

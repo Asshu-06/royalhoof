@@ -1568,17 +1568,24 @@ export default function HomePage() {
     }
     window.addEventListener('storage', handleStorageChange)
 
+    // Load events, gallery, packages
+    loadEvents()
+    loadGalleryItems()
+    loadPackages()
+
+    // Supabase Realtime: re-fetch homepage events whenever the events table changes
+    const eventsChannel = supabase
+      .channel('homepage-events-realtime')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'events' }, () => {
+        loadEvents()
+      })
+      .subscribe()
+
     return () => {
       window.removeEventListener('site_settings_updated', handleUpdate)
       window.removeEventListener('storage', handleStorageChange)
+      supabase.removeChannel(eventsChannel)
     }
-
-    // Load events from database
-    loadEvents()
-    // Load gallery items
-    loadGalleryItems()
-    // Load packages
-    loadPackages()
   }, [])
 
   const loadEvents = async () => {

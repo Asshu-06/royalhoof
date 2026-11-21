@@ -121,6 +121,51 @@ export default function AboutPage() {
         }
       }
     })
+
+    // Live update: same tab (admin saves in same browser session)
+    const handleUpdate = (e) => {
+      if (e.detail?.key === 'about_section_en' && e.detail?.value) {
+        try {
+          const parsed = typeof e.detail.value === 'string' ? JSON.parse(e.detail.value) : e.detail.value
+          if (parsed && typeof parsed === 'object') setData(prev => ({ ...prev, ...parsed }))
+        } catch (err) {}
+      }
+      if (e.detail?.key === 'about_image_url' && e.detail?.value) {
+        setImageUrl(e.detail.value)
+      }
+      if (e.detail?.key === 'about_team' && e.detail?.value) {
+        try {
+          const parsed = typeof e.detail.value === 'string' ? JSON.parse(e.detail.value) : e.detail.value
+          if (Array.isArray(parsed) && parsed.length > 0) setTeamMembers(parsed)
+        } catch (err) {}
+      }
+    }
+    window.addEventListener('site_settings_updated', handleUpdate)
+
+    // Live update: different tab (admin saves in another browser tab)
+    const handleStorageChange = (e) => {
+      if (e.key === 'rh_setting_about_section_en' && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue)
+          if (parsed && typeof parsed === 'object') setData(prev => ({ ...prev, ...parsed }))
+        } catch (err) {}
+      }
+      if (e.key === 'rh_setting_about_image_url' && e.newValue) {
+        try { setImageUrl(JSON.parse(e.newValue)) } catch { setImageUrl(e.newValue) }
+      }
+      if (e.key === 'rh_setting_about_team' && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue)
+          if (Array.isArray(parsed) && parsed.length > 0) setTeamMembers(parsed)
+        } catch (err) {}
+      }
+    }
+    window.addEventListener('storage', handleStorageChange)
+
+    return () => {
+      window.removeEventListener('site_settings_updated', handleUpdate)
+      window.removeEventListener('storage', handleStorageChange)
+    }
   }, [])
 
   // Handle auto-scroll to hash section (#about, #vision, #mission, #our-team) or path section

@@ -77,7 +77,24 @@ export default function ProgramDetailPage() {
       }
     }
     window.addEventListener('site_settings_updated', handleUpdate)
-    return () => window.removeEventListener('site_settings_updated', handleUpdate)
+
+    // Cross-tab: admin saves in a different browser tab
+    const handleStorageChange = (e) => {
+      if (e.key === 'rh_setting_site_offerings' && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue)
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setOfferings(parsed)
+          }
+        } catch (err) {}
+      }
+    }
+    window.addEventListener('storage', handleStorageChange)
+
+    return () => {
+      window.removeEventListener('site_settings_updated', handleUpdate)
+      window.removeEventListener('storage', handleStorageChange)
+    }
   }, [])
 
   // Find program by slug or id (case-insensitive & fallback)

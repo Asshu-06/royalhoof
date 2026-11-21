@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { Calendar, MapPin, Clock, Users, ArrowLeft } from 'lucide-react'
@@ -28,6 +28,18 @@ export default function EventsPage() {
 
   useEffect(() => {
     loadEvents()
+
+    // Supabase Realtime: re-fetch whenever events table changes
+    const channel = supabase
+      .channel('events-page-realtime')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'events' }, () => {
+        loadEvents()
+      })
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
   }, [])
 
   const loadEvents = async () => {
