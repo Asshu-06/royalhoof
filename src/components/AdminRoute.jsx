@@ -1,12 +1,13 @@
-import { useLocation, Navigate } from "react-router-dom"
+import { useState } from "react"
 import { isAdminAuthenticated } from "../pages/admin/AdminLoginPage"
+import AdminLoginPage from "../pages/admin/AdminLoginPage"
 
 export default function AdminRoute({ children }) {
-  const location = useLocation()
+  // Local state triggers re-render when login succeeds
+  const [authed, setAuthed] = useState(() => isAdminAuthenticated())
 
-  if (!isAdminAuthenticated()) {
-    // Redirect to admin login, remembering where we were going
-    return <Navigate to="/admin-login" state={{ from: location.pathname }} replace />
+  if (!authed) {
+    return <AdminLoginPage onSuccess={() => setAuthed(true)} />
   }
 
   return children

@@ -188,10 +188,10 @@ export default function AdminLayout({ children }) {
     return () => document.removeEventListener("mousedown", handler)
   }, [])
 
-  const handleSignOut = async () => {
+  const handleSignOut = () => {
     sessionStorage.removeItem(ADMIN_SESSION_KEY)
     toast.success("Signed out")
-    navigate("/admin-login", { replace: true })
+    window.location.reload()
   }
 
   // Realtime new-order notifications

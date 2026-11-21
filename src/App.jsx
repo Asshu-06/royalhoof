@@ -30,9 +30,6 @@ const EnquiryPage = lazy(() => import('./pages/EnquiryPage'))
 const EventsPage = lazy(() => import('./pages/EventsPage'))
 const PolicyPage = lazy(() => import('./pages/PolicyPage'))
 
-// Admin login page (not lazy — needs to render immediately with no suspense flicker)
-import AdminLoginPage from './pages/admin/AdminLoginPage'
-
 // Admin pages (code split)
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
 const AdminAbout = lazy(() => import('./pages/admin/AdminAbout'))
@@ -145,9 +142,6 @@ export default function App() {
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
-          {/* Admin login - standalone, no layout wrapper */}
-          <Route path="/admin-login" element={<AdminLoginPage />} />
-
           {/* Admin routes - own layout, no storefront navbar/footer */}
           <Route path="/admin/*" element={
             <AdminRoute>

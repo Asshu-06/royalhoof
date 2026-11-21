@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { useNavigate, useLocation } from "react-router-dom"
 import { Eye, EyeOff, Lock, User, AlertCircle } from "lucide-react"
 import { motion } from "framer-motion"
 import logoImg from "../../assets/logo.png"
@@ -14,11 +13,7 @@ export function isAdminAuthenticated() {
   return sessionStorage.getItem(ADMIN_SESSION_KEY) === "true"
 }
 
-export default function AdminLoginPage() {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const from = location.state?.from || "/admin"
-
+export default function AdminLoginPage({ onSuccess }) {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
@@ -35,7 +30,13 @@ export default function AdminLoginPage() {
     setTimeout(() => {
       if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
         sessionStorage.setItem(ADMIN_SESSION_KEY, "true")
-        navigate(from, { replace: true })
+        // If rendered in-place by AdminRoute, call onSuccess to re-render the panel.
+        // If rendered as a standalone route, fall back to full reload.
+        if (typeof onSuccess === "function") {
+          onSuccess()
+        } else {
+          window.location.reload()
+        }
       } else {
         setLoading(false)
         setError("Incorrect username or password.")
