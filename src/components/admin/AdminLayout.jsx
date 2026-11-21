@@ -9,6 +9,7 @@ import {
 import { useAuthStore } from "../../store/authStore"
 import { useAdminStore } from "../../store/adminStore"
 import { supabase } from "../../lib/supabase"
+import { ADMIN_SESSION_KEY } from "../../pages/admin/AdminLoginPage"
 import toast from "react-hot-toast"
 import logoImg from "../../assets/logo.png"
 
@@ -29,9 +30,9 @@ const NAV = [
   { path: "/admin/csr", label: "CSR Section", icon: Heart },
 ]
 
-function Sidebar({ pathname, onSignOut, onNavClick, user, pendingCount }) {
-  const displayName = user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email?.split("@")[0] || "Admin"
-  const initials = displayName.split(" ").map(w => w[0]).slice(0, 2).join("").toUpperCase()
+function Sidebar({ pathname, onSignOut, onNavClick, pendingCount }) {
+  const displayName = "RoyalhoofAdmin"
+  const initials = "RA"
 
   return (
     <motion.aside
@@ -187,7 +188,11 @@ export default function AdminLayout({ children }) {
     return () => document.removeEventListener("mousedown", handler)
   }, [])
 
-  const handleSignOut = async () => { await signOut(); toast.success("Signed out"); navigate("/") }
+  const handleSignOut = async () => {
+    sessionStorage.removeItem(ADMIN_SESSION_KEY)
+    toast.success("Signed out")
+    navigate("/admin-login", { replace: true })
+  }
 
   // Realtime new-order notifications
   useEffect(() => {
@@ -202,8 +207,7 @@ export default function AdminLayout({ children }) {
   }, [])
 
   const currentPageLabel = NAV.find(n => pathname === n.path || (n.path !== "/admin" && pathname.startsWith(n.path)))?.label || "Admin Panel"
-  const initials = (user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email || "A")
-    .split(" ").map(w => w[0]).slice(0, 2).join("").toUpperCase()
+  const initials = "RA"
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#0C0D11]">
@@ -213,7 +217,6 @@ export default function AdminLayout({ children }) {
             pathname={pathname}
             onSignOut={handleSignOut}
             onNavClick={() => { if (window.innerWidth < 1024) setSidebarOpen(false) }}
-            user={user}
             pendingCount={pendingCount}
           />
         )}
@@ -323,7 +326,7 @@ export default function AdminLayout({ children }) {
                 </div>
                 <span style={{ color: "#765334", fontSize: "0.75rem", fontFamily: "'Inter', sans-serif" }}
                   className="hidden sm:block">
-                  {user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email?.split("@")[0]}
+                  RoyalhoofAdmin
                 </span>
               </div>
             </div>
