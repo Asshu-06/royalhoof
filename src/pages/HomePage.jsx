@@ -152,7 +152,12 @@ function AboutSection() {
 
   useEffect(() => {
     getSetting("about_section_en").then(val => {
-      if (val) { try { setDbData(JSON.parse(val)) } catch {} }
+      if (val) {
+        try {
+          const parsed = typeof val === 'string' ? JSON.parse(val) : val
+          if (parsed && typeof parsed === 'object') setDbData(parsed)
+        } catch {}
+      }
     }).catch(() => {})
     getSetting("about_image_url").then(url => {
       if (url) setImageUrl(url)
@@ -1519,11 +1524,21 @@ export default function HomePage() {
     })
     
     getSetting("features_bar").then(val => {
-      if (val) { try { const p = JSON.parse(val); if (Array.isArray(p) && p.length) setFeatures(p) } catch {} }
+      if (val) {
+        try {
+          const p = typeof val === 'string' ? JSON.parse(val) : val
+          if (Array.isArray(p) && p.length) setFeatures(p)
+        } catch {}
+      }
     }).catch(() => {})
 
     getSetting("why_choose_us_en").then(val => {
-      if (val) { try { setWhyChooseData(JSON.parse(val)) } catch {} }
+      if (val) {
+        try {
+          const p = typeof val === 'string' ? JSON.parse(val) : val
+          if (p && typeof p === 'object') setWhyChooseData(p)
+        } catch {}
+      }
     }).catch(() => {})
 
     // Listen for real-time updates (same tab)
